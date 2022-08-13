@@ -1,31 +1,15 @@
-// modulos
-import React, { useEffect, useState } from 'react';
+import TipoApoderados from '../../api/TipoApoderados';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
-// helpers
-import { helpHttp } from '../stateManagement/helpers/helpHttp';
-
-// url
-import { url_locales } from '../routes/Urls';
-
-// css
-import './Dropdown.css';
-
-function DropdownLocales({ region, comuna, handleLocalChange }) {
+function DropdownTipoApoderados({ handleApoderadosChange }) {
 	const [isActive, setIsActive] = useState(false);
-	const [selected, setSelected] = useState('Seleccione un Local');
+	const [selected, setSelected] = useState('Seleccione una Opcion');
 	const [db, setDb] = useState(null);
-	let api = helpHttp();
 
 	useEffect(() => {
-		api.get(url_locales + region + '/' + comuna).then((res) => {
-			if (!res.err) {
-				setDb(res.locales);
-			} else {
-				setDb(null);
-			}
-		});
+		setDb(TipoApoderados.tipoapoderados);
 	}, []);
 
 	return (
@@ -46,15 +30,15 @@ function DropdownLocales({ region, comuna, handleLocalChange }) {
 					{db &&
 						db.map((el) => (
 							<li
-								key={el.CODIGO}
+								key={el.id}
 								onClick={(e) => {
-									setSelected(el.DESCRIPCION);
+									setSelected(el.descripcion);
 									setIsActive(false);
-									handleLocalChange(el.CODIGO, el.DESCRIPCION);
+									handleApoderadosChange(el.id);
 								}}
 								className="dropdown-item"
 							>
-								<p>{el.DESCRIPCION}</p>
+								<p>{el.descripcion}</p>
 							</li>
 						))}
 				</ul>
@@ -63,4 +47,4 @@ function DropdownLocales({ region, comuna, handleLocalChange }) {
 	);
 }
 
-export default DropdownLocales;
+export default DropdownTipoApoderados;

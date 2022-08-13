@@ -1,7 +1,8 @@
 // imagenes
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-// import LogoTeam from '../../components/assets/images/LogoTeamPatriota.jpg';
+import { VinculosPpalNav } from '../../components/layout';
+// import Logo from '../../components/assets/icons/bandera.png';
 
 function Headings() {
 	let navigate = useNavigate();
@@ -33,17 +34,24 @@ function Headings() {
 
 	return (
 		<header>
-			<Link to="/">
-				{/* <img src={LogoTeam} alt="logo" className="header-img-logo" /> */}
-			</Link>
-			<section className="container-row-nowrap gap-2 ml-auto mr-32 mt-12">
+			<section className="huincha"></section>
+			<section className="titulo">
+				<Link to="/">
+					<img src="" alt="logo" />
+				</Link>
+				<span className="titulo-marca"></span>
+				<span className="titulo-texto">Registro</span>
+			</section>
+			{/* <VinculosPpalNav /> */}
+
+			<section className="opciones">
 				<article className="flex-auto">
-					<p className="navlink-lg fc-blue" onClick={handleInicio}>
+					<p className="navlink fc-white" onClick={handleInicio}>
 						Inicio
 					</p>
 				</article>
 				<article className="flex-auto">
-					<p className="navlink-lg fc-blue" onClick={handleContacto}>
+					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto
 					</p>
 				</article>

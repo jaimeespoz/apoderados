@@ -1,0 +1,24 @@
+{
+	"tipoapoderados": [
+		{
+			"id": "1",
+			"descripcion": "Mismo Local y Misma Mesa"
+		},
+		{
+			"id": "2",
+			"descripcion": "Mismo Local y Cualquier Mesa del Local"
+		},
+		{
+			"id": "3",
+			"descripcion": "Misma Comuna y Cualquier Local"
+		},
+		{
+			"id": "4",
+			"descripcion": "Otra Comuna (especificar) y Otro Local (especificar)"
+		},
+		{
+			"id": "5",
+			"descripcion": "Otra Comuna (especificar) y Cualquier Local"
+		}
+	]
+}

@@ -248,3 +248,49 @@ export function TerminosUsoNav() {
 		</section>
 	);
 }
+
+export function RegistroApoderadosNav() {
+	return (
+		<section className="container-col-wrap ml-auto mr-12 my-6">
+			<article className="flex-auto">
+				<p className="titulo-lg fc-grey my-6">Registro de Apoderados de Mesa</p>
+				<hr className="my-4" />
+				<p className="py-3">
+					<a class="navlink-md fc-grey" href="#introduccion">
+						Introducción
+					</a>
+				</p>
+				<p className="py-3">
+					<a class="navlink-md fc-grey" href="#registro">
+						Registro
+					</a>
+				</p>
+				<p className="py-3 pl-4">
+					<a class="navlink-sm fc-grey" href="#personales">
+						Datos Personales
+					</a>
+				</p>
+				<p className="py-3 pl-4">
+					<a class="navlink-sm fc-grey" href="#contacto">
+						Datos de Contacto
+					</a>
+				</p>
+				<p className="py-3 pl-4">
+					<a class="navlink-sm fc-grey" href="#local">
+						Local de Votacion
+					</a>
+				</p>
+				<p className="py-3">
+					<a class="navlink-md fc-grey" href="#forma">
+						Forma de Apoyar
+					</a>
+				</p>
+				<p className="py-3 pl-4">
+					<a class="navlink-sm fc-grey" href="#seleccion">
+						Detalle de su Seleccion
+					</a>
+				</p>
+			</article>
+		</section>
+	);
+}

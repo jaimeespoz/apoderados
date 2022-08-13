@@ -6,6 +6,7 @@ import Home from '../../views/home/Home';
 // paginas
 import Contacto from '../../views/home/contacto/Contacto';
 import RegistroApoderados from '../../views/apoderados/RegistroApoderados';
+import RegistroApoderados2 from '../../views/apoderados/RegistroApoderados2';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -42,6 +43,7 @@ export const Rutas = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/registroapoderados" element={<RegistroApoderados />} />
+				<Route path="/registroapoderados2" element={<RegistroApoderados2 />} />
 				<Route path="/contacto" element={<Contacto />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />

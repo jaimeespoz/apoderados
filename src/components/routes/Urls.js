@@ -1,5 +1,3 @@
-const url_api = 'https://www.caminopropio.cl/api/';
-// const url_api = 'https://localhost:8098/';
 const url_srv = 'https://zkt7kkizv4.execute-api.us-east-1.amazonaws.com/prod/';
 
 export const url_regiones = url_srv + 'getregiones/'; //
@@ -8,17 +6,6 @@ export const url_locales = url_srv + 'getlocales/'; //  /idregion/idcomuna
 export const url_mesas = url_srv + 'getmesas/'; //  /idregion/idcomuna/idlocal
 export const url_mesas_put = url_srv + 'getlocales'; //
 export const url_mesas_get = url_srv + 'getlocales'; //  /idmesa
-
-export const url_tbl_clave_preguntas = url_api + 'ClavePreguntas';
-export const url_tbl_comunas = url_api + 'Comunas';
-export const url_tbl_locales = url_api + 'Locales';
-export const url_tbl_mesas = url_api + 'Mesas';
-export const url_tbl_paises = url_api + 'Paises';
-export const url_tbl_regiones = url_api + 'Regiones';
-export const url_tbl_sexo = url_api + 'Sexo';
-export const url_tbl_usuarios = url_api + 'Usuarios';
-
-export const url_rel_usuarios_mesas = url_api + 'Usuarios_Mesas';
 
 // CREATE TABLE `AUDITDB`.`APODERADOS` (
 //   `Id` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del registro, generado automáticamente',

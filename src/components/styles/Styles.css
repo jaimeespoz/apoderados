@@ -102,7 +102,8 @@ video {
 }
 
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700'); */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700'); */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800');
 
 :root {
     --mainColor: #29335C;
@@ -116,6 +117,10 @@ video {
     --gris-medio-oscuro: rgba(43, 43, 43, 1);
     --gris-medio: rgba(70, 70, 70, 1);
     --grey-light: rgba(72, 72, 72, 0.80);
+    --fondo-header: rgba(73, 77, 85, 1);
+    --font-color-header: rgba(88, 187, 238, 1);
+    --fondo-body: rgba(249, 249, 251, 1);
+    --highlight: rgba(81, 203, 238, 1);
 }
 
 html {
@@ -155,15 +160,68 @@ body {
 header {
     display: flex;
     top: 0px;
-    background-color: rgba(255, 255, 255, 1);
-    height: 80px;
-    border-bottom: 2px solid lightgray;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 25px 20px -20px;
-    margin-bottom: 2px;
+    background-color: var(--fondo-header);
+    height: 130px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    /* box-shadow: rgba(0, 0, 0, 0.15) 0px 25px 20px -20px; */
+    margin-bottom: 1px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+header .huincha {
+    flex: 1 0 auto;
+    background-color: var(--font-color-header);
+    height: 4px;
+    width: 100%;
+}
+
+header .titulo {
+    padding-top: 12px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+header img {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    content: url("/src/components/assets/icons/bandera.png");
+}
+
+header .titulo-marca::before {
+    content: 'Apoderados por el Rechazo';
+}
+
+header .titulo-marca {
+    flex: 0 0 auto;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--font-color-header);
+    /* color: #58bbee; */
+    padding-right: 12px;
+}
+
+header .titulo-texto {
+    flex: 0 0 auto;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--white);
+    text-transform: uppercase;
+}
+
+header .opciones {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
 }
 
 main {
-    background-color: rgba(250, 250, 250, 1);
+    background-color: var(--fondo-body);
     min-height: calc(100vh - 80px - 60px);
     color: orange;
     font-size: 3rem;
@@ -525,6 +583,7 @@ input[type="reset"] {
     font-size: 1.40rem;
     font-weight: 400;
     line-height: 100%;
+    padding-right: 12px;
     cursor: pointer;
 }
 
@@ -537,6 +596,7 @@ input[type="reset"] {
     font-size: 1.20rem;
     font-weight: 400;
     line-height: 100%;
+    padding-right: 12px;
     cursor: pointer;
 }
 
@@ -549,6 +609,7 @@ input[type="reset"] {
     font-size: 0.85rem;
     font-weight: 400;
     line-height: 100%;
+    padding-right: 12px;
     cursor: pointer;
 }
 
@@ -561,6 +622,7 @@ input[type="reset"] {
     font-size: 1.00rem;
     font-weight: 400;
     line-height: 100%;
+    padding-right: 12px;
     cursor: pointer;
 }
 
@@ -598,6 +660,10 @@ input[type="reset"] {
 
 .fc-blue {
     color: var(--dell-blue);
+}
+
+.fc-highlight {
+    color: var(--highlight);
 }
 
 .fc-grey {

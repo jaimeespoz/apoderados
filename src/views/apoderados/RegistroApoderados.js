@@ -8,35 +8,32 @@ import {
 } from '../../utils/FuncionesFechas';
 
 // paginas
-import Nacionalidad from '../../components/custom/Nacionalidad';
-import Sexo from '../../components/custom/Sexo';
 import DropdownRegiones from '../../components/custom/DropdownRegiones';
 import DropdownComunas from '../../components/custom/DropdownComunas';
 import DropdownLocales from '../../components/custom/DropdownLocales';
 import Headings from '../home/Headings';
-import { VinculosNav } from '../../components/layout';
+import { RegistroApoderadosNav, VinculosNav } from '../../components/layout';
 
 // helpers
 import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
-
-// url
-import { url_tbl_usuarios } from '../../components/routes/Urls';
 
 const initialForm = {
 	nombres: '',
 	paterno: '',
 	materno: '',
 	rut: '',
-	sexo: '',
-	nacionalidad: '',
-	nacimiento: '',
+	correo: '',
+	celular: '',
 	region: '',
 	comuna: '',
 	local: '',
+	mesa: '',
 };
 
 const validationsForm = (form) => {
 	let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+	let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+	let regexCelular = /^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/;
 	let regexComments = /^.{1,30}$/;
 	let errors = {};
 
@@ -64,20 +61,20 @@ const validationsForm = (form) => {
 		errors.materno = 'Ingrese hasta 30 letras';
 	}
 
+	if (!form.correo.trim()) {
+		errors.correo = 'Ingrese su Correo Electronico';
+	} else if (!regexEmail.test(form.correo.trim())) {
+		errors.correo = 'El Email ingresado es incorrecto';
+	}
+
+	if (!form.celular.trim()) {
+		errors.celular = 'Ingrese su Celular';
+	} else if (!regexCelular.test(form.celular.trim())) {
+		errors.celular = 'El Celular ingresado es incorrecto';
+	}
+
 	if (!form.rut.trim()) {
 		errors.rut = 'Ingrese su RUT';
-	}
-
-	if (!form.sexo) {
-		errors.sexo = 'Seleccione su Sexo';
-	}
-
-	if (!form.nacionalidad) {
-		errors.nacionalidad = 'Seleccione su Nacionalidad';
-	}
-
-	if (!form.nacimiento) {
-		errors.nacimiento = 'Ingrese su Fecha de Nacimiento';
 	}
 
 	if (!form.region) {
@@ -94,11 +91,15 @@ const validationsForm = (form) => {
 	return errors;
 };
 
-const RegistroApoderados = () => {
+function RegistroApoderados({ form1 }) {
 	const [form, setForm] = useState(initialForm);
-	const [region, setRegion] = useState('');
-	const [comuna, setComuna] = useState('');
-	const [local, setLocal] = useState('');
+	const [region, setRegion] = useState(null);
+	const [regionGlosa, setRegionGlosa] = useState(null);
+	const [comuna, setComuna] = useState(null);
+	const [comunaGlosa, setComunaGlosa] = useState(null);
+	const [local, setLocal] = useState(null);
+	const [localGlosa, setLocalGlosa] = useState(null);
+	const [mesa, setMesa] = useState(null);
 	const [errors, setErrors] = useState({});
 	let navigate = useNavigate();
 	let api = helpHttp();
@@ -112,31 +113,41 @@ const RegistroApoderados = () => {
 		});
 	};
 
-	const handleRegionChange = (codigo) => {
-		// alert('retorno : ' + codigo);
+	const handleRegionChange = (codigo, glosa) => {
 		form.region = codigo;
 		setRegion(codigo);
+		setRegionGlosa(glosa);
+		setComuna('');
 	};
 
-	const handleComunaChange = (codigo) => {
-		// alert('retorno : ' + codigo);
+	const handleComunaChange = (codigo, glosa) => {
 		form.comuna = codigo;
 		setComuna(codigo);
+		setComunaGlosa(glosa);
+		setLocal(null);
 	};
 
-	const handleLocalChange = (codigo) => {
-		// alert('retorno : ' + codigo);
+	const handleLocalChange = (codigo, glosa) => {
 		form.local = codigo;
 		setLocal(codigo);
+		setLocalGlosa(glosa);
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		alert(JSON.stringify(form));
+		// alert(JSON.stringify(form));
 
 		setErrors(validationsForm(form));
 		setErrors((prevState) => validationsForm(form));
+
+		if (errors) {
+			alert('con errores');
+			navigate('/registroapoderados2', { form: form });
+		} else {
+			alert('SIN errores');
+			navigate('/registroapoderados2');
+		}
 
 		// if (errors) {
 		// 	api
@@ -255,24 +266,61 @@ const RegistroApoderados = () => {
 		<>
 			<Headings />
 			<main>
-				<div className="container-row mh">
-					<section className="flex-auto bg-degrade px-10 mwd-30">
-						<div className="container-row gap-16 mt-12 jc-center wd-90">
-							<p className="titulo-xxxl fc-white">Team Patriota</p>
-							<p className="titulo-lg fc-white">Equipo de Auditoria</p>
-							<p className="titulo-xl fc-white">
-								Página de Creacion de Usuarios
-							</p>
-							<hr />
-							<p className="texto-sm fc-white">Cree su Usuario desde aqui</p>
-						</div>
+				<div className="container-row py-4 px-12">
+					<section className="flex-auto wd-30">
+						<RegistroApoderadosNav />
 					</section>
-					<section className="flex-auto Aligner-item--center wd-70 my-8">
-						<div className="container-row jc-center">
-							<form onSubmit={handleSubmit}>
-								<p className="titulo-lg fc-grey mb-2">Sus Datos Personales</p>
-								<div className="bg-white bd-1 py-8 px-12">
-									<div className="container-row-nowrap gap-12">
+					<section className="flex-auto wd-70">
+						<div className="container-row">
+							<section className="flex-fijo">
+								{/* <section>
+									<p className="texto-xl fw-semi-bold fc-highlight py-6 pb-1">Inicio</p>
+								</section> */}
+								<section id="introduccion">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Introduccion
+									</p>
+									<hr></hr>
+									<p className="texto-sm fc-grey pt-3">
+										A traves de los siguiente parrafos, le orientaremos y
+										ayudaremos a registrase correctamente.
+									</p>
+								</section>
+								<section id="registro">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Registro
+									</p>
+									<hr></hr>
+									<p className="texto-sm fc-grey pt-3">
+										A continuacion le solicitaremos tanto sus{' '}
+										<b>Datos Personales</b>, sus <b>Datos de Contacto</b>, como
+										tambien la informacion correspondiente a{' '}
+										<b>su Local de Votacion</b>.
+									</p>
+									<p className="texto-sm fc-grey pt-3">
+										Esta informacion esta protegida por la{' '}
+										<b>Ley de Proteccion de Datos Personales</b> (Nro. 19.628 de
+										1999). Cualquier duda, rogamos consultas los Terminos de Uso
+										de este sitio, en el vinculo presente al pie de cada pagina
+										de este portal.{' '}
+									</p>
+								</section>
+								<section id="personales">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Datos Personales
+									</p>
+									<hr></hr>
+									<p className="texto-sm fc-grey pt-3">
+										Esta informacion es esencial para nosotros. Ya que es quizas
+										una de las pocas forma de evaluar adecuadamentemente, a cada
+										una de las personas que se registren.
+									</p>
+									<p className="texto-sm fc-grey pt-3">
+										Si usted no esta de acuerdo con realizar un registro con la
+										transperencia que nosotros necesitamos, le sugerimos a usted
+										que por favor, se registre en otros portales similares.
+									</p>
+									<div className="container-row-nowrap gap-4 pt-3">
 										<div className="flex-auto">
 											<label htmlFor="nombres" className="form-label-sm">
 												Nombres
@@ -330,11 +378,9 @@ const RegistroApoderados = () => {
 												</p>
 											)}
 										</div>
-									</div>
-									<div className="container-row-nowrap gap-12">
 										<div className="flex-auto">
 											<label htmlFor="rut" className="form-label-sm">
-												RUT
+												Carnet Identidad
 											</label>
 											<input
 												type="text"
@@ -342,7 +388,7 @@ const RegistroApoderados = () => {
 												id="rut"
 												name="rut"
 												value={form.rut}
-												placeholder="Ingrese su RUT"
+												placeholder="Numero de Carnet"
 												onChange={handleChange}
 											/>
 											{errors.rut && (
@@ -351,114 +397,163 @@ const RegistroApoderados = () => {
 												</p>
 											)}
 										</div>
+									</div>
+								</section>
+								{/* Datos de Contacto */}
+								<section id="contacto">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Datos de Contacto
+									</p>
+									<hr></hr>
+									<p className="texto-sm fc-grey pt-3">
+										Le solicitamos que ingrese la informacion de su{' '}
+										<b>Correo Electronico</b> y/o <b>Numero de Celular</b>, ya
+										que necesitaremos un medio de comunicacion con usted, antes
+										dudas, coordinaciones u otra segun nos sea necesario.
+									</p>
+									<hr></hr>
+									<div className="container-row-nowrap gap-4 pt-3">
 										<div className="flex-auto">
-											<label htmlFor="nacimiento" className="form-label-sm">
-												Fecha Nacimiento
+											<label htmlFor="correo" className="form-label-sm">
+												Casilla de Correo
 											</label>
 											<input
 												type="text"
 												className="form-control-sm"
-												id="nacimiento"
-												name="nacimiento"
-												value={form.nacimiento}
-												placeholder="Ingrese Fecha Nacimiento"
+												id="correo"
+												name="correo"
+												value={form.correo}
+												placeholder="Casilla de Correo"
 												onChange={handleChange}
 											/>
-											{errors.nacimiento && (
+											{errors.correo && (
 												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-													{errors.nacimiento}
+													{errors.correo}
 												</p>
 											)}
 										</div>
-									</div>
-									<div className="container-row-nowrap">
 										<div className="flex-auto">
-											<label htmlFor="sexo" className="form-label-sm">
-												Sexo
+											<label htmlFor="celular" className="form-label-sm">
+												Celular
 											</label>
-											<Sexo />
-											{errors.sexo && (
-												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-													{errors.sexo}
-												</p>
-											)}
-										</div>
-										<div className="flex-auto">
-											<label htmlFor="nacionalidad" className="form-label-sm">
-												Nacionalidad
-											</label>
-											<Nacionalidad />
-											{errors.nacionalidad && (
-												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-													{errors.nacionalidad}
-												</p>
-											)}
-										</div>
-									</div>
-								</div>
-								<p className="titulo fc-grey mt-6 mb-2">
-									Cual es su Local de Votacion
-								</p>
-								<div className="bg-white bd-1 py-8 px-12">
-									<div className="container-row-nowrap gap-12">
-										<div className="flex-auto">
-											<label className="form-label-sm">Region</label>
-											<DropdownRegiones
-												handleRegionChange={handleRegionChange}
+											<input
+												type="text"
+												className="form-control-sm"
+												id="celular"
+												name="celular"
+												value={form.celular}
+												placeholder="Numero Celular"
+												onChange={handleChange}
 											/>
-											{errors.region && (
+											{errors.celular && (
 												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-													{errors.region}
+													{errors.celular}
 												</p>
 											)}
 										</div>
-										{region && (
+									</div>
+								</section>
+								{/* Datos de SU LOCAL de Votacion */}
+								<section id="local">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Datos de SU LOCAL de Votacion
+									</p>
+									<hr></hr>
+									<p className="texto-sm fc-grey pt-3">
+										Con esta informacion podremos hacer una mejor administracion
+										de las personas que se registren.
+									</p>
+									<p className="texto-sm fc-grey pt-3">
+										Se socilitara (1) La Region, luego (2) La Comuna, en seguida
+										(3) El Local de Votacion, y finalmente (4) La Mesa de
+										Votacion. Las tres primeras son de caracter obligatorio.
+									</p>
+									<div className="container-row-nowrap gap-4 pt-3">
+										<div className="container-row-nowrap gap-12">
 											<div className="flex-auto">
-												<label className="form-label-sm">Comuna</label>
-												<DropdownComunas
-													region={region}
-													handleComunaChange={(region, handleComunaChange)}
+												<label className="form-label-sm">Region</label>
+												<DropdownRegiones
+													handleRegionChange={handleRegionChange}
 												/>
-												{errors.comuna && (
+												{errors.region && (
 													<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-														{errors.comuna}
+														{errors.region}
 													</p>
 												)}
 											</div>
-										)}
+											{region && (
+												<div className="flex-auto">
+													<label className="form-label-sm">Comuna</label>
+													<DropdownComunas
+														region={region}
+														handleComunaChange={(region, handleComunaChange)}
+													/>
+													{errors.comuna && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.comuna}
+														</p>
+													)}
+												</div>
+											)}
+										</div>
+										<div className="container-row-nowrap gap-12">
+											{comuna && (
+												<div className="flex-auto">
+													<label className="form-label-sm">
+														Local Votacion
+													</label>
+													<DropdownLocales
+														region={region}
+														comuna={comuna}
+														handleLocalChange={handleLocalChange}
+													/>
+													{errors.local && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.local}
+														</p>
+													)}
+												</div>
+											)}
+										</div>
+										<div className="container-row-nowrap gap-12">
+											{local && (
+												<div className="flex-auto">
+													<label htmlFor="mesa" className="form-label-sm">
+														Mesa de Votacion
+													</label>
+													<input
+														type="text"
+														className="form-control-sm"
+														id="mesa"
+														name="mesa"
+														value={form.mesa}
+														placeholder="Numero de Mesa"
+														onChange={handleChange}
+													/>
+													{errors.mesa && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.mesa}
+														</p>
+													)}
+												</div>
+											)}
+										</div>
 									</div>
-									<div className="container-row-nowrap gap-12">
-										{comuna && (
-											<div className="flex-auto">
-												<label className="form-label-sm">Local Votacion</label>
-												<DropdownLocales
-													region={region}
-													comuna={comuna}
-													handleLocalChange={handleLocalChange}
-												/>
-												{errors.local && (
-													<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-														{errors.local}
-													</p>
-												)}
-											</div>
-										)}
-									</div>
-								</div>
-								<button onClick={handleSubmit} className="btn-primary mt-4">
-									Enviar
-								</button>
-								<button onClick={handleVolver} className="btn-primary mt-4">
-									Volver
-								</button>
-							</form>
+								</section>
+							</section>
 						</div>
+						<button onClick={handleSubmit} className="btn-primary mt-8">
+							Siguiente
+						</button>
+						<button onClick={handleVolver} className="btn-primary mt-8">
+							Volver
+						</button>
 					</section>
 				</div>
 			</main>
 			<VinculosNav />
 		</>
 	);
-};
+}
 
 export default RegistroApoderados;

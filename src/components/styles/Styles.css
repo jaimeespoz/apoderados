@@ -179,7 +179,7 @@ header .huincha {
 header .titulo {
     padding-top: 12px;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: col wrap;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -212,6 +212,7 @@ header .titulo-texto {
     font-weight: 800;
     color: var(--white);
     text-transform: uppercase;
+    padding-top: 20px;
 }
 
 header .opciones {
@@ -736,12 +737,14 @@ input[type="reset"] {
 }
 
 .wd-30 {
-    width: 100%;
+    /* width: 100%; */
+    display: none;
 }
 
 @media screen and (min-width: 1024px) {
     .wd-30 {
         width: 30%;
+        display: block;
     }
 }
 
@@ -791,10 +794,6 @@ input[type="reset"] {
 
 .mwd-30 {
     max-width: 30%;
-}
-
-.cel {
-    margin: 40px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -861,3 +860,29 @@ input[type="reset"] {
     display: block;
     margin: 10px 6px 0px 6px;
 }
+
+.bootstrap-select {
+    height: 30px;
+    width: 200px;
+    background-color: rgba(255, 255, 224, 0.4);
+    border-style: solid;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    color: navy;
+    font-weight: 500;
+    font-size: 0.90rem !important;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-color: cornflowerblue;
+    border-width: medium;
+    border-radius: 5px;
+}
+
+/* .bootstrap-select .dropdown-menu {
+    margin: 15px 0 0;
+    font-size: 0.90rem !important;
+    line-height: 95%;
+} */

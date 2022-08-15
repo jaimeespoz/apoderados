@@ -1,5 +1,5 @@
 import DropdownComunas from '../../components/custom/DropdownComunas';
-import DropdownLocales from '../../components/custom/DropdownLocales';
+import DropdownLocales from '../../components/custom/DropdownLocalesxxx';
 
 function Opcion04({
 	region,

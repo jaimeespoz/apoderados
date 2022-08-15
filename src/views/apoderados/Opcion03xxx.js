@@ -1,4 +1,4 @@
-import DropdownLocales from '../../components/custom/DropdownLocales';
+import DropdownLocales from '../../components/custom/DropdownLocalesxxx';
 
 function Opcion03({
 	region,
@@ -17,7 +17,7 @@ function Opcion03({
 				<div className="flex-auto">
 					<label className="form-label-sm">Region</label>
 					<span className="texto-sm fc-secondaryColor">
-						{/* {region} */}
+						{region}
 						{regionglosa}
 					</span>
 				</div>
@@ -26,7 +26,7 @@ function Opcion03({
 				<div className="flex-auto">
 					<label className="form-label-sm">Comuna</label>
 					<span className="texto-sm fc-secondaryColor">
-						{/* {comuna} */}
+						{comuna}
 						{comunaglosa}
 					</span>
 				</div>

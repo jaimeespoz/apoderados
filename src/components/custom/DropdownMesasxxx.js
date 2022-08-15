@@ -15,31 +15,29 @@ import './Dropdown.css';
 const DropdownMesas = ({ region, comuna, local, handleMesaChange }) => {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('Seleccione un Local');
-	const [db, setDb] = useState(null);
+	const [dbMesas, setDbMesas] = useState('');
 	let api = helpHttp();
 
 	useEffect(() => {
-		let options = {
-			jwt: true,
-		};
-		api
-			.get(
-				url_tbl_mesas +
-					'/Browse_Mesas?region=' +
-					region +
-					'&comuna=' +
-					comuna +
-					'&local=' +
-					local,
-				options
-			)
-			.then((res) => {
-				if (!res.err) {
-					setDb(res);
-				} else {
-					setDb(null);
-				}
-			});
+		if (!dbMesas) {
+			api
+				.get(
+					url_tbl_mesas +
+						'/Browse_Mesas?region=' +
+						region +
+						'&comuna=' +
+						comuna +
+						'&local=' +
+						local
+				)
+				.then((res) => {
+					if (!res.err) {
+						setDbMesas(res);
+					} else {
+						setDbMesas('');
+					}
+				});
+		}
 	}, []);
 
 	return (
@@ -56,8 +54,8 @@ const DropdownMesas = ({ region, comuna, local, handleMesaChange }) => {
 				</p>
 			</section>
 			<ul className="dropdown-content">
-				{db &&
-					db.map((el) => (
+				{dbMesas &&
+					dbMesas.map((el) => (
 						<li
 							key={el.mesa}
 							onClick={(e) => {

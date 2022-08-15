@@ -39,7 +39,11 @@ function Headings() {
 				<Link to="/">
 					<img src="" alt="logo" />
 				</Link>
+			</section>
+			<section className="titulo">
 				<span className="titulo-marca"></span>
+			</section>
+			<section className="titulo">
 				<span className="titulo-texto">Registro</span>
 			</section>
 			{/* <VinculosPpalNav /> */}

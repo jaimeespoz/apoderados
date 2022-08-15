@@ -55,7 +55,7 @@ function Home() {
 						</div>
 					</div>
 				</div>
-				<div className="container-row my-6">
+				{/* <div className="container-row my-6">
 					<section className="container-row jc-center">
 						<article className="flex-auto">
 							<p className="titulo-xxl fc-grey my-8">
@@ -243,7 +243,7 @@ function Home() {
 							</article>
 						</div>
 					</section>
-				</div>
+				</div> */}
 			</main>
 			<Footer />
 		</>

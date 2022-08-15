@@ -7,6 +7,11 @@ export const url_mesas = url_srv + 'getmesas/'; //  /idregion/idcomuna/idlocal
 export const url_mesas_put = url_srv + 'getlocales'; //
 export const url_mesas_get = url_srv + 'getlocales'; //  /idmesa
 
+export const url_apoderados_put = url_srv + 'putmodificaapoderado/';
+export const url_apoderados_putxrut = url_srv + 'putmodificaapoderadoxrut/';
+export const url_apoderados_get = url_srv + 'getapoderadorut/';
+export const url_apoderados_nuevo = url_srv + 'putnuevoapoderado';
+
 // CREATE TABLE `AUDITDB`.`APODERADOS` (
 //   `Id` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del registro, generado automáticamente',
 //   `RUT` INT NOT NULL COMMENT 'Rol Único Tributario',
@@ -35,3 +40,34 @@ export const url_mesas_get = url_srv + 'getlocales'; //  /idmesa
 //   `CODIGO_MESA_ASIGNADA` VARCHAR(45) NULL COMMENT 'Código de mesa Asignado al Apoderado ‘*’ para todas las mesas en caso de apoderado de local',
 //   PRIMARY KEY (`Id`),
 //   UNIQUE INDEX `RUT_UNIQUE` (`RUT` ASC) VISIBLE);
+
+// {
+//     "RUT": "8259563",
+//     "DV": "5",
+//     "NOMBRES": "CARLOS",
+//     "APELLIDO_PATERNO": "THOMAS",
+//     "APELLIDO_MATERNO": "SUHR",
+//     "TELEFONO_MOVIL": "992319554",
+//     "EMAIL": "C_THOMAS_S@HOTMAIL.COM",
+//     "TIPO_LOCAL_MESA": "M",
+//     "CODIGO_REGION_VOTA": "13",
+//     "CODIGO_COMUNA_VOTA": "13403",
+//     "CODIGO_LOCAL_VOTA": "1000",
+//     "MESA_VOTA": "38V",
+//     "PREFERENCIA_APODERADO": "1",
+//     "VALIDADO": "0",
+//     "VALIDADO_CUANDO": "None",
+//     "RECHAZADO": "0",
+//     "RECHAZADO_CUANDO": "None",
+//     "RECHAZADO_MOTIVO": "None",
+//     "CONTACTADO": "1",
+//     "CONTACTADO_CUANDO": "2022-08-12 11:09:00",
+//     "ASIGNADO": "1",
+//     "ASIGNADO_CUANDO": "2022-08-12 12:30:00",
+//     "ASIGNACION_COMUNICADA": "1",
+//     "ASIGNACION_COMUNICADA_CUANDO": "2022-08-12 13:25:00",
+//     "CODIGO_COMUNA_ASIGNADA": "13403",
+//     "CODIGO_LOCAL_ASIGNADO": "1000",
+//     "CODIGO_MESA_ASIGNADA": "38V",
+//     "SE_PRESENTO_DIA_DE_VOTACION": "0"
+// }

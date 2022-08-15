@@ -19,9 +19,9 @@ export const helpHttp = () => {
 		if (!options.body) delete options.body;
 
 		// alert(JSON.stringify(options));
-		setTimeout(() => controller.abort(), 5000);
+		setTimeout(() => controller.abort(), 3000);
 
-		//		alert('(1) : ' + endpoint + ' : ' + JSON.stringify(options));
+		// console.log(endpoint + ' : ' + JSON.stringify(options));
 		return fetch(endpoint, options)
 			.then((res) =>
 				res.ok
@@ -35,15 +35,15 @@ export const helpHttp = () => {
 			.catch((err) => err);
 	};
 
-	const register = (url, options = {}) => {
-		options.method = 'POST';
-		return customFetch(url, options);
-	};
+	// const register = (url, options = {}) => {
+	// 	options.method = 'POST';
+	// 	return customFetch(url, options);
+	// };
 
-	const login = (url, options = {}) => {
-		options.method = 'POST';
-		return customFetch(url, options);
-	};
+	// const login = (url, options = {}) => {
+	// 	options.method = 'POST';
+	// 	return customFetch(url, options);
+	// };
 
 	const get = async (url, options = {}) => await customFetch(url, options);
 
@@ -63,8 +63,8 @@ export const helpHttp = () => {
 	};
 
 	return {
-		register,
-		login,
+		// register,
+		// login,
 		get,
 		post,
 		put,

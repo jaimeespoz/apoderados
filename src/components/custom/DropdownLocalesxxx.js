@@ -1,37 +1,33 @@
 // modulos
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 // helpers
 import { helpHttp } from '../stateManagement/helpers/helpHttp';
 
-// url
-import { url_regiones } from '../routes/Urls';
-
 // css
 import './Dropdown.css';
 
-function DropdownRegiones({ handleRegionChange }) {
-	const [region, setRegion] = useState('00');
+function DropdownLocales({ url, handleChange }) {
 	const [isActive, setIsActive] = useState(false);
-	const [selected, setSelected] = useState('Seleccione una Region');
-	const [db, setDb] = useState(null);
+	const [selected, setSelected] = useState('Seleccione un Local');
+	const [dbLocales, setDbLocales] = useState('');
 	let api = helpHttp();
 
+	alert('locales : ' + url);
+
 	useEffect(() => {
-		api.get(url_regiones).then((res) => {
+		api.get(url).then((res) => {
 			if (!res.err) {
-				setDb(res.regiones);
+				setDbLocales(res.locales);
 			} else {
-				setDb(null);
+				setDbLocales('');
 			}
 		});
 	}, []);
 
 	return (
 		<div className="dropdown">
-			<section
+			{/* <section
 				className="dropdown-btn"
 				onClick={(e) => {
 					setIsActive(!isActive);
@@ -44,15 +40,14 @@ function DropdownRegiones({ handleRegionChange }) {
 			</section>
 			{isActive && (
 				<ul className="dropdown-content">
-					{db &&
-						db.map((el) => (
+					{dbLocales &&
+						dbLocales.map((el) => (
 							<li
 								key={el.CODIGO}
 								onClick={(e) => {
 									setSelected(el.DESCRIPCION);
 									setIsActive(false);
-									setRegion(el.CODIGO);
-									handleRegionChange(el.CODIGO, el.DESCRIPCION);
+									handleLocalChange(el.CODIGO, el.DESCRIPCION);
 								}}
 								className="dropdown-item"
 							>
@@ -60,9 +55,29 @@ function DropdownRegiones({ handleRegionChange }) {
 							</li>
 						))}
 				</ul>
-			)}
+			)} */}
+			<select
+				name="cb_locales"
+				id="cb_locales"
+				className="texto-sm fc-grey"
+				onChange={handleChange}
+			>
+				<option value="" className="texto-sm fc-grey">
+					Elige un
+				</option>
+				{dbLocales &&
+					dbLocales.map((el) => (
+						<option
+							key={el.CODIGO}
+							value={el.CODIGO}
+							className="texto-sm fc-grey"
+						>
+							{el.DESCRIPCION}
+						</option>
+					))}
+			</select>
 		</div>
 	);
 }
 
-export default DropdownRegiones;
+export default DropdownLocales;

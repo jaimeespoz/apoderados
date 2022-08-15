@@ -61,21 +61,27 @@ export function VinculosNav() {
 export function TerminosNav() {
 	return (
 		<div className="container-row-nowrap bg-gris-medio">
-			<section>
-				<label className="titulo-md fc-white">Terminos de Uso</label>
-				<hr className="subrayado mt-4" />
-				<article className="flex-auto mt-4">
-					<Link to="/privacidad">
-						<p className="navlink-md fc-white my-1">Privacidad</p>
-					</Link>
-					<Link to="/seguridad">
-						<p className="navlink-md fc-white my-1">Seguridad</p>
-					</Link>
-					<Link to="/terminos">
-						<p className="navlink-md fc-white my-1">Terminos y Condiciones</p>
-					</Link>
-				</article>
-			</section>
+			<article className="flex-resto">
+				<Link to="/privacidad">
+					<p className="navlink-md fc-white my-1">Privacidad</p>
+				</Link>
+			</article>
+			<article className="flex-resto">
+				<span className="separador fc-white"></span>
+			</article>
+			<article className="flex-resto">
+				<Link to="/seguridad">
+					<p className="navlink-md fc-white my-1">Seguridad</p>
+				</Link>
+			</article>
+			<article className="flex-resto">
+				<span className="separador fc-white"></span>
+			</article>
+			<article className="flex-resto">
+				<Link to="/terminos">
+					<p className="navlink-md fc-white my-1">Terminos y Condiciones</p>
+				</Link>
+			</article>
 		</div>
 	);
 }
@@ -256,37 +262,37 @@ export function RegistroApoderadosNav() {
 				<p className="titulo-lg fc-grey my-6">Registro de Apoderados de Mesa</p>
 				<hr className="my-4" />
 				<p className="py-3">
-					<a class="navlink-md fc-grey" href="#introduccion">
+					<a className="navlink-md fc-grey" href="#introduccion">
 						Introducción
 					</a>
 				</p>
 				<p className="py-3">
-					<a class="navlink-md fc-grey" href="#registro">
+					<a className="navlink-md fc-grey" href="#registro">
 						Registro
 					</a>
 				</p>
 				<p className="py-3 pl-4">
-					<a class="navlink-sm fc-grey" href="#personales">
+					<a className="navlink-sm fc-grey" href="#personales">
 						Datos Personales
 					</a>
 				</p>
 				<p className="py-3 pl-4">
-					<a class="navlink-sm fc-grey" href="#contacto">
+					<a className="navlink-sm fc-grey" href="#contacto">
 						Datos de Contacto
 					</a>
 				</p>
 				<p className="py-3 pl-4">
-					<a class="navlink-sm fc-grey" href="#local">
+					<a className="navlink-sm fc-grey" href="#local">
 						Local de Votacion
 					</a>
 				</p>
 				<p className="py-3">
-					<a class="navlink-md fc-grey" href="#forma">
+					<a className="navlink-md fc-grey" href="#forma">
 						Forma de Apoyar
 					</a>
 				</p>
 				<p className="py-3 pl-4">
-					<a class="navlink-sm fc-grey" href="#seleccion">
+					<a className="navlink-sm fc-grey" href="#seleccion">
 						Detalle de su Seleccion
 					</a>
 				</p>

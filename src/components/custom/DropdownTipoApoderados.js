@@ -6,10 +6,10 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 function DropdownTipoApoderados({ handleApoderadosChange }) {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('Seleccione una Opcion');
-	const [db, setDb] = useState(null);
+	const [dbTipoApoderados, setDbTipoApoderados] = useState(null);
 
 	useEffect(() => {
-		setDb(TipoApoderados.tipoapoderados);
+		setDbTipoApoderados(TipoApoderados.tipoapoderados);
 	}, []);
 
 	return (
@@ -27,8 +27,8 @@ function DropdownTipoApoderados({ handleApoderadosChange }) {
 			</section>
 			{isActive && (
 				<ul className="dropdown-content">
-					{db &&
-						db.map((el) => (
+					{dbTipoApoderados &&
+						dbTipoApoderados.map((el) => (
 							<li
 								key={el.id}
 								onClick={(e) => {

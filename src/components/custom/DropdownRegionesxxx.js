@@ -7,20 +7,20 @@ import { helpHttp } from '../stateManagement/helpers/helpHttp';
 // css
 import './Dropdown.css';
 
-function DropdownComunas({ url, handleChange }) {
+function DropdownRegiones({ url, handleChange }) {
 	// const [isActive, setIsActive] = useState(false);
-	// const [selected, setSelected] = useState('Seleccione una Comuna');
-	const [dbComunas, setDbComunas] = useState('');
+	// const [selected, setSelected] = useState('Seleccione una Region');
+	const [dbRegiones, setDbRegiones] = useState('');
 	let api = helpHttp();
 
-	alert('comunas : ' + url);
+	alert('regiones : ' + url);
 
 	useEffect(() => {
 		api.get(url).then((res) => {
 			if (!res.err) {
-				setDbComunas(res.comunas);
+				setDbRegiones(res.regiones);
 			} else {
-				setDbComunas('');
+				setDbRegiones('');
 			}
 		});
 	}, []);
@@ -37,17 +37,17 @@ function DropdownComunas({ url, handleChange }) {
 				<p>
 					<FontAwesomeIcon icon={faCaretDown} />
 				</p>
-			</section>
-			{isActive && (
+			</section> */}
+			{/* {isActive && (
 				<ul className="dropdown-content">
-					{dbComunas &&
-						dbComunas.map((el) => (
+					{dbRegiones &&
+						dbRegiones.map((el) => (
 							<li
 								key={el.CODIGO}
 								onClick={(e) => {
 									setSelected(el.DESCRIPCION);
 									setIsActive(false);
-									handleComunaChange(el.CODIGO, el.DESCRIPCION);
+									handleRegionChange(el.CODIGO, el.DESCRIPCION);
 								}}
 								className="dropdown-item"
 							>
@@ -55,18 +55,18 @@ function DropdownComunas({ url, handleChange }) {
 							</li>
 						))}
 				</ul>
-			)} */}
+			 )} */}
 			<select
-				name="cb_comunas"
-				id="cb_comunas"
+				name="cb_regiones"
+				id="cb_regiones"
 				className="texto-sm fc-grey"
 				onChange={handleChange}
 			>
 				<option value="" className="texto-sm fc-grey">
-					Elige un
+					Elige una Region
 				</option>
-				{dbComunas &&
-					dbComunas.map((el) => (
+				{dbRegiones &&
+					dbRegiones.map((el) => (
 						<option
 							key={el.CODIGO}
 							value={el.CODIGO}
@@ -80,4 +80,4 @@ function DropdownComunas({ url, handleChange }) {
 	);
 }
 
-export default DropdownComunas;
+export default DropdownRegiones;

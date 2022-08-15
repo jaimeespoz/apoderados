@@ -8,20 +8,20 @@ import {
 } from '../../utils/FuncionesFechas';
 
 // paginas
-import DropdownRegiones from '../../components/custom/DropdownRegiones';
+import DropdownRegiones from '../../components/custom/DropdownRegionesxxx';
 import DropdownComunas from '../../components/custom/DropdownComunas';
-import DropdownLocales from '../../components/custom/DropdownLocales';
+import DropdownLocales from '../../components/custom/DropdownLocalesxxx';
 import DropdownTipoApoderados from '../../components/custom/DropdownTipoApoderados';
 import Headings from '../home/Headings';
 import { RegistroApoderadosNav, VinculosNav } from '../../components/layout';
 
 // helpers
 import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
-import Opcion01 from './Opcion01';
-import Opcion02 from './Opcion02';
-import Opcion03 from './Opcion03';
-import Opcion04 from './Opcion04';
-import Opcion05 from './Opcion05';
+// import Opcion01 from './Opcion01';
+// import Opcion02 from './Opcion02';
+// import Opcion03 from './Opcion03';
+// import Opcion04 from './Opcion04';
+// import Opcion05 from './Opcion05';
 
 const initialForm = {
 	nombres: '',
@@ -107,7 +107,7 @@ const validationsForm = (form) => {
 	return errors;
 };
 
-function RegistroApoderados2({ form1 }) {
+function RegistroApoderados2() {
 	const [form, setForm] = useState(initialForm);
 	const [region, setRegion] = useState(null);
 	const [regionGlosa, setRegionGlosa] = useState(null);
@@ -129,7 +129,7 @@ function RegistroApoderados2({ form1 }) {
 	let navigate = useNavigate();
 	let api = helpHttp();
 
-	alert(form1.nombres);
+	// alert(form1.nombres);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;

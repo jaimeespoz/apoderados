@@ -16,7 +16,7 @@ function Opcion02({
 				<div className="flex-auto">
 					<label className="form-label-sm">Region</label>
 					<span className="texto-sm fc-secondaryColor">
-						{/* {region} */}
+						{region}
 						{regionglosa}
 					</span>
 				</div>
@@ -25,7 +25,7 @@ function Opcion02({
 				<div className="flex-auto">
 					<label className="form-label-sm">Comuna</label>
 					<span className="texto-sm fc-secondaryColor">
-						{/* {comuna} */}
+						{comuna}
 						{comunaglosa}
 					</span>
 				</div>
@@ -34,7 +34,7 @@ function Opcion02({
 				<div className="flex-auto">
 					<label className="form-label-sm">Local Votacion</label>
 					<span className="texto-sm fc-secondaryColor">
-						{/* {local} */}
+						{local}
 						{localglosa}
 					</span>
 				</div>

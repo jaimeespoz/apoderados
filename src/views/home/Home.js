@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 //
 import mountainImage from '../../components/assets/images/Fondo.jpg';
-// import LogoTeam from '../../components/assets/images/LogoTransparente.png';
+import Logo from '../../components/assets/images/logo.jpg';
 
 // css
 import '../../components/styles/Styles.css';
@@ -29,22 +29,18 @@ function Home() {
 				<div className=" text-white " style={backgroundImageStyle}>
 					<div className="bg-gradient-to-r from-black px-8 py-16">
 						<div className=" max-w-xl grid grid-cols-1 gap-8">
-							<div className="w-12">
-								{/* <img src={LogoTeam} alt="" className="logo" /> */}
+							<div className="w-16">
+								<img src={Logo} alt="" className="logo" />
 							</div>
 							<h2 className="text-xl uppercase font-bold">
 								Plebiscito 4 de Septiembre del 2022
 							</h2>
 							<h1 className="text-6xl font-bold">
-								Auditoria al Proceso de Votacion
+								Apoderados de Mesa Patriotas
 							</h1>
 							<p className="text-lg">Ayudanos -solo- el dia de la votacion</p>
 							<p className="text-lg">
-								Queremos tener el registro e imagenes de la totalidad de los
-								locales de votacion de nuestro pais
-							</p>
-							<p className="text-lg">
-								10 minutos de tu tiempo, que cambiaran la historia de Chile
+								Solo un dia de tu tiempo, que cambiara la historia de Chile
 							</p>
 							<button
 								className="bg-gradient-to-r from-pink-600 to-orange-600 py-3 px-6 text-lg rounded-md w-48"

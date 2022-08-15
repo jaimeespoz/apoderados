@@ -13,9 +13,9 @@ const PrivacidadMain = () => {
 					</section>
 					<section className="flex-auto my-8 wd-70">
 						<div className="container-row jc-center">
-							<article className="flex-auto">
+							<article className="flex-auto mx-24">
 								<div className="container-row-nowrap jc-center">
-									<article className="flex-auto wd-60">
+									<article className="flex-auto">
 										<p className="titulo-xxl fc-grey my-4">
 											Privacidad y Confidencialidad
 										</p>

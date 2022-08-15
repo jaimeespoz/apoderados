@@ -417,87 +417,83 @@ function RegistroApoderados({ form1 }) {
 										transperencia que nosotros necesitamos, le sugerimos a usted
 										que por favor, se registre en otros portales similares.
 									</p>
-									<div className="container-row-nowrap pt-3">
-										<section className="flex-auto">
-											<div className="container-row-nowrap gap-4 pt-3">
-												<div className="flex-auto">
-													<label htmlFor="nombres" className="form-label-sm">
-														Nombres
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="nombres"
-														name="nombres"
-														value={form.nombres}
-														placeholder="Ingrese Nombres"
-														onChange={handleChange}
-													/>
-													{errors.nombres && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.nombres}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label htmlFor="paterno" className="form-label-sm">
-														Apellido Paterno
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="paterno"
-														name="paterno"
-														value={form.paterno}
-														placeholder="Ingrese su Apellido Paterno"
-														onChange={handleChange}
-													/>
-													{errors.paterno && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.paterno}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label htmlFor="materno" className="form-label-sm">
-														Apellido Materno
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="materno"
-														name="materno"
-														value={form.materno}
-														placeholder="Ingrese su Apellido Materno"
-														onChange={handleChange}
-													/>
-													{errors.materno && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.materno}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label htmlFor="rut" className="form-label-sm">
-														Carnet Identidad
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="rut"
-														name="rut"
-														value={form.rut}
-														placeholder="Numero de Carnet"
-														onChange={handleChange}
-													/>
-													{errors.rut && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.rut}
-														</p>
-													)}
-												</div>
-											</div>
-										</section>
+									<div className="container-row gap-4 pt-3">
+										<div className="flex-auto">
+											<label htmlFor="nombres" className="form-label-sm">
+												Nombres
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="nombres"
+												name="nombres"
+												value={form.nombres}
+												placeholder="Ingrese Nombres"
+												onChange={handleChange}
+											/>
+											{errors.nombres && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.nombres}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="paterno" className="form-label-sm">
+												Apellido Paterno
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="paterno"
+												name="paterno"
+												value={form.paterno}
+												placeholder="Ingrese su Apellido Paterno"
+												onChange={handleChange}
+											/>
+											{errors.paterno && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.paterno}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="materno" className="form-label-sm">
+												Apellido Materno
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="materno"
+												name="materno"
+												value={form.materno}
+												placeholder="Ingrese su Apellido Materno"
+												onChange={handleChange}
+											/>
+											{errors.materno && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.materno}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="rut" className="form-label-sm">
+												Carnet Identidad
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="rut"
+												name="rut"
+												value={form.rut}
+												placeholder="Numero de Carnet"
+												onChange={handleChange}
+											/>
+											{errors.rut && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.rut}
+												</p>
+											)}
+										</div>
 									</div>
 								</section>
 								{/* Datos de Contacto */}
@@ -513,49 +509,45 @@ function RegistroApoderados({ form1 }) {
 										dudas, coordinaciones u otra segun nos sea necesario.
 									</p>
 									<hr></hr>
-									<div className="container-row-nowrap gap-4 pt-3">
-										<section className="flex-auto">
-											<div className="container-row-nowrap pt-3">
-												<div className="flex-auto">
-													<label htmlFor="correo" className="form-label-sm">
-														Casilla de Correo
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="correo"
-														name="correo"
-														value={form.correo}
-														placeholder="Casilla de Correo"
-														onChange={handleChange}
-													/>
-													{errors.correo && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.correo}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label htmlFor="celular" className="form-label-sm">
-														Celular
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="celular"
-														name="celular"
-														value={form.celular}
-														placeholder="Numero Celular"
-														onChange={handleChange}
-													/>
-													{errors.celular && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.celular}
-														</p>
-													)}
-												</div>
-											</div>
-										</section>
+									<div className="container-row gap-4 pt-3">
+										<div className="flex-auto">
+											<label htmlFor="correo" className="form-label-sm">
+												Casilla de Correo
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="correo"
+												name="correo"
+												value={form.correo}
+												placeholder="Casilla de Correo"
+												onChange={handleChange}
+											/>
+											{errors.correo && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.correo}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="celular" className="form-label-sm">
+												Celular
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="celular"
+												name="celular"
+												value={form.celular}
+												placeholder="Numero Celular"
+												onChange={handleChange}
+											/>
+											{errors.celular && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.celular}
+												</p>
+											)}
+										</div>
 									</div>
 								</section>
 								{/* Datos de SU LOCAL de Votacion */}
@@ -573,176 +565,168 @@ function RegistroApoderados({ form1 }) {
 										(3) El Local de Votacion, y finalmente (4) La Mesa de
 										Votacion. Las tres primeras son de caracter obligatorio.
 									</p>
-									<div className="container-row-nowrap pt-3">
-										<section className="flex-auto">
-											<div className="container-row-nowrap gap-4 pt-3">
-												{/* <div className="container-row-nowrap gap-12"> */}
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_regiones"
-															id="cb_regiones"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																cargaComunas(url_comunas + e.target.value);
-																setVotaRegion(e.target.value);
-																setVotaRegionGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																setVotaComuna('');
-																setVotaComunaGlosa('Sin Informacion');
-																setVotaLocal('');
-																setVotaLocalGlosa('Sin Informacion');
-																setValido(false);
-																form.votaregion = e.target.value;
-																form.votaregionglosa =
-																	e.target.options[e.target.selectedIndex].text;
-																form.selregion = e.target.value;
-																form.selregionglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige una Region
+									<div className="container-row gap-3 pt-3">
+										<div className="flex-auto">
+											<label className="form-label-sm">Region</label>
+											<div className="bootstrap-select">
+												<select
+													name="cb_regiones"
+													id="cb_regiones"
+													className="texto-sm fc-grey"
+													onChange={(e) => {
+														cargaComunas(url_comunas + e.target.value);
+														setVotaRegion(e.target.value);
+														setVotaRegionGlosa(
+															e.target.options[e.target.selectedIndex].text
+														);
+														setVotaComuna('');
+														setVotaComunaGlosa('Sin Informacion');
+														setVotaLocal('');
+														setVotaLocalGlosa('Sin Informacion');
+														setValido(false);
+														form.votaregion = e.target.value;
+														form.votaregionglosa =
+															e.target.options[e.target.selectedIndex].text;
+														form.selregion = e.target.value;
+														form.selregionglosa =
+															e.target.options[e.target.selectedIndex].text;
+													}}
+												>
+													<option value="" className="texto-sm fc-grey">
+														Elige una Region
+													</option>
+													{dbRegiones &&
+														dbRegiones.map((el) => (
+															<option
+																key={el.CODIGO}
+																value={el.CODIGO}
+																className="texto-sm fc-grey"
+															>
+																{el.DESCRIPCION}
 															</option>
-															{dbRegiones &&
-																dbRegiones.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
-																	</option>
-																))}
-														</select>
-													</div>
-													{errors.votaregion && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votaregion}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label className="form-label-sm">Comuna</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_comunas"
-															id="cb_comunas"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																cargaLocales(
-																	url_locales +
-																		votaRegion +
-																		'/' +
-																		e.target.value
-																);
-																setVotaComuna(e.target.value);
-																setVotaComunaGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																setVotaLocal('');
-																setVotaLocalGlosa('Sin Informacion');
-																setValido(false);
-																form.votacomuna = e.target.value;
-																form.votacomunaglosa =
-																	e.target.options[e.target.selectedIndex].text;
-																form.selcomuna = e.target.value;
-																form.selcomunaglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige una Comuna
-															</option>
-															{dbComunas &&
-																dbComunas.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
-																	</option>
-																))}
-														</select>
-													</div>
-													{errors.votacomuna && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votacomuna}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label className="form-label-sm">Local</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_locales"
-															id="cb_locales"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																setVotaLocal(e.target.value);
-																setVotaLocalGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																setValido(false);
-																form.votalocal = e.target.value;
-																form.votalocalglosa =
-																	e.target.options[e.target.selectedIndex].text;
-																form.sellocal = e.target.value;
-																form.sellocalglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige un Local
-															</option>
-															{dbLocales &&
-																dbLocales.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
-																	</option>
-																))}
-														</select>
-													</div>
-													{errors.votalocal && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votalocal}
-														</p>
-													)}
-													{/* </div>
-										<div className="flex-auto"> */}
-													<label htmlFor="votamesa" className="form-label-sm">
-														Mesa de Votacion
-													</label>
-													<input
-														type="text"
-														className="form-control-sm"
-														id="votamesa"
-														name="votamesa"
-														value={form.votamesa}
-														placeholder="Numero de Mesa"
-														onChange={(e) => {
-															setVotaMesa(e.target.value);
-															form.votamesa = e.target.value;
-															form.selmesa = e.target.value;
-															setValido(true);
-															// handleChange();
-														}}
-													/>
-													{errors.votamesa && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votamesa}
-														</p>
-													)}
-												</div>
+														))}
+												</select>
 											</div>
-										</section>
+											{errors.votaregion && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.votaregion}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label className="form-label-sm">Comuna</label>
+											<div className="bootstrap-select">
+												<select
+													name="cb_comunas"
+													id="cb_comunas"
+													className="texto-sm fc-grey"
+													onChange={(e) => {
+														cargaLocales(
+															url_locales + votaRegion + '/' + e.target.value
+														);
+														setVotaComuna(e.target.value);
+														setVotaComunaGlosa(
+															e.target.options[e.target.selectedIndex].text
+														);
+														setVotaLocal('');
+														setVotaLocalGlosa('Sin Informacion');
+														setValido(false);
+														form.votacomuna = e.target.value;
+														form.votacomunaglosa =
+															e.target.options[e.target.selectedIndex].text;
+														form.selcomuna = e.target.value;
+														form.selcomunaglosa =
+															e.target.options[e.target.selectedIndex].text;
+													}}
+												>
+													<option value="" className="texto-sm fc-grey">
+														Elige una Comuna
+													</option>
+													{dbComunas &&
+														dbComunas.map((el) => (
+															<option
+																key={el.CODIGO}
+																value={el.CODIGO}
+																className="texto-sm fc-grey"
+															>
+																{el.DESCRIPCION}
+															</option>
+														))}
+												</select>
+											</div>
+											{errors.votacomuna && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.votacomuna}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label className="form-label-sm">Local</label>
+											<div className="bootstrap-select">
+												<select
+													name="cb_locales"
+													id="cb_locales"
+													className="texto-sm fc-grey"
+													onChange={(e) => {
+														setVotaLocal(e.target.value);
+														setVotaLocalGlosa(
+															e.target.options[e.target.selectedIndex].text
+														);
+														setValido(false);
+														form.votalocal = e.target.value;
+														form.votalocalglosa =
+															e.target.options[e.target.selectedIndex].text;
+														form.sellocal = e.target.value;
+														form.sellocalglosa =
+															e.target.options[e.target.selectedIndex].text;
+													}}
+												>
+													<option value="" className="texto-sm fc-grey">
+														Elige un Local
+													</option>
+													{dbLocales &&
+														dbLocales.map((el) => (
+															<option
+																key={el.CODIGO}
+																value={el.CODIGO}
+																className="texto-sm fc-grey"
+															>
+																{el.DESCRIPCION}
+															</option>
+														))}
+												</select>
+											</div>
+											{errors.votalocal && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.votalocal}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="votamesa" className="form-label-sm">
+												Mesa de Votacion
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="votamesa"
+												name="votamesa"
+												value={form.votamesa}
+												placeholder="Numero de Mesa"
+												onChange={(e) => {
+													setVotaMesa(e.target.value);
+													form.votamesa = e.target.value;
+													form.selmesa = e.target.value;
+													setValido(true);
+													// handleChange();
+												}}
+											/>
+											{errors.votamesa && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.votamesa}
+												</p>
+											)}
+										</div>
 									</div>
 								</section>
 
@@ -805,45 +789,58 @@ function RegistroApoderados({ form1 }) {
 												Opcion Elegida: Mismo Local y Misma Mesa
 											</p>
 											<hr></hr>
-											<div className="container-row-nowrap gap-4 pt-2">
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaRegion}
-														{votaRegionglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">Comuna</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaComuna}
-														{votaComunaglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">
-														Local Votacion
-													</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaLocal}
-														{votaLocalglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">
-														Mesa de Votacion
-													</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaMesa}
-													</span>
-												</div>
-											</div>
+											<table>
+												<tbody>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Region</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaRegionglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Comuna</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaComunaglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">
+																Local Votacion
+															</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaLocalglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">
+																Mesa Votacion
+															</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaMesa}
+															</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</section>
 									)}
 									{tipoApoderados === '2' && (
@@ -852,35 +849,45 @@ function RegistroApoderados({ form1 }) {
 												Opcion Elegida: Mismo Local y Cualquier Mesa del Local
 											</p>
 											<hr></hr>
-											<div className="container-row-nowrap gap-4 pt-2">
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaRegion}
-														{votaRegionglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">Comuna</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaComuna}
-														{votaComunaglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">
-														Local Votacion
-													</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaLocal}
-														{votaLocalglosa}
-													</span>
-												</div>
-											</div>
+											<table>
+												<tbody>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Region</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaRegionglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Comuna</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaComunaglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">
+																Local Votacion
+															</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaLocalglosa}
+															</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</section>
 									)}
 									{tipoApoderados === '3' && (
@@ -889,66 +896,74 @@ function RegistroApoderados({ form1 }) {
 												Opcion Elegida: Misma Comuna y Cualquier Local
 											</p>
 											<hr></hr>
-											<div className="container-row-nowrap gap-4 pt-2">
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaRegion}
-														{votaRegionglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">Comuna</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaComuna}
-														{votaComunaglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">
-														Local Votacion
-													</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_locales_seleccion"
-															id="cb_locales_seleccion"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																setSelLocal(e.target.value);
-																setSelLocalGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																form.sellocal = e.target.value;
-																form.setlocalglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige un Local
-															</option>
-															{dbLocales &&
-																dbLocales.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
+											<table>
+												<tbody>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Region</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaRegionglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Comuna</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaComunaglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">
+																Local Votacion
+															</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<div className="bootstrap-select">
+																<select
+																	name="cb_locales_seleccion"
+																	id="cb_locales_seleccion"
+																	className="texto-sm fc-grey"
+																	onChange={(e) => {
+																		setSelLocal(e.target.value);
+																		setSelLocalGlosa(
+																			e.target.options[e.target.selectedIndex]
+																				.text
+																		);
+																		form.sellocal = e.target.value;
+																		form.setlocalglosa =
+																			e.target.options[
+																				e.target.selectedIndex
+																			].text;
+																	}}
+																>
+																	<option value="" className="texto-sm fc-grey">
+																		Elige un Local
 																	</option>
-																))}
-														</select>
-													</div>
-													{errors.sellocal && (
-														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.sellocal}
-														</p>
-													)}
-												</div>
-											</div>
+																	{dbLocales &&
+																		dbLocales.map((el) => (
+																			<option
+																				key={el.CODIGO}
+																				value={el.CODIGO}
+																				className="texto-sm fc-grey"
+																			>
+																				{el.DESCRIPCION}
+																			</option>
+																		))}
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</section>
 									)}
 									{tipoApoderados === '4' && (
@@ -958,95 +973,111 @@ function RegistroApoderados({ form1 }) {
 												(especificar)
 											</p>
 											<hr></hr>
-											<div className="container-row-nowrap gap-4 pt-2">
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaRegion}
-														{votaRegionglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">Comuna</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_comunas_seleccion"
-															id="cb_comunas_seleccion"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																cargaLocales(
-																	url_locales +
-																		votaRegion +
-																		'/' +
-																		e.target.value
-																);
-																setSelComuna(e.target.value);
-																setSelComunaGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																setSelLocal('');
-																setSelLocalGlosa('Sin Informacion');
-																form.selcomuna = e.target.value;
-																form.selcomunaglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige una Comuna
-															</option>
-															{dbComunas &&
-																dbComunas.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
+											<table>
+												<tbody>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Region</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaRegionglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Comuna</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<div className="bootstrap-select">
+																<select
+																	name="cb_comunas_seleccion"
+																	id="cb_comunas_seleccion"
+																	className="texto-sm fc-grey"
+																	onChange={(e) => {
+																		cargaLocales(
+																			url_locales +
+																				votaRegion +
+																				'/' +
+																				e.target.value
+																		);
+																		setSelComuna(e.target.value);
+																		setSelComunaGlosa(
+																			e.target.options[e.target.selectedIndex]
+																				.text
+																		);
+																		setSelLocal('');
+																		setSelLocalGlosa('Sin Informacion');
+																		form.selcomuna = e.target.value;
+																		form.selcomunaglosa =
+																			e.target.options[
+																				e.target.selectedIndex
+																			].text;
+																	}}
+																>
+																	<option value="" className="texto-sm fc-grey">
+																		Elige una Comuna
 																	</option>
-																))}
-														</select>
-													</div>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">
-														Local Votacion
-													</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_locales_seleccion"
-															id="cb_locales_seleccion"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																setSelLocal(e.target.value);
-																setSelLocalGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																form.sellocal = e.target.value;
-																form.sellocalglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige un Local
-															</option>
-															{dbLocales &&
-																dbLocales.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
+																	{dbComunas &&
+																		dbComunas.map((el) => (
+																			<option
+																				key={el.CODIGO}
+																				value={el.CODIGO}
+																				className="texto-sm fc-grey"
+																			>
+																				{el.DESCRIPCION}
+																			</option>
+																		))}
+																</select>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">
+																Local Votacion
+															</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<div className="bootstrap-select">
+																<select
+																	name="cb_locales_seleccion"
+																	id="cb_locales_seleccion"
+																	className="texto-sm fc-grey"
+																	onChange={(e) => {
+																		setSelLocal(e.target.value);
+																		setSelLocalGlosa(
+																			e.target.options[e.target.selectedIndex]
+																				.text
+																		);
+																		form.sellocal = e.target.value;
+																		form.sellocalglosa =
+																			e.target.options[
+																				e.target.selectedIndex
+																			].text;
+																	}}
+																>
+																	<option value="" className="texto-sm fc-grey">
+																		Elige un Local
 																	</option>
-																))}
-														</select>
-													</div>
-												</div>
-											</div>
+																	{dbLocales &&
+																		dbLocales.map((el) => (
+																			<option
+																				key={el.CODIGO}
+																				value={el.CODIGO}
+																				className="texto-sm fc-grey"
+																			>
+																				{el.DESCRIPCION}
+																			</option>
+																		))}
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</section>
 									)}
 									{tipoApoderados === '5' && (
@@ -1056,50 +1087,61 @@ function RegistroApoderados({ form1 }) {
 												Local
 											</p>
 											<hr></hr>
-											<div className="container-row-nowrap gap-4 pt-2">
-												<div className="flex-auto">
-													<label className="form-label-sm">Region</label>
-													<span className="texto-sm fc-secondaryColor">
-														{votaRegion}
-														{votaRegionglosa}
-													</span>
-												</div>
-											</div>
-											<div className="container-row-nowrap">
-												<div className="flex-auto">
-													<label className="form-label-sm">Comuna</label>
-													<div className="bootstrap-select">
-														<select
-															name="cb_comunas_seleccion"
-															id="cb_comunas_seleccion"
-															className="texto-sm fc-grey"
-															onChange={(e) => {
-																setSelComuna(e.target.value);
-																setSelComunaGlosa(
-																	e.target.options[e.target.selectedIndex].text
-																);
-																form.selcomuna = e.target.value;
-																form.selcomunaglosa =
-																	e.target.options[e.target.selectedIndex].text;
-															}}
-														>
-															<option value="" className="texto-sm fc-grey">
-																Elige una Comuna
-															</option>
-															{dbComunas &&
-																dbComunas.map((el) => (
-																	<option
-																		key={el.CODIGO}
-																		value={el.CODIGO}
-																		className="texto-sm fc-grey"
-																	>
-																		{el.DESCRIPCION}
+											<table>
+												<tbody>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Region</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<span className="texto-sm fc-secondaryColor">
+																{/* {votaRegion} */}
+																{votaRegionglosa}
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td style={{ width: '40%' }}>
+															<label className="form-label-sm">Comuna</label>
+														</td>
+														<td style={{ width: '60%' }}>
+															<div className="bootstrap-select">
+																<select
+																	name="cb_comunas_seleccion"
+																	id="cb_comunas_seleccion"
+																	className="texto-sm fc-grey"
+																	onChange={(e) => {
+																		setSelComuna(e.target.value);
+																		setSelComunaGlosa(
+																			e.target.options[e.target.selectedIndex]
+																				.text
+																		);
+																		form.selcomuna = e.target.value;
+																		form.selcomunaglosa =
+																			e.target.options[
+																				e.target.selectedIndex
+																			].text;
+																	}}
+																>
+																	<option value="" className="texto-sm fc-grey">
+																		Elige una Comuna
 																	</option>
-																))}
-														</select>
-													</div>
-												</div>
-											</div>
+																	{dbComunas &&
+																		dbComunas.map((el) => (
+																			<option
+																				key={el.CODIGO}
+																				value={el.CODIGO}
+																				className="texto-sm fc-grey"
+																			>
+																				{el.DESCRIPCION}
+																			</option>
+																		))}
+																</select>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</section>
 									)}
 								</section>

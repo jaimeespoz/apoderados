@@ -13,9 +13,9 @@ function PrivacidadConfidencialidad() {
 					</section>
 					<section className="flex-auto my-8 wd-70">
 						<div className="container-row jc-center">
-							<article className="flex-auto">
+							<article className="flex-auto mx-24">
 								<div className="container-row-nowrap jc-center">
-									<article className="flex-auto wd-60">
+									<article className="flex-auto">
 										<p className="titulo-xxl fc-grey my-4">
 											Privacidad y Confidencialidad
 										</p>
@@ -24,7 +24,7 @@ function PrivacidadConfidencialidad() {
 											Protejemos las privacidad de la informacion no publica, a
 											traves :
 										</p>
-										<ul className="flex-auto7 ul-circle fc-grey ml-6">
+										<ul className="flex-auto ul-circle fc-grey ml-6">
 											<li>
 												<p className="texto-sm fc-grey-light mt-3">
 													No revelamos a terceros información de los clientes

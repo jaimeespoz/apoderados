@@ -9,6 +9,7 @@ import {
 // paginas
 import Headings from '../home/Headings';
 import { RegistroApoderadosNav, VinculosNav } from '../../components/layout';
+import { validateRUT } from 'validar-rut';
 
 // url
 import {
@@ -26,13 +27,14 @@ import TipoApoderados from '../../api/TipoApoderados.json';
 import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 
 const initialForm = {
-	nombres: 'Jaime',
-	paterno: 'Espoz',
-	materno: 'Asmussen',
-	rut: '10607791',
-	cdv: '6',
-	correo: 'jespoz@outlook.es',
-	celular: '56965687533',
+	nombres: '',
+	paterno: '',
+	materno: '',
+	rut: '',
+	cuerpo: '',
+	cdv: '',
+	correo: '',
+	celular: '',
 	votaregion: '',
 	votaregionglosa: '',
 	votacomuna: '',
@@ -48,6 +50,7 @@ const initialForm = {
 	sellocalglosa: '',
 	selmesa: '',
 	preferencia: '',
+	errores: '0',
 };
 
 const validationsForm = (form) => {
@@ -55,6 +58,7 @@ const validationsForm = (form) => {
 	let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
 	let regexCelular = /^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/;
 	let regexComments = /^.{1,30}$/;
+	// let regexRut = /^(\d{1,2}(?:[\.]?\d{3}){2}-[\dkK])$/;
 	let errors = {};
 
 	// errors.nombres = '';
@@ -79,64 +83,108 @@ const validationsForm = (form) => {
 	// errors.selmesa = '';
 	// errors.preferencia = '';
 
+	form.errores = '0';
 	if (!form.nombres.trim()) {
 		errors.nombres = 'Ingrese su Nombre';
+		form.errores = '1';
 	} else if (!regexName.test(form.nombres.trim())) {
 		errors.nombres = 'Ingrese solo letras';
+		form.errores = '1';
 	} else if (!regexComments.test(form.nombres.trim())) {
 		errors.nombres = 'Ingrese hasta 30 letras';
+		form.errores = '1';
 	}
 
 	if (!form.paterno.trim()) {
 		errors.paterno = 'Ingrese su Apellido Paterno';
+		form.errores = '1';
 	} else if (!regexName.test(form.paterno.trim())) {
 		errors.paterno = 'Ingrese solo letras';
+		form.errores = '1';
 	} else if (!regexComments.test(form.paterno.trim())) {
 		errors.paterno = 'Ingrese hasta 30 letras';
+		form.errores = '1';
 	}
 
 	if (!form.materno.trim()) {
 		errors.materno = 'Ingrese su Apellido Materno';
+		form.errores = '1';
 	} else if (!regexName.test(form.materno.trim())) {
 		errors.materno = 'Ingrese solo letras';
+		form.errores = '1';
 	} else if (!regexComments.test(form.materno.trim())) {
 		errors.materno = 'Ingrese hasta 30 letras';
+		form.errores = '1';
 	}
 
 	if (!form.correo.trim()) {
 		errors.correo = 'Ingrese su Correo Electronico';
+		form.errores = '1';
 	} else if (!regexEmail.test(form.correo.trim())) {
 		errors.correo = 'El Email ingresado es incorrecto';
+		form.errores = '1';
 	}
 
 	if (!form.celular.trim()) {
 		errors.celular = 'Ingrese su Celular';
+		form.errores = '1';
 	} else if (!regexCelular.test(form.celular.trim())) {
 		errors.celular = 'El Celular ingresado es incorrecto';
+		form.errores = '1';
 	}
 
 	if (!form.rut.trim()) {
 		errors.rut = 'Ingrese su RUT';
+		form.errores = '1';
+	} else {
+		// if (!regexRut.test(form.rut.trim())) {
+		// 	errors.rut = 'El RUT ingresado es incorrecto';
+		// } else {
+		if (!validateRUT(form.rut.trim())) {
+			errors.rut = 'El RUT ingresado es incorrecto';
+			form.errores = '1';
+		} else {
+			// alert('form: ' + form.rut.trim());
+			let rutpaso = form.rut.trim();
+			// alert('rutpaso: ' + rutpaso);
+			let rutpaso2 = rutpaso.replace(/-/g, '');
+			// alert('rutpaso2: ' + rutpaso2);
+			let rutpaso3 = rutpaso2.replace(/\./g, '');
+			// alert('rutpaso3: ' + rutpaso3);
+			let largo = rutpaso3.length;
+			// alert('largo: ' + largo);
+			let cuerpo = rutpaso3.substring(0, largo - 1);
+			let digito = rutpaso3.substring(largo - 1, largo);
+			// alert(rutpaso3 + ' : ' + cuerpo + '-' + digito);
+			form.cuerpo = cuerpo;
+			form.cdv = digito;
+		}
+		// }
 	}
 
 	if (!form.votaregion) {
 		errors.votaregion = 'Seleccione su Region';
+		form.errores = '1';
 	}
 
 	if (!form.votacomuna) {
 		errors.votacomuna = 'Seleccione su Comuna';
+		form.errores = '1';
 	}
 
 	if (!form.votalocal) {
 		errors.votalocal = 'Seleccione su Local';
+		form.errores = '1';
 	}
 
 	if (!form.votamesa) {
 		errors.votamesa = 'Indiquenos su Mesa';
+		form.errores = '1';
 	}
 
 	if (!form.preferencia) {
 		errors.preferencia = 'Seleccione su Preferencia';
+		form.errores = '1';
 	} else {
 		segunpreferencia(form);
 	}
@@ -144,6 +192,7 @@ const validationsForm = (form) => {
 	if (form.preferencia === '3') {
 		if (!form.sellocal) {
 			errors.sellocal = 'Seleccione el Local';
+			form.errores = '1';
 		}
 	}
 
@@ -212,7 +261,6 @@ function RegistroApoderados({ form1 }) {
 	const [dbComunas, setDbComunas] = useState('');
 	const [dbLocales, setDbLocales] = useState('');
 	const [dbTipoApoderados, setDbTipoApoderados] = useState(null);
-	// const [dbComunassel, setDbComunasSel] = useState('');
 
 	const [valido, setValido] = useState(false);
 	const [errors, setErrors] = useState({});
@@ -220,9 +268,6 @@ function RegistroApoderados({ form1 }) {
 	let api = helpHttp();
 
 	useEffect(() => {
-		// alert('cargaRegiones: ' + url_regiones);
-		// setDbComunas('');
-		// setDbLocales('');
 		api.get(url_regiones).then((res) => {
 			if (!res.err) {
 				setDbRegiones(res.regiones);
@@ -234,7 +279,6 @@ function RegistroApoderados({ form1 }) {
 	}, []);
 
 	const cargaComunas = (url) => {
-		// alert('cargaComunas: ' + url);
 		setDbLocales('');
 		api.get(url).then((res) => {
 			if (!res.err) {
@@ -246,7 +290,6 @@ function RegistroApoderados({ form1 }) {
 	};
 
 	const cargaLocales = (url) => {
-		// alert('cargaLocales: ' + url);
 		api.get(url).then((res) => {
 			if (!res.err) {
 				setDbLocales(res.locales);
@@ -274,9 +317,9 @@ function RegistroApoderados({ form1 }) {
 		// alert(JSON.stringify(form));
 		// alert(JSON.stringify(errors));
 
-		if (errors) {
+		if (form.errores === '0') {
 			let data = {
-				RUT: form.rut,
+				RUT: form.cuerpo,
 				DV: form.cdv,
 				NOMBRES: form.nombres,
 				APELLIDO_PATERNO: form.paterno,
@@ -291,7 +334,7 @@ function RegistroApoderados({ form1 }) {
 				PREFERENCIA_APODERADO: form.preferencia,
 			};
 			let data2 = {
-				RUT: form.rut,
+				RUT: form.cuerpo,
 				DV: form.cdv,
 				NOMBRES: form.nombres,
 				APELLIDO_PATERNO: form.paterno,
@@ -319,7 +362,7 @@ function RegistroApoderados({ form1 }) {
 				CODIGO_COMUNA_ASIGNADA: '0',
 				CODIGO_LOCAL_ASIGNADO: '0',
 				CODIGO_MESA_ASIGNADA: '0',
-				SE_PRESENTO_DIA_VOTACION: '0',
+				SE_PRESENTO_DIA_VOTACION: '9',
 			};
 			// graba header apoderado
 			let options = {
@@ -353,7 +396,7 @@ function RegistroApoderados({ form1 }) {
 					}));
 				}
 			});
-			alert('Registrado. Nos contactaremos con Usted');
+			alert('Registrado. Nos contactaremos con Usted, a la brevedad posible');
 			navigate('/');
 			return;
 		}

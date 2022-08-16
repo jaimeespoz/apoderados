@@ -1,0 +1,16 @@
+{
+	"apoderadosvalidados": [
+		{
+			"id": "0",
+			"descripcion": "0 Por Validar"
+		},
+		{
+			"id": "1",
+			"descripcion": "1 Validado Negativamente"
+		},
+		{
+			"id": "2",
+			"descripcion": "2 Validado Positivamente"
+		}
+	]
+}

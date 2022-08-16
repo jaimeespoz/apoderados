@@ -32,14 +32,13 @@ function Home() {
 							<div className="w-16">
 								<img src={Logo} alt="" className="logo" />
 							</div>
+							<>La Diestra</>
 							<h2 className="text-xl uppercase font-bold">
 								Plebiscito 4 de Septiembre del 2022
 							</h2>
 							<h1 className="text-6xl font-bold">Apoderados x el Rechazo</h1>
-							<p className="text-lg">Ayudanos -solo- el dia de la votacion</p>
-							<p className="text-lg">
-								Solo un dia de tu tiempo, que cambiara la historia de Chile
-							</p>
+							{/* <p className="text-lg">Ayudanos -solo- el dia de la votacion</p> */}
+							<p className="text-lg">Juntos para salvar CHILE</p>
 							<button
 								className="bg-gradient-to-r from-pink-600 to-orange-600 py-3 px-6 text-lg rounded-md w-48"
 								onClick={handleClick}

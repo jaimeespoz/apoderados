@@ -12,10 +12,10 @@ function Headings() {
 		navigate('/');
 	}
 
-	// function handleReclamos(e) {
-	// 	e.preventDefault();
-	// 	navigate('/reclamos');
-	// }
+	function handleNomina(e) {
+		e.preventDefault();
+		navigate('/nomina');
+	}
 
 	// function handleInformacion(e) {
 	// 	e.preventDefault();
@@ -54,6 +54,11 @@ function Headings() {
 						Inicio
 					</p>
 				</article>
+				{/* <article className="flex-auto">
+					<p className="navlink fc-white" onClick={handleNomina}>
+						Nomina
+					</p>
+				</article> */}
 				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto

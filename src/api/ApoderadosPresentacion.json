@@ -1,0 +1,16 @@
+{
+	"apoderadospresentados": [
+		{
+			"id": "0",
+			"descripcion": "0 Sin Informacion"
+		},
+		{
+			"id": "1",
+			"descripcion": "1 No se presenta"
+		},
+		{
+			"id": "2",
+			"descripcion": "2 Si se presenta"
+		}
+	]
+}

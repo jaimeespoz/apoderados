@@ -1,0 +1,24 @@
+{
+	"apoderadoscontactados": [
+		{
+			"id": "0",
+			"descripcion": "0 Por Contactar"
+		},
+		{
+			"id": "1",
+			"descripcion": "1 No Responde Celular y/o Correo"
+		},
+		{
+			"id": "3",
+			"descripcion": "3 ....."
+		},
+		{
+			"id": "7",
+			"descripcion": "7 Contactado por Mail"
+		},
+		{
+			"id": "8",
+			"descripcion": "8 Contactado por Celular"
+		}
+	]
+}

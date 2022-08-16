@@ -21,7 +21,7 @@ del,
 details,
 dfn,
 dialog,
-div,
+/* div, */
 dl,
 dt,
 em,
@@ -881,8 +881,71 @@ input[type="reset"] {
     border-radius: 5px;
 }
 
-/* .bootstrap-select .dropdown-menu {
-    margin: 15px 0 0;
-    font-size: 0.90rem !important;
-    line-height: 95%;
+/* 
+.rdt_Table {
+    background-color: red;
+    color: purple;
+    line-height: 26px;
+}
+
+.rdt_TableRow {
+    background-color: red;
+    color: black;
+    line-height: 26px;
+}
+
+.rdt_TableCol {
+    background-color: #17223b;
+    color: #84ff2d;
+    line-height: 26px;
+}
+
+.rdt_TableCol_Sortable {
+    background-color: #17223b;
+    color: yellow;
+    line-height: 26px;
+}
+
+.rdt_TableCell {
+    background-color: var(--white);
+    height: 26px;
+    padding: 0;
+}
+
+.rdt_TableHeader {
+    height: 26px;
+    background-color: yellow;
+    color: burlywood;
+    line-height: 26px;
+}
+
+.rdt_TableFooter {
+    background-color: #0076ce;
+    color: greenyellow;
+    line-height: 26px;
+}
+
+.rdt_TableHead {
+    background-color: #0076ce;
+    color: orange;
+    line-height: 26px;
+}
+
+.rdt_TableHeadRow {
+    height: 26px;
+    background-color: yellow;
+    color: #15cdfc;
+    line-height: 26px;
+}
+
+.rdt_TableBody {
+    background-color: black;
+    color: white;
+    line-height: 26px;
+}
+
+.rdt_ExpanderRow {
+    background-color: black;
+    color: #15cdfc;
+    line-height: 26px;
 } */

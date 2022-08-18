@@ -21,18 +21,22 @@ export const helpHttp = () => {
 		// alert(JSON.stringify(options));
 		setTimeout(() => controller.abort(), 3000);
 
-		// console.log(endpoint + ' : ' + JSON.stringify(options));
-		return fetch(endpoint, options)
-			.then((res) =>
-				res.ok
-					? res.json()
-					: Promise.reject({
-							err: true,
-							status: res.status || '00',
-							statusText: res.statusText || 'Ocurrio un Error',
-					  })
-			)
-			.catch((err) => err);
+		console.log(endpoint + ' : ' + JSON.stringify(options));
+		return (
+			fetch(endpoint, options)
+				// .then((response) => response.json())
+				// .then((json) => console.log(json))
+				.then((res) =>
+					res.ok
+						? res.json()
+						: Promise.reject({
+								err: true,
+								status: res.status || '00',
+								statusText: res.statusText || 'Ocurrio un Error',
+						  })
+				)
+				.catch((err) => err)
+		);
 	};
 
 	// const register = (url, options = {}) => {

@@ -1,6 +1,10 @@
 {
 	"tipoapoderados": [
 		{
+			"id": "0",
+			"descripcion": "Sin Informacion"
+		},
+		{
 			"id": "1",
 			"descripcion": "1 Mismo Local y Misma Mesa"
 		},

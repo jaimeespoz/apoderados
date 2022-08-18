@@ -18,12 +18,12 @@ export function VinculosPpalNav() {
 						<p className="navlink-lg fc-blue">Nomina</p>
 					</Link>
 				</article>
-				{/*<article className="flex-auto mr-4">
-					<Link to="/informacion">
+				{/* <article className="flex-auto mr-4">
+					<Link to="/modales">
 						<p className="navlink-lg fc-blue">Informacion</p>
 					</Link>
-				</article>
-				<article className="flex-auto mr-4">
+				</article> */}
+				{/*<article className="flex-auto mr-4">
 					<Link to="/dudas">
 						<p className="navlink-lg fc-blue">Dudas</p>
 					</Link>

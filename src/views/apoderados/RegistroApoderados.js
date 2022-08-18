@@ -440,7 +440,7 @@ function RegistroApoderados({ form1 }) {
 									<p className="texto-sm fc-grey pt-3">
 										Esta informacion esta protegida por la{' '}
 										<b>Ley de Proteccion de Datos Personales</b> (Nro. 19.628 de
-										1999). Cualquier duda, rogamos consultas los Terminos de Uso
+										1999). Cualquier duda, rogamos consultar los Terminos de Uso
 										de este sitio, en el vinculo presente al pie de cada pagina
 										de este portal.{' '}
 									</p>
@@ -452,8 +452,8 @@ function RegistroApoderados({ form1 }) {
 									<hr></hr>
 									<p className="texto-sm fc-grey pt-3">
 										Esta informacion es esencial para nosotros. Ya que es quizas
-										una de las pocas forma de evaluar adecuadamentemente, a cada
-										una de las personas que se registren.
+										una de las pocas formas de evaluar adecuadamentemente, a
+										cada una de las personas que se registren.
 									</p>
 									<p className="texto-sm fc-grey pt-3">
 										Si usted no esta de acuerdo con realizar un registro con la
@@ -549,7 +549,7 @@ function RegistroApoderados({ form1 }) {
 										Le solicitamos que ingrese la informacion de su{' '}
 										<b>Correo Electronico</b> y/o <b>Numero de Celular</b>, ya
 										que necesitaremos un medio de comunicacion con usted, antes
-										dudas, coordinaciones u otra segun nos sea necesario.
+										dudas, coordinaciones u otra, segun nos sea necesario.
 									</p>
 									<hr></hr>
 									<div className="container-row gap-4 pt-3">
@@ -606,7 +606,7 @@ function RegistroApoderados({ form1 }) {
 									<p className="texto-sm fc-grey pt-3">
 										Se socilitara (1) La Region, luego (2) La Comuna, en seguida
 										(3) El Local de Votacion, y finalmente (4) La Mesa de
-										Votacion. Las tres primeras son de caracter obligatorio.
+										Votacion.
 									</p>
 									<div className="container-row gap-3 pt-3">
 										<div className="flex-auto">

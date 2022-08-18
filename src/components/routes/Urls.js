@@ -39,6 +39,7 @@ export const url_apoderados_query = url_srv + 'putqueryapoderados';
 //   `CODIGO_COMUNA_ASIGNADA` VARCHAR(5) NULL COMMENT 'Código de la comuna asignada al apoderado',
 //   `CODIGO_LOCAL_ASIGNADO` INT NULL COMMENT 'Código de Local Asignado al apoderado',
 //   `CODIGO_MESA_ASIGNADA` VARCHAR(45) NULL COMMENT 'Código de mesa Asignado al Apoderado ‘*’ para todas las mesas en caso de apoderado de local',
+//   "SE_PRESENTO_DIA_DE_VOTACION": "0"
 //   PRIMARY KEY (`Id`),
 //   UNIQUE INDEX `RUT_UNIQUE` (`RUT` ASC) VISIBLE);
 //

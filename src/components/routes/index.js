@@ -7,6 +7,8 @@ import Home from '../../views/home/Home';
 import Contacto from '../../views/home/contacto/Contacto';
 import RegistroApoderados from '../../views/apoderados/RegistroApoderados';
 import NominaApoderados from '../../views/mantencion/NominaApoderados';
+import Modals from '../common/Modals';
+import Mantencion from '../../views/mantencion/Mantencion';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -45,6 +47,8 @@ export const Rutas = () => {
 				<Route path="/registroapoderados" element={<RegistroApoderados />} />
 				<Route path="/nomina" element={<NominaApoderados />} />
 				<Route path="/contacto" element={<Contacto />} />
+				<Route path="/modales" element={<Modals />} />
+				<Route path="/mantencion" element={<Mantencion />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

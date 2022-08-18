@@ -17,10 +17,10 @@ function Headings() {
 		navigate('/nomina');
 	}
 
-	// function handleInformacion(e) {
-	// 	e.preventDefault();
-	// 	navigate('/informacion');
-	// }
+	function handleModales(e) {
+		e.preventDefault();
+		navigate('/modales');
+	}
 
 	// function handleDudas(e) {
 	// 	e.preventDefault();

@@ -24,6 +24,11 @@ export const helpHttp = () => {
 		console.log(endpoint + ' : ' + JSON.stringify(options));
 		return (
 			fetch(endpoint, options)
+				// .then(parseJson)
+				// .then((res) => {
+				// 	console.log('My json: ', res);
+				// })
+				// .then((response) => console.log(response))
 				// .then((response) => response.json())
 				// .then((json) => console.log(json))
 				.then((res) =>
@@ -38,7 +43,17 @@ export const helpHttp = () => {
 				.catch((err) => err)
 		);
 	};
-
+	const parseJson = async (response) => {
+		const text = await response.text();
+		console.log(text);
+		try {
+			const json = JSON.parse(text);
+			console.log(json);
+			return json;
+		} catch (err) {
+			throw new Error('Did not receive JSON, instead received: ' + text);
+		}
+	};
 	// const register = (url, options = {}) => {
 	// 	options.method = 'POST';
 	// 	return customFetch(url, options);

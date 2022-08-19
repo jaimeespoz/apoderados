@@ -11,35 +11,44 @@ import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 function Mantencion() {
 	alert('entre Mantencion');
 	const location = useLocation();
-	const { Id } = location.state;
-	const [dbUser, setDbUser] = useState('');
+	const { Obj } = location.state;
+	const [datos, setDatos] = useState([]);
 	let api = helpHttp();
 
-	// alert(Id);
-
-	let data = {
-		filter: 'ID=' + Id,
-		limit: 1,
-	};
-	alert(JSON.stringify(data));
-	let options = {
-		body: data,
-		headers: { 'content-type': 'application/json' },
-	};
+	// const { Id, RUT } = Obj;
 
 	useEffect(() => {
-		if (dbUser === '') {
-			alert(JSON.stringify(options));
-			api.post(url_apoderados_query, options).then((res) => {
-				if (!res.err) {
-					setDbUser(res.apoderados);
-					alert(JSON.stringify(dbUser));
-				} else {
-					setDbUser('');
-				}
-			});
-		}
+		setDatos(Obj);
+		alert('en mantencion' + JSON.stringify(Obj));
+		// alert('en mantencion' + JSON.parse(Obj));
+		alert('***********: ' + JSON.stringify(datos));
+		alert(datos.Id);
+		alert(Obj.Id);
 	}, []);
+	// let data = {
+	// 	filter: 'ID=' + Id,
+	// 	limit: 1,
+	// };
+	// // alert(JSON.stringify(data));
+	// let options = {
+	// 	body: data,
+	// 	headers: { 'content-type': 'application/json' },
+	// };
+
+	// useEffect(() => {
+	// 	//if (dbUser === '') {
+	// 	alert(JSON.stringify(options));
+	// 	api.post(url_apoderados_query, options).then((res) => {
+	// 		if (!res.err) {
+	// 			alert('**: ' + JSON.stringify(res.apoderados));
+	// 			setDatos(res);
+	// 			alert(JSON.stringify(datos));
+	// 		} else {
+	// 			setDatos('');
+	// 		}
+	// 	});
+	// 	//}
+	// }, []);
 
 	return (
 		<>
@@ -48,12 +57,12 @@ function Mantencion() {
 				<div className="container-row mh">
 					<div>
 						<hr></hr>
-						{dbUser && (
+						{datos && (
 							<section>
 								<article className="texto fc-grey">
 									<p className="texto-sm fc-grey">RUT</p>
 									<p className="texto-sm fc-grey">
-										{dbUser.RUT}-{dbUser.DV}
+										{datos.RUT}-{datos.DV}
 									</p>
 								</article>
 								{/* <tr>

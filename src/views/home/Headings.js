@@ -54,11 +54,11 @@ function Headings() {
 						Inicio
 					</p>
 				</article>
-				{/* <article className="flex-auto">
+				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleNomina}>
 						Nomina
 					</p>
-				</article> */}
+				</article>
 				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto

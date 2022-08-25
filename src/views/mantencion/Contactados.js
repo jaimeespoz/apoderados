@@ -94,7 +94,7 @@ const Contactados = () => {
 	const carga_query = async () => {
 		let data = {
 			filter: 'CONTACTADO=1',
-			limit: 1000,
+			limit: 100,
 		};
 
 		let options = {

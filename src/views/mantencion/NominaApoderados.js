@@ -94,7 +94,7 @@ const NominaApoderados = () => {
 	const carga_query = async () => {
 		let data = {
 			filter: 'NOMBRES<>""',
-			limit: 1000,
+			limit: 100,
 		};
 
 		let options = {

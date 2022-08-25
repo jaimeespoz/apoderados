@@ -2,7 +2,7 @@
 import 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DataTable, { defaultThemes } from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { confirm } from 'react-confirm-box';
@@ -15,20 +15,6 @@ import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
 import { url_apoderados_put } from '../../components/routes/Urls';
-
-// import TipoApoderados from '../../api/TipoApoderados.json';
-// import ApoderadosAsignados from '../../api/ApoderadosAsignados.json';
-// import ApoderadosPresentacion from '../../api/ApoderadosPresentacion.json';
-// import ApoderadosContactados from '../../api/ApoderadosContactados.json';
-// import ApoderadosValidados from '../../api/ApoderadosValidados.json';
-
-// const initialForm = {
-// 	contactados: '',
-// 	validados: '',
-// 	asignados: '',
-// 	presentacion: '',
-// 	preferencia: '',
-// };
 
 const customStyles = {
 	header: {
@@ -71,7 +57,7 @@ const paginacionOpciones = {
 	selectAllRowsItemText: 'Todos',
 };
 
-const NominaApoderados = () => {
+const Seleccion = () => {
 	// const location = useLocation();
 	// const { Query } = location.state;
 	const [users, setUsers] = useState([]);
@@ -126,26 +112,11 @@ const NominaApoderados = () => {
 				sortable: true,
 				grow: 2,
 			},
-			// {
-			// 	name: 'Correo',
-			// 	selector: (row) => row.EMAIL,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'Nombres',
-			// 	selector: (row) => row.NOMBRES,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'RUT',
-			// 	selector: (row) => row.RUT + '-' + row.DV,
-			// 	right: true,
-			// },
-			// {
-			// 	name: 'EMail',
-			// 	selector: (row) => row.EMAIL,
-			// 	grow: 3,
-			// },
+			{
+				name: 'Correo',
+				selector: (row) => row.EMAIL,
+				sortable: true,
+			},
 			{
 				name: 'Celular',
 				selector: (row) => row.TELEFONO_MOVIL,
@@ -158,7 +129,7 @@ const NominaApoderados = () => {
 							<button className="btn btn-sm btn-primary">Editar</button>
 						</Link>
 						<button
-							onClick={() => handleButtonClick(row.Id)}
+							onClick={() => handleButtonClick(row._id)}
 							className="btn btn-sm btn-secondary"
 						>
 							Contactado
@@ -242,52 +213,46 @@ const NominaApoderados = () => {
 						<OpcionesNav />
 					</section>
 					<section className="flex-auto Aligner-item--center wd-70">
-						<div className="container-row jc-center">
+						<div className="container-row jc-center mx-12">
 							<div className="flex-auto">
-								{/* <p className="titulo-xl fc-grey my-8">
-									Apoderados
-								</p> */}
+								<p className="titulo-xl fc-grey my-8">
+									Auditaremos el Proceso de Votacion
+								</p>
 							</div>
-							<section className="flex-auto my-2">
-								<div className="container-row">
-									<article className="flex-auto bd-1">
-										<div className="container-row my-3 mx-3">
-											<DataTable
-												// title="Apoderados x el Rechazo"
-												columns={columnas}
-												data={filtrados}
-												conditionalRowStyles={conditionalRowStyles}
-												customStyles={customStyles}
-												highlightOnHover
-												striped
-												pointerOnHover
-												pagination
-												paginationComponentOptions={paginacionOpciones}
-												localization={{
-													header: {
-														actions: 'Acciones',
-													},
-												}}
-												subHeader
-												subHeaderComponent={
-													<input
-														type="text"
-														placeholder="buscar"
-														className="w-25 form-control"
-														value={search}
-														onChange={(e) => setSearch(e.target.value)}
-													></input>
-												}
-												dense
-											/>
-										</div>
-									</article>
-								</div>
-								{/* <button onClick={handleVolver} className="btn-primary mt-8">
-									Volver
-								</button> */}
-							</section>
+							<div className="container-row my-3 mx-3">
+								<DataTable
+									// title="Apoderados x el Rechazo"
+									columns={columnas}
+									data={filtrados}
+									conditionalRowStyles={conditionalRowStyles}
+									customStyles={customStyles}
+									highlightOnHover
+									striped
+									pointerOnHover
+									pagination
+									paginationComponentOptions={paginacionOpciones}
+									localization={{
+										header: {
+											actions: 'Acciones',
+										},
+									}}
+									subHeader
+									subHeaderComponent={
+										<input
+											type="text"
+											placeholder="buscar"
+											className="w-25 form-control"
+											value={search}
+											onChange={(e) => setSearch(e.target.value)}
+										></input>
+									}
+									dense
+								/>
+							</div>
 						</div>
+						<button onClick={handleVolver} className="btn-primary mt-8">
+							Volver
+						</button>
 					</section>
 				</div>
 			</main>
@@ -296,4 +261,4 @@ const NominaApoderados = () => {
 	);
 };
 
-export default NominaApoderados;
+export default Seleccion;

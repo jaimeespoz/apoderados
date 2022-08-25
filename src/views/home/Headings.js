@@ -1,8 +1,6 @@
 // imagenes
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { VinculosPpalNav } from '../../components/layout';
-// import Logo from '../../components/assets/icons/bandera.png';
 
 function Headings() {
 	let navigate = useNavigate();
@@ -16,16 +14,6 @@ function Headings() {
 		e.preventDefault();
 		navigate('/nomina');
 	}
-
-	function handleModales(e) {
-		e.preventDefault();
-		navigate('/modales');
-	}
-
-	// function handleDudas(e) {
-	// 	e.preventDefault();
-	// 	navigate('/dudas');
-	// }
 
 	function handleContacto(e) {
 		e.preventDefault();
@@ -54,11 +42,11 @@ function Headings() {
 						Inicio
 					</p>
 				</article>
-				<article className="flex-auto">
+				{/* <article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleNomina}>
 						Nomina
 					</p>
-				</article>
+				</article> */}
 				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto

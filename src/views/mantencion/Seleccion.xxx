@@ -1,0 +1,243 @@
+// import '../App.css';
+import 'styled-components';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import Headings from '../home/Headings';
+import { VinculosNav } from '../../components/layout';
+
+import TipoApoderados from '../../api/TipoApoderados.json';
+import ApoderadosAsignados from '../../api/ApoderadosAsignados.json';
+import ApoderadosPresentacion from '../../api/ApoderadosPresentacion.json';
+import ApoderadosContactados from '../../api/ApoderadosContactados.json';
+import ApoderadosValidados from '../../api/ApoderadosValidados.json';
+
+const initialForm = {
+	contactados: '',
+	validados: '',
+	asignados: '',
+	presentacion: '',
+	preferencia: '',
+};
+
+const Seleccion = () => {
+	const [form, setForm] = useState(initialForm);
+
+	const [dbApoderadosContactados, setDbApoderadosContactados] = useState(null);
+	const [dbApoderadosValidados, setDbApoderadosValidados] = useState(null);
+	const [dbApoderadosAsignados, setDbApoderadosAsignados] = useState(null);
+	const [dbApoderadosPresentacion, setDbApoderadosPresentacion] =
+		useState(null);
+	const [dbTipoApoderados, setDbTipoApoderados] = useState(null);
+	let navigate = useNavigate();
+
+	useEffect(() => {
+		setDbApoderadosContactados(ApoderadosContactados.apoderadoscontactados);
+		setDbApoderadosValidados(ApoderadosValidados.apoderadosvalidados);
+		setDbApoderadosAsignados(ApoderadosAsignados.apoderadosasignados);
+		setDbApoderadosPresentacion(ApoderadosPresentacion.apoderadospresentacion);
+		setDbTipoApoderados(TipoApoderados.tipoapoderados);
+	}, []);
+
+	const consulta = () => {
+		let str = '';
+		if (form.contactados !== '') {
+			// if (form.contactados !== '' && form.contactados !== '0') {
+			str = 'CONTACTADO=' + form.contactados;
+		}
+		if (form.validados !== '' && form.validados !== '0') {
+			if (str.length === 0) {
+				str = str + 'VALIDADO=' + form.validados;
+			} else {
+				str = str + ' AND VALIDADO=' + form.validados;
+			}
+		}
+		if (form.asignados !== '' && form.asignados !== '0') {
+			if (str.length === 0) {
+				str = str + 'ASIGNADO=' + form.asignados;
+			} else {
+				str = str + ' AND ASIGNADO=' + form.asignados;
+			}
+		}
+		if (form.presentacion !== '' && form.presentacion !== '0') {
+			if (str.length === 0) {
+				str = str + 'SE_PRESENTO_DIA_DE_VOTACION=' + form.presentacion;
+			} else {
+				str = str + ' AND SE_PRESENTO_DIA_DE_VOTACION=' + form.presentacion;
+			}
+		}
+		if (form.preferencia !== '' && form.preferencia !== '0') {
+			if (str.length === 0) {
+				str = str + 'PREFERENCIA_APODERADO=' + form.preferencia;
+			} else {
+				str = str + ' AND PREFERENCIA_APODERADO=' + form.preferencia;
+			}
+		}
+		navigate('/nomina', { state: { Query: str } });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		consulta();
+	};
+
+	return (
+		<>
+			<Headings />
+			<main>
+				<div className="container-row py-8">
+					<section className="flex-auto wd-20"></section>
+					<section className="flex-auto wd-60">
+						<div className="container-row">
+							<div className="flex-auto">
+								<label className="form-label-sm">Contactado</label>
+								<div className="bootstrap-select">
+									<select
+										name="cb_contactado"
+										id="cb_contactado"
+										className="texto-sm fc-grey"
+										onChange={(e) => {
+											form.contactados = e.target.value;
+										}}
+									>
+										<option value="" className="texto-sm fc-grey">
+											Elige una Opcion
+										</option>
+										{dbApoderadosContactados &&
+											dbApoderadosContactados.map((el) => (
+												<option
+													key={el.id}
+													value={el.id}
+													className="texto-sm fc-grey"
+												>
+													{el.descripcion}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+							<div className="flex-auto">
+								<label className="form-label-sm">Validado</label>
+								<div className="bootstrap-select">
+									<select
+										name="cb_validado"
+										id="cb_validado"
+										className="texto-sm fc-grey"
+										onChange={(e) => {
+											form.validados = e.target.value;
+										}}
+									>
+										<option value="" className="texto-sm fc-grey">
+											Elige una Opcion
+										</option>
+										{dbApoderadosValidados &&
+											dbApoderadosValidados.map((el) => (
+												<option
+													key={el.id}
+													value={el.id}
+													className="texto-sm fc-grey"
+												>
+													{el.descripcion}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+							<div className="flex-auto">
+								<label className="form-label-sm">Asignacion</label>
+								<div className="bootstrap-select">
+									<select
+										name="cb_asignado"
+										id="cb_asignado"
+										className="texto-sm fc-grey"
+										onChange={(e) => {
+											form.asignados = e.target.value;
+										}}
+									>
+										<option value="" className="texto-sm fc-grey">
+											Elige una Opcion
+										</option>
+										{dbApoderadosAsignados &&
+											dbApoderadosAsignados.map((el) => (
+												<option
+													key={el.id}
+													value={el.id}
+													className="texto-sm fc-grey"
+												>
+													{el.descripcion}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+							<div className="flex-auto">
+								<label className="form-label-sm">Presentacion</label>
+								<div className="bootstrap-select">
+									<select
+										name="cb_presentacion"
+										id="cb_presentacion"
+										className="texto-sm fc-grey"
+										onChange={(e) => {
+											form.presentacion = e.target.value;
+										}}
+									>
+										<option value="" className="texto-sm fc-grey">
+											Elige una Opcion
+										</option>
+										{dbApoderadosPresentacion &&
+											dbApoderadosPresentacion.map((el) => (
+												<option
+													key={el.id}
+													value={el.id}
+													className="texto-sm fc-grey"
+												>
+													{el.descripcion}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+							<div className="flex-auto">
+								<label className="form-label-sm">Tipo de Participacion</label>
+								<div className="bootstrap-select">
+									<select
+										name="cb_preferencia"
+										id="cb_preferencia"
+										className="texto-sm fc-grey"
+										onChange={(e) => {
+											form.preferencia = e.target.value;
+										}}
+									>
+										<option value="" className="texto-sm fc-grey">
+											Elige una Opcion
+										</option>
+										{dbTipoApoderados &&
+											dbTipoApoderados.map((el) => (
+												<option
+													key={el.id}
+													value={el.id}
+													className="texto-sm fc-grey"
+												>
+													{el.descripcion}
+												</option>
+											))}
+									</select>
+								</div>
+							</div>
+
+							<div className="flex-auto">
+								<button onClick={handleSubmit} className="btn-primary mt-8">
+									Aceptar
+								</button>
+							</div>
+						</div>
+					</section>
+					<section className="flex-auto wd-20"></section>
+				</div>
+			</main>
+			<VinculosNav />
+		</>
+	);
+};
+
+export default Seleccion;

@@ -71,7 +71,7 @@ const paginacionOpciones = {
 	selectAllRowsItemText: 'Todos',
 };
 
-const NominaApoderados = () => {
+const Contactados = () => {
 	// const location = useLocation();
 	// const { Query } = location.state;
 	const [users, setUsers] = useState([]);
@@ -93,7 +93,7 @@ const NominaApoderados = () => {
 
 	const carga_query = async () => {
 		let data = {
-			filter: 'NOMBRES<>""',
+			filter: 'CONTACTADO=1',
 			limit: 1000,
 		};
 
@@ -126,72 +126,52 @@ const NominaApoderados = () => {
 				sortable: true,
 				grow: 2,
 			},
-			// {
-			// 	name: 'Correo',
-			// 	selector: (row) => row.EMAIL,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'Nombres',
-			// 	selector: (row) => row.NOMBRES,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'RUT',
-			// 	selector: (row) => row.RUT + '-' + row.DV,
-			// 	right: true,
-			// },
-			// {
-			// 	name: 'EMail',
-			// 	selector: (row) => row.EMAIL,
-			// 	grow: 3,
-			// },
 			{
 				name: 'Celular',
 				selector: (row) => row.TELEFONO_MOVIL,
 			},
-			{
-				name: 'Action',
-				cell: (row) => (
-					<>
-						<Link to={'/mantencion'} state={{ Row: row }}>
-							<button className="btn btn-sm btn-primary">Editar</button>
-						</Link>
-						<button
-							onClick={() => handleButtonClick(row.Id)}
-							className="btn btn-sm btn-secondary"
-						>
-							Contactado
-						</button>
-					</>
-				),
-			},
+			// {
+			// 	name: 'Action',
+			// 	cell: (row) => (
+			// 		<>
+			// 			<Link to={'/mantencion'} state={{ Row: row }}>
+			// 				<button className="btn btn-sm btn-primary">Editar</button>
+			// 			</Link>
+			// 			<button
+			// 				onClick={() => handleButtonClick(row._id)}
+			// 				className="btn btn-sm btn-secondary"
+			// 			>
+			// 				Contactado
+			// 			</button>
+			// 		</>
+			// 	),
+			// },
 		];
 		setColumnas(columns);
 	};
 
-	const conditionalRowStyles = [
-		{
-			when: (row) => row.CONTACTADO === '0',
-			style: {
-				backgroundColor: 'pink',
-				color: 'white',
-				'&:hover': {
-					cursor: 'pointer',
-				},
-			},
-		},
-		{
-			when: (row) => row.CONTACTADO !== '0',
-			style: {
-				backgroundColor: 'lightgreen',
-				color: 'white',
-				'&:hover': {
-					cursor: 'pointer',
-				},
-			},
-		},
-	];
+	// const conditionalRowStyles = [
+	// 	{
+	// 		when: (row) => row.CONTACTADO === '0',
+	// 		style: {
+	// 			backgroundColor: 'pink',
+	// 			color: 'white',
+	// 			'&:hover': {
+	// 				cursor: 'pointer',
+	// 			},
+	// 		},
+	// 	},
+	// 	{
+	// 		when: (row) => row.CONTACTADO !== '0',
+	// 		style: {
+	// 			backgroundColor: 'lightgreen',
+	// 			color: 'white',
+	// 			'&:hover': {
+	// 				cursor: 'pointer',
+	// 			},
+	// 		},
+	// 	},
+	// ];
 
 	useEffect(() => {
 		let result = users.filter((item) => {
@@ -256,7 +236,7 @@ const NominaApoderados = () => {
 												// title="Apoderados x el Rechazo"
 												columns={columnas}
 												data={filtrados}
-												conditionalRowStyles={conditionalRowStyles}
+												// conditionalRowStyles={conditionalRowStyles}
 												customStyles={customStyles}
 												highlightOnHover
 												striped
@@ -296,4 +276,4 @@ const NominaApoderados = () => {
 	);
 };
 
-export default NominaApoderados;
+export default Contactados;

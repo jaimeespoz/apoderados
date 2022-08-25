@@ -21,48 +21,19 @@ export const helpHttp = () => {
 		// alert(JSON.stringify(options));
 		setTimeout(() => controller.abort(), 3000);
 
-		console.log(endpoint + ' : ' + JSON.stringify(options));
-		return (
-			fetch(endpoint, options)
-				// .then(parseJson)
-				// .then((res) => {
-				// 	console.log('My json: ', res);
-				// })
-				// .then((response) => console.log(response))
-				// .then((response) => response.json())
-				// .then((json) => console.log(json))
-				.then((res) =>
-					res.ok
-						? res.json()
-						: Promise.reject({
-								err: true,
-								status: res.status || '00',
-								statusText: res.statusText || 'Ocurrio un Error',
-						  })
-				)
-				.catch((err) => err)
-		);
+		// console.log(endpoint + ' : ' + JSON.stringify(options));
+		return fetch(endpoint, options)
+			.then((res) =>
+				res.ok
+					? res.json()
+					: Promise.reject({
+							err: true,
+							status: res.status || '00',
+							statusText: res.statusText || 'Ocurrio un Error',
+					  })
+			)
+			.catch((err) => err);
 	};
-	const parseJson = async (response) => {
-		const text = await response.text();
-		console.log(text);
-		try {
-			const json = JSON.parse(text);
-			console.log(json);
-			return json;
-		} catch (err) {
-			throw new Error('Did not receive JSON, instead received: ' + text);
-		}
-	};
-	// const register = (url, options = {}) => {
-	// 	options.method = 'POST';
-	// 	return customFetch(url, options);
-	// };
-
-	// const login = (url, options = {}) => {
-	// 	options.method = 'POST';
-	// 	return customFetch(url, options);
-	// };
 
 	const get = async (url, options = {}) => await customFetch(url, options);
 
@@ -82,8 +53,6 @@ export const helpHttp = () => {
 	};
 
 	return {
-		// register,
-		// login,
 		get,
 		post,
 		put,

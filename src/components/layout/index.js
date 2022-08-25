@@ -1,5 +1,26 @@
 // modulos
 import { Link, useNavigate } from 'react-router-dom';
+import Opciones from '../../api/Opciones';
+
+export function OpcionesNav() {
+	return (
+		<section className="container-row-nowrap ml-auto mr-12 mt-6">
+			<article className="flex-auto">
+				<p className="titulo-xl fc-white my-6">Opciones</p>
+				<hr className="my-4" />
+				{Opciones.map((item, index) => {
+					return (
+						<div key={index}>
+							<Link to={item.path}>
+								<p className="texto fc-white my-2">{item.title}</p>
+							</Link>
+						</div>
+					);
+				})}
+			</article>
+		</section>
+	);
+}
 
 export function VinculosPpalNav() {
 	return (

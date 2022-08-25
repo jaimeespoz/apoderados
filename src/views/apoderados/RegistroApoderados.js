@@ -61,28 +61,6 @@ const validationsForm = (form) => {
 	// let regexRut = /^(\d{1,2}(?:[\.]?\d{3}){2}-[\dkK])$/;
 	let errors = {};
 
-	// errors.nombres = '';
-	// errors.paterno = '';
-	// errors.materno = '';
-	// errors.correo = '';
-	// errors.rut = '';
-	// errors.celular = '';
-	// errors.votaregion = '';
-	// errors.votaregionglosa = '';
-	// errors.votacomuna = '';
-	// errors.votacomunaglosa = '';
-	// errors.votalocal = '';
-	// errors.votalocalglosa = '';
-	// errors.votamesa = '';
-	// errors.selregion = '';
-	// errors.selregionglosa = '';
-	// errors.selcomuna = '';
-	// errors.selcomunaglosa = '';
-	// errors.sellocal = '';
-	// errors.sellocalglosa = '';
-	// errors.selmesa = '';
-	// errors.preferencia = '';
-
 	form.errores = '0';
 	if (!form.nombres.trim()) {
 		errors.nombres = 'Ingrese su Nombre';
@@ -144,18 +122,12 @@ const validationsForm = (form) => {
 			errors.rut = 'El RUT ingresado es incorrecto';
 			form.errores = '1';
 		} else {
-			// alert('form: ' + form.rut.trim());
 			let rutpaso = form.rut.trim();
-			// alert('rutpaso: ' + rutpaso);
 			let rutpaso2 = rutpaso.replace(/-/g, '');
-			// alert('rutpaso2: ' + rutpaso2);
 			let rutpaso3 = rutpaso2.replace(/\./g, '');
-			// alert('rutpaso3: ' + rutpaso3);
 			let largo = rutpaso3.length;
-			// alert('largo: ' + largo);
 			let cuerpo = rutpaso3.substring(0, largo - 1);
 			let digito = rutpaso3.substring(largo - 1, largo);
-			// alert(rutpaso3 + ' : ' + cuerpo + '-' + digito);
 			form.cuerpo = cuerpo;
 			form.cdv = digito;
 		}
@@ -370,7 +342,7 @@ function RegistroApoderados({ form1 }) {
 				headers: { 'content-type': 'application/json' },
 			};
 
-			console.log(JSON.stringify(options));
+			// console.log(JSON.stringify(options));
 			api.post(url_apoderados_nuevo, options).then((res) => {
 				if (!res.err) {
 					//alert(res.body);
@@ -413,9 +385,6 @@ function RegistroApoderados({ form1 }) {
 					<section className="flex-auto wd-70">
 						<div className="container-row jc-center">
 							<section className="flex-auto wd-70">
-								{/* <section>
-									<p className="texto-xl fw-semi-bold fc-highlight py-6 pb-1">Inicio</p>
-								</section> */}
 								<section id="introduccion">
 									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
 										Introduccion

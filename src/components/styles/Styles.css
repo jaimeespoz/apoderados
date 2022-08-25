@@ -881,6 +881,12 @@ input[type="reset"] {
     border-radius: 5px;
 }
 
+.btnBuscar {
+    color: var(--mainColorLight);
+    font-size: 1.10rem;
+    border: none;
+}
+
 /* 
 .rdt_Table {
     background-color: red;

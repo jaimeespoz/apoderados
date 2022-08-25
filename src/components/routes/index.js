@@ -6,9 +6,13 @@ import Home from '../../views/home/Home';
 // paginas
 import Contacto from '../../views/home/contacto/Contacto';
 import RegistroApoderados from '../../views/apoderados/RegistroApoderados';
+import Seleccion from '../../views/mantencion/Seleccion';
 import NominaApoderados from '../../views/mantencion/NominaApoderados';
-import Modals from '../common/Modals';
 import Mantencion from '../../views/mantencion/Mantencion';
+import MantencionPersonales from '../../views/mantencion/MantencionPersonales';
+import MantencionLocal from '../../views/mantencion/MantencionLocal';
+import MantencionSeleccionados from '../../views/mantencion/MantencionSeleccionado';
+import Contactados from '../../views/mantencion/Contactados';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -45,10 +49,14 @@ export const Rutas = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/registroapoderados" element={<RegistroApoderados />} />
+				<Route path="/seleccion" element={<Seleccion />} />
 				<Route path="/nomina" element={<NominaApoderados />} />
 				<Route path="/contacto" element={<Contacto />} />
-				<Route path="/modales" element={<Modals />} />
 				<Route path="/mantencion" element={<Mantencion />} />
+				<Route path="/personales" element={<MantencionPersonales />} />
+				<Route path="/local" element={<MantencionLocal />} />
+				<Route path="/seleccionados" element={<MantencionSeleccionados />} />
+				<Route path="/contactados" element={<Contactados />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

@@ -9,6 +9,10 @@ import { confirm } from 'react-confirm-box';
 
 import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 import { url_apoderados_query } from '../../components/routes/Urls';
+import {
+	fecha_del_dia_aaaammdd,
+	fecha_nula_aaaammdd,
+} from '../../utils/FuncionesFechas';
 
 import Headings from '../home/Headings';
 import { OpcionesNav, VinculosNav } from '../../components/layout';
@@ -93,7 +97,7 @@ const Contactados = () => {
 
 	const carga_query = async () => {
 		let data = {
-			filter: 'CONTACTADO=1',
+			filter: 'CONTACTADO=1 AND TIPO_LOCAL_MESA<>"Z"',
 			limit: 100,
 		};
 
@@ -138,10 +142,16 @@ const Contactados = () => {
 							<button className="btn btn-sm btn-primary">Editar</button>
 						</Link> */}
 						<button
-							onClick={() => handleButtonClick(row._id)}
+							onClick={() => handleButtonClick(row.Id)}
 							className="btn btn-sm btn-secondary"
 						>
 							Des-Contactar
+						</button>
+						<button
+							onClick={() => handleNQNPClick(row.Id)}
+							className="btn btn-sm btn-secondary"
+						>
+							NP -NQ
 						</button>
 					</>
 				),
@@ -191,6 +201,7 @@ const Contactados = () => {
 		if (result) {
 			let data = {
 				CONTACTADO: '0',
+				CONTACTADO_CUANDO: '',
 			};
 
 			let options = {
@@ -204,13 +215,36 @@ const Contactados = () => {
 						...prevState,
 						usuario: 'Usuario ingresado ya esta Registrado',
 					}));
+					carga_query();
 				}
 			});
 		}
 	};
 
-	const handleVolver = (e) => {
-		// navigate('/seleccion', { state: { Query: Query } });
+	const handleNQNPClick = async (Id) => {
+		const result = await confirm('¿ Esta seguro ?');
+		if (result) {
+			let data = {
+				CONTACTADO: '1',
+				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
+				TIPO_LOCAL_MESA: 'Z',
+			};
+
+			let options = {
+				body: data,
+				headers: { 'content-type': 'application/json' },
+			};
+
+			api.post(url_apoderados_put + Id, options).then((res) => {
+				if (!res.err) {
+					setErrors((prevState) => ({
+						...prevState,
+						usuario: 'Usuario ingresado ya esta Registrado',
+					}));
+					carga_query();
+				}
+			});
+		}
 	};
 
 	return (

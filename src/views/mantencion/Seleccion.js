@@ -129,7 +129,7 @@ const Seleccion = () => {
 							<button className="btn btn-sm btn-primary">Editar</button>
 						</Link>
 						<button
-							onClick={() => handleButtonClick(row._id)}
+							onClick={() => handleButtonClick(row.Id)}
 							className="btn btn-sm btn-secondary"
 						>
 							Contactado

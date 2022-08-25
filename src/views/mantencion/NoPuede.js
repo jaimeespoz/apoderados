@@ -75,7 +75,7 @@ const paginacionOpciones = {
 	selectAllRowsItemText: 'Todos',
 };
 
-const NominaApoderados = () => {
+const NoPuede = () => {
 	// const location = useLocation();
 	// const { Query } = location.state;
 	const [users, setUsers] = useState([]);
@@ -97,7 +97,7 @@ const NominaApoderados = () => {
 
 	const carga_query = async () => {
 		let data = {
-			filter: 'NOMBRES<>"" AND CONTACTADO<>"1" AND TIPO_LOCAL_MESA<>"Z"',
+			filter: 'TIPO_LOCAL_MESA="Z"',
 			limit: 100,
 		};
 
@@ -128,28 +128,8 @@ const NominaApoderados = () => {
 					', ' +
 					row.NOMBRES,
 				sortable: true,
-				//				grow: 2,
+				grow: 2,
 			},
-			// {
-			// 	name: 'Correo',
-			// 	selector: (row) => row.EMAIL,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'Nombres',
-			// 	selector: (row) => row.NOMBRES,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'RUT',
-			// 	selector: (row) => row.RUT + '-' + row.DV,
-			// 	right: true,
-			// },
-			// {
-			// 	name: 'EMail',
-			// 	selector: (row) => row.EMAIL,
-			// 	grow: 3,
-			// },
 			{
 				name: 'Celular',
 				selector: (row) => row.TELEFONO_MOVIL,
@@ -158,20 +138,11 @@ const NominaApoderados = () => {
 				name: 'Action',
 				cell: (row) => (
 					<>
-						<Link to={'/mantencion'} state={{ Row: row }}>
-							<button className="btn btn-sm btn-primary">Editar</button>
-						</Link>
 						<button
 							onClick={() => handleButtonClick(row.Id)}
 							className="btn btn-sm btn-secondary"
 						>
-							Contactado
-						</button>
-						<button
-							onClick={() => handleNQNPClick(row.Id)}
-							className="btn btn-sm btn-secondary"
-						>
-							NP -NQ
+							Des NQ-NP
 						</button>
 					</>
 				),
@@ -180,28 +151,28 @@ const NominaApoderados = () => {
 		setColumnas(columns);
 	};
 
-	const conditionalRowStyles = [
-		{
-			when: (row) => row.CONTACTADO === '0',
-			style: {
-				backgroundColor: 'pink',
-				color: 'white',
-				'&:hover': {
-					cursor: 'pointer',
-				},
-			},
-		},
-		{
-			when: (row) => row.CONTACTADO !== '0',
-			style: {
-				backgroundColor: 'lightgreen',
-				color: 'white',
-				'&:hover': {
-					cursor: 'pointer',
-				},
-			},
-		},
-	];
+	// const conditionalRowStyles = [
+	// 	{
+	// 		when: (row) => row.CONTACTADO === '0',
+	// 		style: {
+	// 			backgroundColor: 'pink',
+	// 			color: 'white',
+	// 			'&:hover': {
+	// 				cursor: 'pointer',
+	// 			},
+	// 		},
+	// 	},
+	// 	{
+	// 		when: (row) => row.CONTACTADO !== '0',
+	// 		style: {
+	// 			backgroundColor: 'lightgreen',
+	// 			color: 'white',
+	// 			'&:hover': {
+	// 				cursor: 'pointer',
+	// 			},
+	// 		},
+	// 	},
+	// ];
 
 	useEffect(() => {
 		let result = users.filter((item) => {
@@ -220,34 +191,7 @@ const NominaApoderados = () => {
 		const result = await confirm('¿ Esta seguro ?');
 		if (result) {
 			let data = {
-				CONTACTADO: '1',
-				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-			};
-
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-					carga_query();
-				}
-			});
-		}
-	};
-
-	const handleNQNPClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '1',
-				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-				TIPO_LOCAL_MESA: 'Z',
+				TIPO_LOCAL_MESA: '',
 			};
 
 			let options = {
@@ -290,7 +234,7 @@ const NominaApoderados = () => {
 												// title="Apoderados x el Rechazo"
 												columns={columnas}
 												data={filtrados}
-												conditionalRowStyles={conditionalRowStyles}
+												// conditionalRowStyles={conditionalRowStyles}
 												customStyles={customStyles}
 												highlightOnHover
 												striped
@@ -330,4 +274,4 @@ const NominaApoderados = () => {
 	);
 };
 
-export default NominaApoderados;
+export default NoPuede;

@@ -130,22 +130,22 @@ const Contactados = () => {
 				name: 'Celular',
 				selector: (row) => row.TELEFONO_MOVIL,
 			},
-			// {
-			// 	name: 'Action',
-			// 	cell: (row) => (
-			// 		<>
-			// 			<Link to={'/mantencion'} state={{ Row: row }}>
-			// 				<button className="btn btn-sm btn-primary">Editar</button>
-			// 			</Link>
-			// 			<button
-			// 				onClick={() => handleButtonClick(row._id)}
-			// 				className="btn btn-sm btn-secondary"
-			// 			>
-			// 				Contactado
-			// 			</button>
-			// 		</>
-			// 	),
-			// },
+			{
+				name: 'Action',
+				cell: (row) => (
+					<>
+						{/* <Link to={'/mantencion'} state={{ Row: row }}>
+							<button className="btn btn-sm btn-primary">Editar</button>
+						</Link> */}
+						<button
+							onClick={() => handleButtonClick(row._id)}
+							className="btn btn-sm btn-secondary"
+						>
+							Des-Contactar
+						</button>
+					</>
+				),
+			},
 		];
 		setColumnas(columns);
 	};
@@ -190,7 +190,7 @@ const Contactados = () => {
 		const result = await confirm('¿ Esta seguro ?');
 		if (result) {
 			let data = {
-				CONTACTADO: '1',
+				CONTACTADO: '0',
 			};
 
 			let options = {

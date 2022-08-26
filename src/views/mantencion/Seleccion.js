@@ -1,15 +1,9 @@
-// import '../App.css';
 import 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DataTable, { defaultThemes } from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { confirm } from 'react-confirm-box';
-
-import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 import { url_apoderados_query } from '../../components/routes/Urls';
-
 import Headings from '../home/Headings';
 import { OpcionesNav, VinculosNav } from '../../components/layout';
 
@@ -63,11 +57,7 @@ const Seleccion = () => {
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState('');
 	const [filtrados, setFiltrados] = useState([]);
-	const [errors, setErrors] = useState({});
-
 	const [columnas, setColumnas] = useState([]);
-	let navigate = useNavigate();
-	let api = helpHttp();
 
 	// alert(Query);
 
@@ -88,15 +78,21 @@ const Seleccion = () => {
 			headers: { 'content-type': 'application/json' },
 		};
 
-		// alert(JSON.stringify(options));
-		await api.post(url_apoderados_query, options).then((res) => {
-			if (!res.err) {
-				setUsers(res.apoderados);
-				setFiltrados(res.apoderados);
-				// } else {
-				// 	setUsers('');
-			}
-		});
+		await fetch(url_apoderados_query, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setUsers(result.apoderados);
+				setFiltrados(result.apoderados);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const asignarColumnas = () => {
@@ -178,30 +174,33 @@ const Seleccion = () => {
 	}, [search]);
 
 	const handleButtonClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '1',
-			};
+		let data = {
+			CONTACTADO: '1',
+		};
 
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-				}
+		fetch(url_apoderados_put + Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				// if (result.filasafectadas === 0) {
+				// 	alert('No se pudo grabar');
+				// }
+				// if (result.filasafectadas === 1) {
+				// 	alert('Grabado');
+				// }
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
 	const handleVolver = (e) => {
-		// navigate('/seleccion', { state: { Query: Query } });
+		// navigate('/seleccion');
 	};
 
 	return (

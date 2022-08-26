@@ -1,38 +1,15 @@
-// import '../App.css';
 import 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DataTable, { defaultThemes } from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { confirm } from 'react-confirm-box';
-
-import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 import { url_apoderados_query } from '../../components/routes/Urls';
-import {
-	fecha_del_dia_aaaammdd,
-	fecha_nula_aaaammdd,
-} from '../../utils/FuncionesFechas';
-
+import { fecha_del_dia_aaaammdd } from '../../utils/FuncionesFechas';
 import Headings from '../home/Headings';
 import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
 import { url_apoderados_put } from '../../components/routes/Urls';
-
-// import TipoApoderados from '../../api/TipoApoderados.json';
-// import ApoderadosAsignados from '../../api/ApoderadosAsignados.json';
-// import ApoderadosPresentacion from '../../api/ApoderadosPresentacion.json';
-// import ApoderadosContactados from '../../api/ApoderadosContactados.json';
-// import ApoderadosValidados from '../../api/ApoderadosValidados.json';
-
-// const initialForm = {
-// 	contactados: '',
-// 	validados: '',
-// 	asignados: '',
-// 	presentacion: '',
-// 	preferencia: '',
-// };
 
 const customStyles = {
 	header: {
@@ -76,16 +53,11 @@ const paginacionOpciones = {
 };
 
 const NominaApoderados = () => {
-	// const location = useLocation();
-	// const { Query } = location.state;
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState('');
 	const [filtrados, setFiltrados] = useState([]);
-	const [errors, setErrors] = useState({});
 
 	const [columnas, setColumnas] = useState([]);
-	let navigate = useNavigate();
-	let api = helpHttp();
 
 	// alert(Query);
 
@@ -95,26 +67,40 @@ const NominaApoderados = () => {
 		setFiltrados(users);
 	}, []);
 
+	useEffect(() => {
+		let result = users.filter((item) => {
+			if (
+				item.APELLIDO_PATERNO.toLowerCase().includes(search.toLowerCase()) ||
+				item.APELLIDO_MATERNO.toLowerCase().includes(search.toLowerCase()) ||
+				item.NOMBRES.toLowerCase().includes(search.toLowerCase())
+			) {
+				return item;
+			}
+		});
+		setFiltrados(result);
+	}, [search]);
+
 	const carga_query = async () => {
 		let data = {
 			filter: 'NOMBRES<>"" AND CONTACTADO<>"1" AND TIPO_LOCAL_MESA<>"Z"',
 			limit: 100,
 		};
 
-		let options = {
-			body: data,
-			headers: { 'content-type': 'application/json' },
-		};
-
-		// alert(JSON.stringify(options));
-		await api.post(url_apoderados_query, options).then((res) => {
-			if (!res.err) {
-				setUsers(res.apoderados);
-				setFiltrados(res.apoderados);
-				// } else {
-				// 	setUsers('');
-			}
-		});
+		await fetch(url_apoderados_query, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setUsers(result.apoderados);
+				setFiltrados(result.apoderados);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const asignarColumnas = () => {
@@ -128,28 +114,7 @@ const NominaApoderados = () => {
 					', ' +
 					row.NOMBRES,
 				sortable: true,
-				//				grow: 2,
 			},
-			// {
-			// 	name: 'Correo',
-			// 	selector: (row) => row.EMAIL,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'Nombres',
-			// 	selector: (row) => row.NOMBRES,
-			// 	sortable: true,
-			// },
-			// {
-			// 	name: 'RUT',
-			// 	selector: (row) => row.RUT + '-' + row.DV,
-			// 	right: true,
-			// },
-			// {
-			// 	name: 'EMail',
-			// 	selector: (row) => row.EMAIL,
-			// 	grow: 3,
-			// },
 			{
 				name: 'Celular',
 				selector: (row) => row.TELEFONO_MOVIL,
@@ -158,7 +123,7 @@ const NominaApoderados = () => {
 				name: 'Action',
 				cell: (row) => (
 					<>
-						<Link to={'/mantencion'} state={{ Row: row }}>
+						<Link to={'/mantencion'} state={{ Id: row.Id, Row: row }}>
 							<button className="btn btn-sm btn-primary">Editar</button>
 						</Link>
 						<button
@@ -203,68 +168,51 @@ const NominaApoderados = () => {
 		},
 	];
 
-	useEffect(() => {
-		let result = users.filter((item) => {
-			if (
-				item.APELLIDO_PATERNO.toLowerCase().includes(search.toLowerCase()) ||
-				item.APELLIDO_MATERNO.toLowerCase().includes(search.toLowerCase()) ||
-				item.NOMBRES.toLowerCase().includes(search.toLowerCase())
-			) {
-				return item;
-			}
-		});
-		setFiltrados(result);
-	}, [search]);
-
 	const handleButtonClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '1',
-				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-			};
+		let data = {
+			CONTACTADO: '1',
+			CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
+		};
 
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-					carga_query();
-				}
+		await fetch(url_apoderados_put + Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				carga_query();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
 	const handleNQNPClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '1',
-				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-				TIPO_LOCAL_MESA: 'Z',
-			};
+		let data = {
+			CONTACTADO: '1',
+			CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
+			TIPO_LOCAL_MESA: 'Z',
+		};
 
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-					carga_query();
+		await fetch(url_apoderados_put + Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.filasafectadas === 0) {
+					alert('No se pudo grabar');
 				}
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
 	return (
@@ -312,9 +260,6 @@ const NominaApoderados = () => {
 										</div>
 									</article>
 								</div>
-								{/* <button onClick={handleVolver} className="btn-primary mt-8">
-									Volver
-								</button> */}
 							</section>
 						</div>
 					</section>

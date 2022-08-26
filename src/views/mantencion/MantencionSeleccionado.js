@@ -28,6 +28,7 @@ const initialForm = {
 	preferencia: '',
 	errores: '0',
 };
+
 const validationsForm = (form) => {
 	let errors = {};
 
@@ -89,15 +90,12 @@ function MantencionSeleccionados() {
 	const [form, setForm] = useState(initialForm);
 	const [users, setUsers] = useState('');
 	const location = useLocation();
-	const { Query, Row } = location.state;
+	const { Id } = location.state;
 	const [tipoApoderados, setTipoApoderados] = useState(null);
 
-	// const [selRegion, setSelRegion] = useState('');
 	const [selComuna, setSelComuna] = useState('');
 	const [selLocal, setSelLocal] = useState('');
-	// const [selMesa, setSelMesa] = useState('');
 
-	const [selRegionglosa, setSelRegionGlosa] = useState('');
 	const [selComunaglosa, setSelComunaGlosa] = useState('');
 	const [selLocalglosa, setSelLocalGlosa] = useState('');
 
@@ -106,7 +104,6 @@ function MantencionSeleccionados() {
 	const [dbLocales, setDbLocales] = useState('');
 	const [dbTipoApoderados, setDbTipoApoderados] = useState(null);
 
-	const [valido, setValido] = useState(false);
 	const [errors, setErrors] = useState({});
 	let navigate = useNavigate();
 
@@ -118,7 +115,7 @@ function MantencionSeleccionados() {
 
 	const cargaApoderado = async () => {
 		let data = {
-			filter: 'ID=' + Row.Id,
+			filter: 'ID=' + Id,
 			limit: 1,
 		};
 		await fetch(url_apoderados_query, {
@@ -200,7 +197,7 @@ function MantencionSeleccionados() {
 					CODIGO_MESA_ASIGNADA: '0',
 				};
 
-				fetch(url_apoderados_put + Row.Id, {
+				fetch(url_apoderados_put + Id, {
 					method: 'post',
 					headers: {
 						'Content-Type': 'application/json',
@@ -219,13 +216,13 @@ function MantencionSeleccionados() {
 					.catch((err) => {
 						console.log(err);
 					});
-				navigate('/mantencion', { state: { Query: Query, Row: Row } });
+				navigate('/mantencion', { state: { Id: Id } });
 			}
 		}
 	};
 
 	const handleVolver = (e) => {
-		navigate('/mantencion', { state: { Query: Query, Row: Row } });
+		navigate('/mantencion', { state: { Id: Id } });
 	};
 
 	return (

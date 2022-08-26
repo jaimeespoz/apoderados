@@ -1,38 +1,15 @@
-// import '../App.css';
 import 'styled-components';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-// import { useLocation } from 'react-router-dom';
 import DataTable, { defaultThemes } from 'react-data-table-component';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { confirm } from 'react-confirm-box';
-
-import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 import { url_apoderados_query } from '../../components/routes/Urls';
-import {
-	fecha_del_dia_aaaammdd,
-	fecha_nula_aaaammdd,
-} from '../../utils/FuncionesFechas';
+import { fecha_del_dia_aaaammdd } from '../../utils/FuncionesFechas';
 
 import Headings from '../home/Headings';
 import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
 import { url_apoderados_put } from '../../components/routes/Urls';
-
-// import TipoApoderados from '../../api/TipoApoderados.json';
-// import ApoderadosAsignados from '../../api/ApoderadosAsignados.json';
-// import ApoderadosPresentacion from '../../api/ApoderadosPresentacion.json';
-// import ApoderadosContactados from '../../api/ApoderadosContactados.json';
-// import ApoderadosValidados from '../../api/ApoderadosValidados.json';
-
-// const initialForm = {
-// 	contactados: '',
-// 	validados: '',
-// 	asignados: '',
-// 	presentacion: '',
-// 	preferencia: '',
-// };
 
 const customStyles = {
 	header: {
@@ -76,18 +53,10 @@ const paginacionOpciones = {
 };
 
 const Contactados = () => {
-	// const location = useLocation();
-	// const { Query } = location.state;
 	const [users, setUsers] = useState([]);
 	const [search, setSearch] = useState('');
 	const [filtrados, setFiltrados] = useState([]);
-	const [errors, setErrors] = useState({});
-
 	const [columnas, setColumnas] = useState([]);
-	let navigate = useNavigate();
-	let api = helpHttp();
-
-	// alert(Query);
 
 	useEffect(() => {
 		carga_query();
@@ -95,26 +64,40 @@ const Contactados = () => {
 		setFiltrados(users);
 	}, []);
 
+	useEffect(() => {
+		let result = users.filter((item) => {
+			if (
+				item.APELLIDO_PATERNO.toLowerCase().includes(search.toLowerCase()) ||
+				item.APELLIDO_MATERNO.toLowerCase().includes(search.toLowerCase()) ||
+				item.NOMBRES.toLowerCase().includes(search.toLowerCase())
+			) {
+				return item;
+			}
+		});
+		setFiltrados(result);
+	}, [search]);
+
 	const carga_query = async () => {
 		let data = {
 			filter: 'CONTACTADO=1 AND TIPO_LOCAL_MESA<>"Z"',
 			limit: 100,
 		};
 
-		let options = {
-			body: data,
-			headers: { 'content-type': 'application/json' },
-		};
-
-		// alert(JSON.stringify(options));
-		await api.post(url_apoderados_query, options).then((res) => {
-			if (!res.err) {
-				setUsers(res.apoderados);
-				setFiltrados(res.apoderados);
-				// } else {
-				// 	setUsers('');
-			}
-		});
+		await fetch(url_apoderados_query, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setUsers(result.apoderados);
+				setFiltrados(result.apoderados);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const asignarColumnas = () => {
@@ -160,91 +143,49 @@ const Contactados = () => {
 		setColumnas(columns);
 	};
 
-	// const conditionalRowStyles = [
-	// 	{
-	// 		when: (row) => row.CONTACTADO === '0',
-	// 		style: {
-	// 			backgroundColor: 'pink',
-	// 			color: 'white',
-	// 			'&:hover': {
-	// 				cursor: 'pointer',
-	// 			},
-	// 		},
-	// 	},
-	// 	{
-	// 		when: (row) => row.CONTACTADO !== '0',
-	// 		style: {
-	// 			backgroundColor: 'lightgreen',
-	// 			color: 'white',
-	// 			'&:hover': {
-	// 				cursor: 'pointer',
-	// 			},
-	// 		},
-	// 	},
-	// ];
-
-	useEffect(() => {
-		let result = users.filter((item) => {
-			if (
-				item.APELLIDO_PATERNO.toLowerCase().includes(search.toLowerCase()) ||
-				item.APELLIDO_MATERNO.toLowerCase().includes(search.toLowerCase()) ||
-				item.NOMBRES.toLowerCase().includes(search.toLowerCase())
-			) {
-				return item;
-			}
-		});
-		setFiltrados(result);
-	}, [search]);
-
 	const handleButtonClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '0',
-				CONTACTADO_CUANDO: '',
-			};
+		let data = {
+			CONTACTADO: '0',
+			CONTACTADO_CUANDO: '',
+		};
 
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-					carga_query();
-				}
+		await fetch(url_apoderados_put + Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				carga_query();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
 	const handleNQNPClick = async (Id) => {
-		const result = await confirm('¿ Esta seguro ?');
-		if (result) {
-			let data = {
-				CONTACTADO: '1',
-				CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-				TIPO_LOCAL_MESA: 'Z',
-			};
+		let data = {
+			CONTACTADO: '1',
+			CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
+			TIPO_LOCAL_MESA: 'Z',
+		};
 
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
-
-			api.post(url_apoderados_put + Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-					carga_query();
-				}
+		fetch(url_apoderados_put + Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				carga_query();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-		}
 	};
 
 	return (
@@ -297,9 +238,6 @@ const Contactados = () => {
 										</div>
 									</article>
 								</div>
-								{/* <button onClick={handleVolver} className="btn-primary mt-8">
-									Volver
-								</button> */}
 							</section>
 						</div>
 					</section>

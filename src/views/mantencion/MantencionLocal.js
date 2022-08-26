@@ -58,7 +58,7 @@ function MantencionLocal() {
 	const [form, setForm] = useState(initialForm);
 	const [users, setUsers] = useState('');
 	const location = useLocation();
-	const { Query, Row } = location.state;
+	const { Id } = location.state;
 	const [votaRegion, setVotaRegion] = useState('');
 	const [votaComuna, setVotaComuna] = useState('');
 	const [votaLocal, setVotaLocal] = useState('');
@@ -83,7 +83,7 @@ function MantencionLocal() {
 
 	const cargaApoderado = async () => {
 		let data = {
-			filter: 'ID=' + Row.Id,
+			filter: 'ID=' + Id,
 			limit: 1,
 		};
 		await fetch(url_apoderados_query, {
@@ -172,7 +172,7 @@ function MantencionLocal() {
 				MESA_VOTA: form.votamesa,
 			};
 
-			fetch(url_apoderados_put + Row.Id, {
+			fetch(url_apoderados_put + Id, {
 				method: 'post',
 				headers: {
 					'Content-Type': 'application/json',
@@ -191,12 +191,12 @@ function MantencionLocal() {
 				.catch((err) => {
 					console.log(err);
 				});
-			navigate('/mantencion', { state: { Query: Query, Row: Row } });
+			navigate('/mantencion', { state: { Id: Id } });
 		}
 	};
 
 	const handleVolver = (e) => {
-		navigate('/mantencion', { state: { Query: Query, Row: Row } });
+		navigate('/mantencion', { state: { Id: Id } });
 	};
 
 	return (

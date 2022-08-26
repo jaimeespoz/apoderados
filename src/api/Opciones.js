@@ -1,6 +1,6 @@
 import * as FaIcons from 'react-icons/fa';
 
-export const Opciones = [
+const Opciones = [
 	{
 		title: 'Por Contactar',
 		path: '/nomina',

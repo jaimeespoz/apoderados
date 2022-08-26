@@ -73,7 +73,7 @@ const Seleccion = () => {
 				str = str + ' AND PREFERENCIA_APODERADO=' + form.preferencia;
 			}
 		}
-		navigate('/nomina', { state: { Query: str } });
+		navigate('/nomina');
 	};
 
 	const handleSubmit = (e) => {

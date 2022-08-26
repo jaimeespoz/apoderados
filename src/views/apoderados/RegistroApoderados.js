@@ -58,7 +58,6 @@ const validationsForm = (form) => {
 	let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
 	let regexCelular = /^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/;
 	let regexComments = /^.{1,30}$/;
-	// let regexRut = /^(\d{1,2}(?:[\.]?\d{3}){2}-[\dkK])$/;
 	let errors = {};
 
 	form.errores = '0';
@@ -118,19 +117,19 @@ const validationsForm = (form) => {
 		// if (!regexRut.test(form.rut.trim())) {
 		// 	errors.rut = 'El RUT ingresado es incorrecto';
 		// } else {
-		if (!validateRUT(form.rut.trim())) {
-			errors.rut = 'El RUT ingresado es incorrecto';
-			form.errores = '1';
-		} else {
-			let rutpaso = form.rut.trim();
-			let rutpaso2 = rutpaso.replace(/-/g, '');
-			let rutpaso3 = rutpaso2.replace(/\./g, '');
-			let largo = rutpaso3.length;
-			let cuerpo = rutpaso3.substring(0, largo - 1);
-			let digito = rutpaso3.substring(largo - 1, largo);
-			form.cuerpo = cuerpo;
-			form.cdv = digito;
-		}
+		// if (!validateRUT(form.rut.trim())) {
+		// 	errors.rut = 'El RUT ingresado es incorrecto';
+		// 	form.errores = '1';
+		// } else {
+		let rutpaso = form.rut.trim();
+		let rutpaso2 = rutpaso.replace(/-/g, '');
+		let rutpaso3 = rutpaso2.replace(/\./g, '');
+		let largo = rutpaso3.length;
+		let cuerpo = rutpaso3.substring(0, largo - 1);
+		let digito = rutpaso3.substring(largo - 1, largo);
+		form.cuerpo = cuerpo;
+		form.cdv = digito;
+		// }
 		// }
 	}
 

@@ -12,7 +12,7 @@ export function OpcionesNav() {
 					return (
 						<div key={index}>
 							<Link to={item.path}>
-								<p className="texto fc-white my-2">{item.title}</p>
+								<p className="navlink-sm fc-white my-3">{item.title}</p>
 							</Link>
 						</div>
 					);

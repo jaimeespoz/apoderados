@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { useLocation } from 'react-router-dom';
 import Headings from '../home/Headings';
-import { VinculosNav } from '../../components/layout';
+import { OpcionesNav, VinculosNav } from '../../components/layout';
 import { validateRUT } from 'validar-rut';
 
 // url
-import { url_apoderados_put } from '../../components/routes/Urls';
-
-// helpers
-import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
+import {
+	url_apoderados_query,
+	url_apoderados_put,
+} from '../../components/routes/Urls';
 
 const initialForm = {
 	nombres: '',
@@ -109,14 +109,15 @@ const validationsForm = (form) => {
 
 function MantencionPersonales() {
 	const [form, setForm] = useState(initialForm);
+	const [users, setUsers] = useState('');
 	const location = useLocation();
 	const { Query, Row } = location.state;
 	const [errors, setErrors] = useState({});
 	let navigate = useNavigate();
-	let api = helpHttp();
 
 	// datos iniciales
 	useEffect(() => {
+		cargaApoderado();
 		form.nombres = Row.NOMBRES;
 		form.paterno = Row.APELLIDO_PATERNO;
 		form.materno = Row.APELLIDO_MATERNO;
@@ -126,6 +127,27 @@ function MantencionPersonales() {
 		form.correo = Row.EMAIL;
 		form.celular = Row.TELEFONO_MOVIL;
 	}, []);
+
+	const cargaApoderado = async () => {
+		let data = {
+			filter: 'ID=' + Row.Id,
+			limit: 1,
+		};
+		await fetch(url_apoderados_query, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setUsers(result.apoderados[0]);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -143,7 +165,6 @@ function MantencionPersonales() {
 
 		if (form.errores === '0') {
 			let data = {
-				ID: Row.Id,
 				RUT: form.cuerpo,
 				DV: form.cdv,
 				NOMBRES: form.nombres,
@@ -152,24 +173,27 @@ function MantencionPersonales() {
 				TELEFONO_MOVIL: form.celular,
 				EMAIL: form.correo,
 			};
-			// graba header apoderado
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
 
-			// console.log(JSON.stringify(options));
-			api.post(url_apoderados_put + Row.Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-				}
-			});
-			alert('Registrado. Nos contactaremos con Usted, a la brevedad posible');
+			fetch(url_apoderados_put + Row.Id, {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => res.json())
+				.then((result) => {
+					if (result.filasafectadas === 0) {
+						alert('No se pudo grabar');
+					}
+					if (result.filasafectadas === 1) {
+						alert('Grabado');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			navigate('/mantencion', { state: { Query: Query, Row: Row } });
-			return;
 		}
 	};
 
@@ -181,148 +205,169 @@ function MantencionPersonales() {
 		<>
 			<Headings />
 			<main>
-				<div className="container-row py-8">
-					<section className="flex-auto wd-20"></section>
-					<section className="flex-auto wd-60">
-						<section className="flex-auto">
-							<section id="personales">
-								<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
-									Datos Personales
-								</p>
-								<div className="container-row gap-4 pt-3">
-									<div className="flex-auto">
-										<label htmlFor="nombres" className="form-label-sm">
-											Nombres
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="nombres"
-											name="nombres"
-											value={form.nombres}
-											placeholder="Ingrese Nombres"
-											onChange={handleChange}
-										/>
-										{errors.nombres && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.nombres}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label htmlFor="paterno" className="form-label-sm">
-											Apellido Paterno
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="paterno"
-											name="paterno"
-											value={form.paterno}
-											placeholder="Ingrese su Apellido Paterno"
-											onChange={handleChange}
-										/>
-										{errors.paterno && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.paterno}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label htmlFor="materno" className="form-label-sm">
-											Apellido Materno
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="materno"
-											name="materno"
-											value={form.materno}
-											placeholder="Ingrese su Apellido Materno"
-											onChange={handleChange}
-										/>
-										{errors.materno && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.materno}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label htmlFor="rut" className="form-label-sm">
-											Carnet Identidad
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="rut"
-											name="rut"
-											value={form.rut}
-											placeholder="Numero de Carnet"
-											onChange={handleChange}
-										/>
-										{errors.rut && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.rut}
-											</p>
-										)}
-									</div>
-								</div>
-							</section>
-							{/* Datos de Contacto */}
-							<section id="contacto">
-								<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
-									Datos de Contacto
-								</p>
-								<div className="container-row gap-4 pt-3">
-									<div className="flex-auto">
-										<label htmlFor="correo" className="form-label-sm">
-											Casilla de Correo
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="correo"
-											name="correo"
-											value={form.correo}
-											placeholder="Casilla de Correo"
-											onChange={handleChange}
-										/>
-										{errors.correo && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.correo}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label htmlFor="celular" className="form-label-sm">
-											Celular
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="celular"
-											name="celular"
-											value={form.celular}
-											placeholder="Numero Celular"
-											onChange={handleChange}
-										/>
-										{errors.celular && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.celular}
-											</p>
-										)}
-									</div>
-								</div>
-							</section>
-						</section>
-						<button onClick={handleSubmit} className="btn-primary mt-8">
-							Aceptar
-						</button>
-						<button onClick={handleVolver} className="btn-primary mt-8">
-							Volver
-						</button>
+				<div className="container-row mh">
+					<section className="flex-auto bg-azul px-10 wd-20">
+						<OpcionesNav />
 					</section>
-					<section className="flex-auto wd-20"></section>
+					<section className="flex-auto Aligner-item--center wd-80">
+						{/* <div className="container-row  px-12 py-6">
+								<section className="flex-auto">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Datos Personales
+									</p>
+								</section>
+							</div> */}
+
+						<div className="container-row jc-center">
+							<div className="container-row my-2">
+								<section className="flex-auto bd-1 px-12 py-6">
+									<p className="texto fw-semi-bold fc-grey pt-3">
+										Datos Personales
+									</p>
+									<div className="container-row gap-4 pt-3">
+										<div className="flex-auto">
+											<label htmlFor="nombres" className="form-label-sm">
+												Nombres
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="nombres"
+												name="nombres"
+												value={form.nombres}
+												placeholder="Ingrese Nombres"
+												onChange={handleChange}
+											/>
+											{errors.nombres && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.nombres}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="paterno" className="form-label-sm">
+												Apellido Paterno
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="paterno"
+												name="paterno"
+												value={form.paterno}
+												placeholder="Ingrese su Apellido Paterno"
+												onChange={handleChange}
+											/>
+											{errors.paterno && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.paterno}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="materno" className="form-label-sm">
+												Apellido Materno
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="materno"
+												name="materno"
+												value={form.materno}
+												placeholder="Ingrese su Apellido Materno"
+												onChange={handleChange}
+											/>
+											{errors.materno && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.materno}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="rut" className="form-label-sm">
+												Carnet Identidad
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="rut"
+												name="rut"
+												value={form.rut + '-' + form.cdv}
+												placeholder="Numero de Carnet"
+												onChange={handleChange}
+											/>
+											{errors.rut && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.rut}
+												</p>
+											)}
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+
+						<div className="container-row jc-center">
+							<div className="container-row my-2">
+								<section className="flex-auto bd-1 px-12 py-6">
+									<p className="texto fw-semi-bold fc-grey pt-3">
+										Datos de Contacto
+									</p>
+									<div className="container-row gap-4 pt-3">
+										<div className="flex-auto">
+											<label htmlFor="correo" className="form-label-sm">
+												Casilla de Correo
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="correo"
+												name="correo"
+												value={form.correo}
+												placeholder="Casilla de Correo"
+												onChange={handleChange}
+											/>
+											{errors.correo && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.correo}
+												</p>
+											)}
+										</div>
+										<div className="flex-auto">
+											<label htmlFor="celular" className="form-label-sm">
+												Celular
+											</label>
+											<input
+												type="text"
+												className="form-control-sm"
+												id="celular"
+												name="celular"
+												value={form.celular}
+												placeholder="Numero Celular"
+												onChange={handleChange}
+											/>
+											{errors.celular && (
+												<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+													{errors.celular}
+												</p>
+											)}
+										</div>
+									</div>
+								</section>
+								{/* </section> */}
+							</div>
+						</div>
+
+						<div className="container-row jc-center">
+							<div className="container-row">
+								<button onClick={handleSubmit} className="btn-primary mt-8">
+									Aceptar
+								</button>
+								<button onClick={handleVolver} className="btn-primary mt-8">
+									Volver
+								</button>
+							</div>
+						</div>
+					</section>
 				</div>
 			</main>
 			<VinculosNav />

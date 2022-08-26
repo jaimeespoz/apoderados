@@ -272,16 +272,11 @@ const NominaApoderados = () => {
 			<Headings />
 			<main>
 				<div className="container-row mh">
-					<section className="flex-auto bg-azul px-10 wd-30">
+					<section className="flex-auto bg-azul px-10 wd-20">
 						<OpcionesNav />
 					</section>
-					<section className="flex-auto Aligner-item--center wd-70">
+					<section className="flex-auto Aligner-item--center wd-80">
 						<div className="container-row jc-center">
-							<div className="flex-auto">
-								{/* <p className="titulo-xl fc-grey my-8">
-									Apoderados
-								</p> */}
-							</div>
 							<section className="flex-auto my-2">
 								<div className="container-row">
 									<article className="flex-auto bd-1">

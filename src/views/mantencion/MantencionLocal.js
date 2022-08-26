@@ -1,15 +1,9 @@
 // modulos
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-	fecha_del_dia_aaaammdd,
-	fecha_nula_aaaammdd,
-} from '../../utils/FuncionesFechas';
-
 import { useLocation } from 'react-router-dom';
 import Headings from '../home/Headings';
-import { VinculosNav } from '../../components/layout';
-import { validateRUT } from 'validar-rut';
+import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
 import {
@@ -22,10 +16,6 @@ import {
 	url_comunas,
 	url_locales,
 } from '../../components/routes/Urls';
-import TipoApoderados from '../../api/TipoApoderados.json';
-
-// helpers
-import { helpHttp } from '../../components/stateManagement/helpers/helpHttp';
 
 const initialForm = {
 	votaregion: '',
@@ -38,11 +28,6 @@ const initialForm = {
 	errores: '0',
 };
 const validationsForm = (form) => {
-	let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
-	let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
-	let regexCelular = /^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/;
-	let regexComments = /^.{1,30}$/;
-	// let regexRut = /^(\d{1,2}(?:[\.]?\d{3}){2}-[\dkK])$/;
 	let errors = {};
 
 	form.errores = '0';
@@ -78,20 +63,10 @@ function MantencionLocal() {
 	const [votaComuna, setVotaComuna] = useState('');
 	const [votaLocal, setVotaLocal] = useState('');
 	const [votaMesa, setVotaMesa] = useState('');
-	const [tipoApoderados, setTipoApoderados] = useState(null);
-
-	// const [selRegion, setSelRegion] = useState('');
-	const [selComuna, setSelComuna] = useState('');
-	const [selLocal, setSelLocal] = useState('');
-	// const [selMesa, setSelMesa] = useState('');
 
 	const [votaRegionglosa, setVotaRegionGlosa] = useState('');
 	const [votaComunaglosa, setVotaComunaGlosa] = useState('');
 	const [votaLocalglosa, setVotaLocalGlosa] = useState('');
-
-	const [selRegionglosa, setSelRegionGlosa] = useState('');
-	const [selComunaglosa, setSelComunaGlosa] = useState('');
-	const [selLocalglosa, setSelLocalGlosa] = useState('');
 
 	const [dbRegiones, setDbRegiones] = useState('');
 	const [dbComunas, setDbComunas] = useState('');
@@ -100,7 +75,6 @@ function MantencionLocal() {
 	const [valido, setValido] = useState(false);
 	const [errors, setErrors] = useState({});
 	let navigate = useNavigate();
-	let api = helpHttp();
 
 	useEffect(() => {
 		cargaApoderado();
@@ -184,7 +158,7 @@ function MantencionLocal() {
 			[name]: value,
 		});
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		setErrors(validationsForm(form));
@@ -197,22 +171,27 @@ function MantencionLocal() {
 				CODIGO_LOCAL_VOTA: form.votalocal,
 				MESA_VOTA: form.votamesa,
 			};
-			let options = {
-				body: data,
-				headers: { 'content-type': 'application/json' },
-			};
 
-			api.post(url_apoderados_put + Row.Id, options).then((res) => {
-				if (!res.err) {
-					setErrors((prevState) => ({
-						...prevState,
-						usuario: 'Usuario ingresado ya esta Registrado',
-					}));
-				}
-			});
-			alert('Registrado. Nos contactaremos con Usted, a la brevedad posible');
+			fetch(url_apoderados_put + Row.Id, {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => res.json())
+				.then((result) => {
+					if (result.filasafectadas === 0) {
+						alert('No se pudo grabar');
+					}
+					if (result.filasafectadas === 1) {
+						alert('Grabado');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			navigate('/mantencion', { state: { Query: Query, Row: Row } });
-			return;
 		}
 	};
 
@@ -224,242 +203,277 @@ function MantencionLocal() {
 		<>
 			<Headings />
 			<main>
-				<div className="container-row py-8">
-					<section className="flex-auto wd-20"></section>
-					<section className="flex-auto wd-60">
-						<div className="bd-1 px-12 py-6">
-							<p className="texto fw-semi-bold fc-grey pt-3">
-								Datos Personales
-							</p>
-							<div className="container-row gap-4">
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">Nombres</label>
-									<p className="form-label-sm">{users.NOMBRES}</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">
-										Apellido Paterno
-									</label>
-									<p className="form-label-sm">{users.APELLIDO_PATERNO}</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">
-										Apellido Materno
-									</label>
-									<p className="form-label-sm">{users.APELLIDO_MATERNO}</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">
-										Carnet Identidad
-									</label>
-									<p className="form-label-sm">{users.RUT + '-' + users.DV}</p>
-								</div>
-							</div>
-							<p className="texto fw-semi-bold fc-grey pt-3">
-								Local de Votacion del Apoderado
-							</p>
-							<div className="container-row gap-4">
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">Region</label>
-									<p className="form-label-sm">
-										{users.DESC_REGION_VOTA_SUPERVISA}
+				<div className="container-row">
+					<section className="flex-auto bg-azul px-10 wd-20">
+						<OpcionesNav />
+					</section>
+					<section className="flex-auto Aligner-item--center wd-80">
+						<div className="container-row jc-center">
+							<div className="container-row  px-12 py-6">
+								<section className="flex-auto">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Local de Votacion
 									</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">Comuna</label>
-									<p className="form-label-sm">{users.DESC_COMUNA_VOTA}</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">Local</label>
-									<p className="form-label-sm">{users.DESC_LOCAL_VOTA}</p>
-								</div>
-								<div className="flex-auto">
-									<label className="form-label-sm fc-blue">
-										Mesa de Votacion
-									</label>
-									<p className="form-label-sm">{users.MESA_VOTA}</p>
-								</div>
+								</section>
 							</div>
 						</div>
-						<section className="flex-auto">
-							{/* Datos de SU LOCAL de Votacion */}
-							<section id="local">
-								<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
-									Datos de SU LOCAL de Votacion
-								</p>
-								<div className="container-row gap-3 pt-3">
-									<div className="flex-auto">
-										<label className="form-label-sm">Region</label>
-										<div className="bootstrap-select">
-											<select
-												name="cb_regiones"
-												id="cb_regiones"
-												className="texto-sm fc-grey"
-												onChange={(e) => {
-													cargaComunas(url_comunas + e.target.value);
-													setVotaRegion(e.target.value);
-													setVotaRegionGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setVotaComuna('');
-													setVotaComunaGlosa('Sin Informacion');
-													setVotaLocal('');
-													setVotaLocalGlosa('Sin Informacion');
-													setValido(false);
-													form.votaregion = e.target.value;
-													form.votaregionglosa =
-														e.target.options[e.target.selectedIndex].text;
-													form.selregion = e.target.value;
-													form.selregionglosa =
-														e.target.options[e.target.selectedIndex].text;
-												}}
-											>
-												<option value="" className="texto-sm fc-grey">
-													Elige una Region
-												</option>
-												{dbRegiones &&
-													dbRegiones.map((el) => (
-														<option
-															key={el.CODIGO}
-															value={el.CODIGO}
-															className="texto-sm fc-grey"
-														>
-															{el.DESCRIPCION}
-														</option>
-													))}
-											</select>
+						<div className="container-row jc-center">
+							<div className="container-row my-2">
+								<section className="flex-auto bd-1 px-12 py-6">
+									<p className="texto fw-semi-bold fc-grey pt-3">
+										Datos Personales
+									</p>
+									<div className="container-row gap-4">
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">Nombres</label>
+											<p className="form-label-sm">{users.NOMBRES}</p>
 										</div>
-										{errors.votaregion && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.votaregion}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label className="form-label-sm">Comuna</label>
-										<div className="bootstrap-select">
-											<select
-												name="cb_comunas"
-												id="cb_comunas"
-												className="texto-sm fc-grey"
-												onChange={(e) => {
-													cargaLocales(
-														url_locales + votaRegion + '/' + e.target.value
-													);
-													setVotaComuna(e.target.value);
-													setVotaComunaGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setVotaLocal('');
-													setVotaLocalGlosa('Sin Informacion');
-													setValido(false);
-													form.votacomuna = e.target.value;
-													form.votacomunaglosa =
-														e.target.options[e.target.selectedIndex].text;
-													form.selcomuna = e.target.value;
-													form.selcomunaglosa =
-														e.target.options[e.target.selectedIndex].text;
-												}}
-											>
-												<option value="" className="texto-sm fc-grey">
-													Elige una Comuna
-												</option>
-												{dbComunas &&
-													dbComunas.map((el) => (
-														<option
-															key={el.CODIGO}
-															value={el.CODIGO}
-															className="texto-sm fc-grey"
-														>
-															{el.DESCRIPCION}
-														</option>
-													))}
-											</select>
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">
+												Apellido Paterno
+											</label>
+											<p className="form-label-sm">{users.APELLIDO_PATERNO}</p>
 										</div>
-										{errors.votacomuna && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.votacomuna}
-											</p>
-										)}
-									</div>
-									<div className="flex-auto">
-										<label className="form-label-sm">Local</label>
-										<div className="bootstrap-select">
-											<select
-												name="cb_locales"
-												id="cb_locales"
-												className="texto-sm fc-grey"
-												onChange={(e) => {
-													setVotaLocal(e.target.value);
-													setVotaLocalGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setValido(false);
-													form.votalocal = e.target.value;
-													form.votalocalglosa =
-														e.target.options[e.target.selectedIndex].text;
-													form.sellocal = e.target.value;
-													form.sellocalglosa =
-														e.target.options[e.target.selectedIndex].text;
-												}}
-											>
-												<option value="" className="texto-sm fc-grey">
-													Elige un Local
-												</option>
-												{dbLocales &&
-													dbLocales.map((el) => (
-														<option
-															key={el.CODIGO}
-															value={el.CODIGO}
-															className="texto-sm fc-grey"
-														>
-															{el.DESCRIPCION}
-														</option>
-													))}
-											</select>
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">
+												Apellido Materno
+											</label>
+											<p className="form-label-sm">{users.APELLIDO_MATERNO}</p>
 										</div>
-										{errors.votalocal && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.votalocal}
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">
+												Carnet Identidad
+											</label>
+											<p className="form-label-sm">
+												{users.RUT + '-' + users.DV}
 											</p>
-										)}
+										</div>
 									</div>
-									<div className="flex-auto">
-										<label htmlFor="votamesa" className="form-label-sm">
-											Mesa de Votacion
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											id="votamesa"
-											name="votamesa"
-											value={form.votamesa}
-											placeholder="Numero de Mesa"
-											onChange={(e) => {
-												setVotaMesa(e.target.value);
-												form.votamesa = e.target.value;
-												form.selmesa = e.target.value;
-												setValido(true);
-												handleChange();
-											}}
-										/>
-										{errors.votamesa && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.votamesa}
+								</section>
+							</div>
+						</div>
+						<div className="container-row jc-center">
+							<div className="container-row my-2">
+								<section className="flex-auto bd-1 px-12 py-6">
+									<p className="texto fw-semi-bold fc-grey pt-3">
+										Local de Votacion del Apoderado
+									</p>
+									<div className="container-row gap-4">
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">Region</label>
+											<p className="form-label-sm">
+												{users.DESC_REGION_VOTA_SUPERVISA}
 											</p>
-										)}
+										</div>
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">Comuna</label>
+											<p className="form-label-sm">{users.DESC_COMUNA_VOTA}</p>
+										</div>
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">Local</label>
+											<p className="form-label-sm">{users.DESC_LOCAL_VOTA}</p>
+										</div>
+										<div className="flex-auto">
+											<label className="form-label-sm fc-blue">
+												Mesa de Votacion
+											</label>
+											<p className="form-label-sm">{users.MESA_VOTA}</p>
+										</div>
 									</div>
-								</div>
-							</section>
-						</section>
-						<button onClick={handleSubmit} className="btn-primary mt-8">
-							Aceptar
-						</button>
-						<button onClick={handleVolver} className="btn-primary mt-8">
-							Volver
-						</button>
+								</section>
+							</div>
+						</div>
+						<div className="container-row jc-center">
+							<div className="container-row">
+								<section className="flex-auto bd-1 px-12">
+									<section className="flex-auto">
+										{/* Datos de SU LOCAL de Votacion */}
+										<section id="local">
+											<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+												Datos de SU LOCAL de Votacion
+											</p>
+											<div className="container-row gap-3 pt-3">
+												<div className="flex-auto">
+													<label className="form-label-sm">Region</label>
+													<div className="bootstrap-select">
+														<select
+															name="cb_regiones"
+															id="cb_regiones"
+															className="texto-sm fc-grey"
+															onChange={(e) => {
+																cargaComunas(url_comunas + e.target.value);
+																setVotaRegion(e.target.value);
+																setVotaRegionGlosa(
+																	e.target.options[e.target.selectedIndex].text
+																);
+																setVotaComuna('');
+																setVotaComunaGlosa('Sin Informacion');
+																setVotaLocal('');
+																setVotaLocalGlosa('Sin Informacion');
+																setValido(false);
+																form.votaregion = e.target.value;
+																form.votaregionglosa =
+																	e.target.options[e.target.selectedIndex].text;
+																form.selregion = e.target.value;
+																form.selregionglosa =
+																	e.target.options[e.target.selectedIndex].text;
+															}}
+														>
+															<option value="" className="texto-sm fc-grey">
+																Elige una Region
+															</option>
+															{dbRegiones &&
+																dbRegiones.map((el) => (
+																	<option
+																		key={el.CODIGO}
+																		value={el.CODIGO}
+																		className="texto-sm fc-grey"
+																	>
+																		{el.DESCRIPCION}
+																	</option>
+																))}
+														</select>
+													</div>
+													{errors.votaregion && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.votaregion}
+														</p>
+													)}
+												</div>
+												<div className="flex-auto">
+													<label className="form-label-sm">Comuna</label>
+													<div className="bootstrap-select">
+														<select
+															name="cb_comunas"
+															id="cb_comunas"
+															className="texto-sm fc-grey"
+															onChange={(e) => {
+																cargaLocales(
+																	url_locales +
+																		votaRegion +
+																		'/' +
+																		e.target.value
+																);
+																setVotaComuna(e.target.value);
+																setVotaComunaGlosa(
+																	e.target.options[e.target.selectedIndex].text
+																);
+																setVotaLocal('');
+																setVotaLocalGlosa('Sin Informacion');
+																setValido(false);
+																form.votacomuna = e.target.value;
+																form.votacomunaglosa =
+																	e.target.options[e.target.selectedIndex].text;
+																form.selcomuna = e.target.value;
+																form.selcomunaglosa =
+																	e.target.options[e.target.selectedIndex].text;
+															}}
+														>
+															<option value="" className="texto-sm fc-grey">
+																Elige una Comuna
+															</option>
+															{dbComunas &&
+																dbComunas.map((el) => (
+																	<option
+																		key={el.CODIGO}
+																		value={el.CODIGO}
+																		className="texto-sm fc-grey"
+																	>
+																		{el.DESCRIPCION}
+																	</option>
+																))}
+														</select>
+													</div>
+													{errors.votacomuna && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.votacomuna}
+														</p>
+													)}
+												</div>
+												<div className="flex-auto">
+													<label className="form-label-sm">Local</label>
+													<div className="bootstrap-select">
+														<select
+															name="cb_locales"
+															id="cb_locales"
+															className="texto-sm fc-grey"
+															onChange={(e) => {
+																setVotaLocal(e.target.value);
+																setVotaLocalGlosa(
+																	e.target.options[e.target.selectedIndex].text
+																);
+																setValido(false);
+																form.votalocal = e.target.value;
+																form.votalocalglosa =
+																	e.target.options[e.target.selectedIndex].text;
+																form.sellocal = e.target.value;
+																form.sellocalglosa =
+																	e.target.options[e.target.selectedIndex].text;
+															}}
+														>
+															<option value="" className="texto-sm fc-grey">
+																Elige un Local
+															</option>
+															{dbLocales &&
+																dbLocales.map((el) => (
+																	<option
+																		key={el.CODIGO}
+																		value={el.CODIGO}
+																		className="texto-sm fc-grey"
+																	>
+																		{el.DESCRIPCION}
+																	</option>
+																))}
+														</select>
+													</div>
+													{errors.votalocal && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.votalocal}
+														</p>
+													)}
+												</div>
+												<div className="flex-auto">
+													<label htmlFor="votamesa" className="form-label-sm">
+														Mesa de Votacion
+													</label>
+													<input
+														type="text"
+														className="form-control-sm"
+														id="votamesa"
+														name="votamesa"
+														value={form.votamesa}
+														placeholder="Numero de Mesa"
+														onChange={(e) => {
+															setVotaMesa(e.target.value);
+															form.votamesa = e.target.value;
+															form.selmesa = e.target.value;
+															setValido(true);
+															handleChange();
+														}}
+													/>
+													{errors.votamesa && (
+														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
+															{errors.votamesa}
+														</p>
+													)}
+												</div>
+											</div>
+										</section>
+									</section>
+								</section>
+							</div>
+						</div>
+						<div className="container-row jc-center">
+							<div className="container-row">
+								<button onClick={handleSubmit} className="btn-primary mt-8">
+									Aceptar
+								</button>
+								<button onClick={handleVolver} className="btn-primary mt-8">
+									Volver
+								</button>
+							</div>
+						</div>
 					</section>
-					<section className="flex-auto wd-20"></section>
 				</div>
 			</main>
 			<VinculosNav />

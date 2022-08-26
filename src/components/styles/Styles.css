@@ -615,7 +615,7 @@ input[type="reset"] {
 }
 
 .navlink-sm:hover {
-    color: var(--secondaryColor);
+    color: var(--grey-light);
 }
 
 .navlink-md {

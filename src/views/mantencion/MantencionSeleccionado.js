@@ -96,6 +96,7 @@ function MantencionSeleccionados() {
 	const [selComuna, setSelComuna] = useState('');
 	const [selLocal, setSelLocal] = useState('');
 
+	const [selRegionglosa, setSelRegionGlosa] = useState('');
 	const [selComunaglosa, setSelComunaGlosa] = useState('');
 	const [selLocalglosa, setSelLocalGlosa] = useState('');
 

@@ -95,7 +95,8 @@ const validationsForm = (form) => {
 };
 
 const CasosFormPersonales = ({
-	updatePersonales,
+	setOpcion,
+	updatePersonal,
 	dataToEdit,
 	setDataToEdit,
 }) => {
@@ -127,10 +128,15 @@ const CasosFormPersonales = ({
 		setErrors((prevState) => validationsForm(form));
 
 		if (form.ERRORES === '0') {
-			updatePersonales(form);
+			updatePersonal(form);
 			setForm(initialForm);
 			setDataToEdit(null);
+			setOpcion('0');
 		}
+	};
+
+	const handleVolver = (e) => {
+		setOpcion('0');
 	};
 
 	return (
@@ -318,6 +324,9 @@ const CasosFormPersonales = ({
 					<div className="col-12 mt-2">
 						<Button variant="primary" size="sm" active onClick={handleSubmit}>
 							Aceptar
+						</Button>
+						<Button variant="primary" size="sm" active onClick={handleVolver}>
+							Volver
 						</Button>
 					</div>
 				</div>

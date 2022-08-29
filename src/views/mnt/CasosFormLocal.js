@@ -1,11 +1,6 @@
 // modulos
 import { useState, useEffect } from 'react';
-
-// url
-// import {
-// 	url_apoderados_query,
-// 	url_apoderados_put,
-// } from '../../components/routes/Urls';
+import Button from 'react-bootstrap/Button';
 
 import {
 	url_regiones,
@@ -15,13 +10,6 @@ import {
 
 const initialForm = {
 	Id: '',
-	// NOMBRES: '',
-	// APELLIDO_PATERNO: '',
-	// APELLIDO_MATERNO: '',
-	// RUT: '',
-	// DV: '',
-	// TELEFONO_MOVIL: '',
-	// EMAIL: '',
 	CODIGO_REGION_VOTA: '',
 	CODIGO_COMUNA_VOTA: '',
 	CODIGO_LOCAL_VOTA: '',
@@ -31,54 +19,51 @@ const initialForm = {
 const validationsForm = (form) => {
 	let errors = {};
 
-	form.errores = '0';
-
+	form.ERRORES = '0';
 	if (!form.CODIGO_REGION_VOTA) {
 		errors.CODIGO_REGION_VOTA = 'Seleccione su Region';
-		form.errores = '1';
+		form.ERRORES = '1';
 	}
 
 	if (!form.CODIGO_COMUNA_VOTA) {
 		errors.CODIGO_COMUNA_VOTA = 'Seleccione su Comuna';
-		form.errores = '1';
+		form.ERRORES = '1';
 	}
 
 	if (!form.CODIGO_LOCAL_VOTA) {
 		errors.CODIGO_LOCAL_VOTA = 'Seleccione su Local';
-		form.errores = '1';
+		form.ERRORES = '1';
 	}
 
 	if (!form.MESA_VOTA) {
 		errors.MESA_VOTA = 'Indiquenos su Mesa';
-		form.errores = '1';
+		form.ERRORES = '1';
 	}
 	return errors;
 };
 
-const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
+const CasosFormLocal = ({
+	setOpcion,
+	updateLocal,
+	dataToEdit,
+	setDataToEdit,
+}) => {
 	const [form, setForm] = useState(initialForm);
-	const [votaRegion, setVotaRegion] = useState('');
-	const [votaComuna, setVotaComuna] = useState('');
-	const [votaLocal, setVotaLocal] = useState('');
-	const [votaMesa, setVotaMesa] = useState('');
-
-	const [votaRegionglosa, setVotaRegionGlosa] = useState('');
-	const [votaComunaglosa, setVotaComunaGlosa] = useState('');
-	const [votaLocalglosa, setVotaLocalGlosa] = useState('');
 
 	const [dbRegiones, setDbRegiones] = useState('');
 	const [dbComunas, setDbComunas] = useState('');
 	const [dbLocales, setDbLocales] = useState('');
 
-	const [valido, setValido] = useState(false);
 	const [errors, setErrors] = useState({});
 
-	// alert(form.Id);
-
 	useEffect(() => {
-		setForm(initialForm);
-		setForm(dataToEdit);
-		cargaRegiones();
+		if (dataToEdit) {
+			setForm(initialForm);
+			setForm(dataToEdit);
+			cargaRegiones();
+		} else {
+			setForm(initialForm);
+		}
 	}, [dataToEdit]);
 
 	const cargaRegiones = async () => {
@@ -137,20 +122,20 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 			[name]: value,
 		});
 	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		setErrors(validationsForm(form));
 		setErrors((prevState) => validationsForm(form));
 
-		alert(JSON.stringify(errors));
-		alert(form.errores);
-
 		if (form.ERRORES === '0') {
 			updateLocal(form);
-			setForm(initialForm);
-			setDataToEdit(null);
 		}
+	};
+
+	const handleVolver = (e) => {
+		setOpcion('0');
 	};
 
 	return (
@@ -235,26 +220,15 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 										<label className="form-label-sm fc-blue">Region</label>
 										<div className="bootstrap-select">
 											<select
-												name="cb_regiones"
-												id="cb_regiones"
+												name="CODIGO_REGION_VOTA"
+												id="CODIGO_REGION_VOTA"
 												className="texto-sm fc-grey"
 												onChange={(e) => {
 													cargaComunas(url_comunas + e.target.value);
-													setVotaRegion(e.target.value);
-													setVotaRegionGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setVotaComuna('');
-													setVotaComunaGlosa('Sin Informacion');
-													setVotaLocal('');
-													setVotaLocalGlosa('Sin Informacion');
-													setValido(false);
 													form.CODIGO_REGION_VOTA = e.target.value;
-													form.votaregionglosa =
-														e.target.options[e.target.selectedIndex].text;
-													// form.selregion = e.target.value;
-													// form.selregionglosa =
-													// 	e.target.options[e.target.selectedIndex].text;
+													form.CODIGO_COMUNA_VOTA = '';
+													form.CODIGO_LOCAL_VOTA = '';
+													form.MESA_VOTA = '';
 												}}
 											>
 												<option value="" className="texto-sm fc-grey">
@@ -287,21 +261,14 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 												className="texto-sm fc-grey"
 												onChange={(e) => {
 													cargaLocales(
-														url_locales + votaRegion + '/' + e.target.value
+														url_locales +
+															form.CODIGO_REGION_VOTA +
+															'/' +
+															e.target.value
 													);
-													setVotaComuna(e.target.value);
-													setVotaComunaGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setVotaLocal('');
-													setVotaLocalGlosa('Sin Informacion');
-													setValido(false);
 													form.CODIGO_COMUNA_VOTA = e.target.value;
-													form.votacomunaglosa =
-														e.target.options[e.target.selectedIndex].text;
-													// form.selcomuna = e.target.value;
-													// form.selcomunaglosa =
-													// 	e.target.options[e.target.selectedIndex].text;
+													form.CODIGO_LOCAL_VOTA = '';
+													form.MESA_VOTA = '';
 												}}
 											>
 												<option value="" className="texto-sm fc-grey">
@@ -335,17 +302,9 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 												id="cb_locales"
 												className="texto-sm fc-grey"
 												onChange={(e) => {
-													setVotaLocal(e.target.value);
-													setVotaLocalGlosa(
-														e.target.options[e.target.selectedIndex].text
-													);
-													setValido(false);
+													// setVotaLocal(e.target.value);
 													form.CODIGO_LOCAL_VOTA = e.target.value;
-													form.votalocalglosa =
-														e.target.options[e.target.selectedIndex].text;
-													// form.sellocal = e.target.value;
-													// form.sellocalglosa =
-													// 	e.target.options[e.target.selectedIndex].text;
+													form.MESA_VOTA = '';
 												}}
 											>
 												<option value="" className="texto-sm fc-grey">
@@ -384,10 +343,7 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 											value={form.MESA_VOTA}
 											placeholder="Numero de Mesa"
 											onChange={(e) => {
-												// setVotaMesa(e.target.value);
 												form.MESA_VOTA = e.target.value;
-												// form.selmesa = e.target.value;
-												setValido(true);
 												handleChange(e);
 											}}
 										/>
@@ -405,6 +361,14 @@ const CasosFormLocal = ({ updateLocal, dataToEdit, setDataToEdit }) => {
 								<button onClick={handleSubmit} className="btn-primary">
 									Aceptar
 								</button>
+								<Button
+									variant="primary"
+									size="sm"
+									active
+									onClick={handleVolver}
+								>
+									Volver
+								</Button>
 							</div>
 						</div>
 					</form>

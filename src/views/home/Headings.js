@@ -10,14 +10,14 @@ function Headings() {
 		navigate('/');
 	}
 
-	function handleNomina(e) {
-		e.preventDefault();
-		navigate('/nomina');
-	}
+	// function handleNomina(e) {
+	// 	e.preventDefault();
+	// 	navigate('/nomina');
+	// }
 
 	function handleMnt(e) {
 		e.preventDefault();
-		navigate('/mnt');
+		navigate('/nomina');
 	}
 
 	function handleContacto(e) {
@@ -47,16 +47,12 @@ function Headings() {
 						Inicio
 					</p>
 				</article>
-				<article className="flex-auto">
+				{/* <article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleNomina}>
 						Nomina
 					</p>
-				</article>
-				<article className="flex-auto">
-					<p className="navlink fc-white" onClick={handleMnt}>
-						Mnt
-					</p>
-				</article>
+				</article> */}
+				npm start
 				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto

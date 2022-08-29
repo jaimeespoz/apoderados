@@ -1,12 +1,6 @@
 import CasosRow from './CasosRow';
 
-const CasosTabla = ({
-	data,
-	setOpcion,
-	setDataToEdit,
-	updatePersonales,
-	updateLocal,
-}) => {
+const CasosTabla = ({ data, setOpcion, setDataToEdit }) => {
 	return (
 		<div className="container">
 			<div className="row my-4">
@@ -39,8 +33,6 @@ const CasosTabla = ({
 												el={el}
 												setOpcion={setOpcion}
 												setDataToEdit={setDataToEdit}
-												updatePersonales={updatePersonales}
-												updateLocal={updateLocal}
 											/>
 										))
 									) : (

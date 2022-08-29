@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { url_apoderados_query } from '../../components/routes/Urls';
-import { fecha_del_dia_aaaammdd } from '../../utils/FuncionesFechas';
 import Headings from '../home/Headings';
 import { VinculosNav } from '../../components/layout';
 
@@ -10,10 +9,13 @@ import CasosTabla from './CasosTabla';
 import CasosFormPersonales from './CasosFormPersonales';
 import CasosFormLocal from './CasosFormLocal';
 import CasosFormSeleccion from './CasosFormSeleccion';
+import CasosFormContactado from './CasosFormContactado';
+import CasosFormNoPuede from './CasosFormNoPuede';
+import CasosFormBlanco from './CasosFormBlanco';
 
 const Nomina = () => {
 	const [db, setDb] = useState(null);
-	const [opcion, setOpcion] = useState('1');
+	const [opcion, setOpcion] = useState('0');
 	const [dataToEdit, setDataToEdit] = useState(null);
 
 	useEffect(() => {
@@ -23,9 +25,9 @@ const Nomina = () => {
 	const carga_query = () => {
 		let data = {
 			filter:
-				// 'APELLIDO_PATERNO="THOMAS" CONTACTADO=0 OR TIPO_LOCAL_MESA<>"none" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-				'APELLIDO_PATERNO="THOMAS"',
-			limit: 300,
+				'CONTACTADO=0 OR TIPO_LOCAL_MESA<>"Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			// 'APELLIDO_PATERNO="THOMAS"',
+			limit: 20,
 		};
 
 		fetch(url_apoderados_query, {
@@ -44,24 +46,24 @@ const Nomina = () => {
 			});
 	};
 
-	const createData = (data) => {
-		data.id = Date.now();
+	// const createData = (data) => {
+	// 	data.id = Date.now();
 
-		let options = {
-			body: data,
-			headers: { 'content-type': 'application/json' },
-		};
+	// 	let options = {
+	// 		body: data,
+	// 		headers: { 'content-type': 'application/json' },
+	// 	};
 
-		// api.post(url, options).then((res) => {
-		// 	if (!res.err) {
-		// 		setDb([...db, res]);
-		// 	} else {
-		// 		setError(res);
-		// 	}
-		// });
-	};
+	// 	// api.post(url, options).then((res) => {
+	// 	// 	if (!res.err) {
+	// 	// 		setDb([...db, res]);
+	// 	// 	} else {
+	// 	// 		setError(res);
+	// 	// 	}
+	// 	// });
+	// };
 
-	const updatePersonales = async (form) => {
+	const updatePersonal = async (form) => {
 		let data = {
 			Id: form.Id,
 			RUT: form.CUERPO,
@@ -73,8 +75,7 @@ const Nomina = () => {
 			EMAIL: form.EMAIL,
 		};
 
-		// alert(form.Id);
-		// alert('data: ' + JSON.stringify(data));
+		// alert(JSON.stringify(data));
 		await fetch(url_apoderados_put + form.Id, {
 			method: 'post',
 			headers: {
@@ -89,7 +90,7 @@ const Nomina = () => {
 					alert('No se pudo grabar');
 				}
 				if (result.filasafectadas === 1) {
-					// alert('Grabado');
+					alert('Cambios Grabados');
 					carga_query();
 				}
 			})
@@ -99,92 +100,15 @@ const Nomina = () => {
 	};
 
 	const updateLocal = async (form) => {
-		alert('updateLocal');
 		let data = {
-			CODIGO_REGION_VOTA: form.votaregion,
-			CODIGO_COMUNA_VOTA: form.votacomuna,
-			CODIGO_LOCAL_VOTA: form.votalocal,
-			MESA_VOTA: form.votamesa,
+			Id: form.Id,
+			CODIGO_REGION_VOTA: form.CODIGO_REGION_VOTA,
+			CODIGO_COMUNA_VOTA: form.CODIGO_COMUNA_VOTA,
+			CODIGO_LOCAL_VOTA: form.CODIGO_LOCAL_VOTA,
+			MESA_VOTA: form.MESA_VOTA,
 		};
 
-		alert('data: ' + JSON.stringify(data));
-		// await fetch(url_apoderados_put + form.Id, {
-		// 	method: 'post',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify(data),
-		// })
-		// 	.then((res) => res.json())
-		// 	.then((result) => {
-		// 		if (result.filasafectadas === 0) {
-		// 			alert('No se pudo grabar');
-		// 		}
-		// 		if (result.filasafectadas === 1) {
-		// 			alert('Grabado');
-		// 		}
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	});
-	};
-
-	const updateSeleccion = async (form) => {};
-
-	const deleteData = (id) => {
-		let isDelete = window.confirm(
-			`¿Estás seguro de eliminar el registro con el id '${id}'?`
-		);
-
-		// if (isDelete) {
-		// 	let endpoint = `${url}/${id}`;
-		// 	let options = {
-		// 		headers: { 'content-type': 'application/json' },
-		// 	};
-
-		// 	api.del(endpoint, options).then((res) => {
-		// 		if (!res.err) {
-		// 			let newData = db.filter((el) => el.id !== id);
-		// 			setDb(newData);
-		// 		} else {
-		// 			setError(res);
-		// 		}
-		// 	});
-		// } else {
-		// 	return;
-		// }
-	};
-
-	const handleContacto = async (Id) => {
-		let data = {
-			CONTACTADO: '1',
-			CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-		};
-
-		await fetch(url_apoderados_put + Id, {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		})
-			.then((res) => res.json())
-			.then((result) => {
-				carga_query();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-	const handleNoPuede = async (Id) => {
-		let data = {
-			CONTACTADO: '1',
-			CONTACTADO_CUANDO: fecha_del_dia_aaaammdd,
-			TIPO_LOCAL_MESA: 'Z',
-		};
-
-		await fetch(url_apoderados_put + Id, {
+		await fetch(url_apoderados_put + form.Id, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -195,6 +119,125 @@ const Nomina = () => {
 			.then((result) => {
 				if (result.filasafectadas === 0) {
 					alert('No se pudo grabar');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const updateSeleccion = async (form) => {
+		let data = {
+			Id: form.Id,
+			CODIGO_COMUNA_ASIGNADA: form.CODIGO_COMUNA_ASIGNADA,
+			CODIGO_LOCAL_ASIGNADO: form.CODIGO_LOCAL_ASIGNADO,
+			CODIGO_MESA_ASIGNADA: form.CODIGO_MESA_ASIGNADA,
+		};
+
+		await fetch(url_apoderados_put + form.Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.filasafectadas === 0) {
+					alert('No se pudo grabar');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	// const deleteData = (id) => {
+	// 	let isDelete = window.confirm(
+	// 		`¿Estás seguro de eliminar el registro con el id '${id}'?`
+	// 	);
+
+	// 	// if (isDelete) {
+	// 	// 	let endpoint = `${url}/${id}`;
+	// 	// 	let options = {
+	// 	// 		headers: { 'content-type': 'application/json' },
+	// 	// 	};
+
+	// 	// 	api.del(endpoint, options).then((res) => {
+	// 	// 		if (!res.err) {
+	// 	// 			let newData = db.filter((el) => el.id !== id);
+	// 	// 			setDb(newData);
+	// 	// 		} else {
+	// 	// 			setError(res);
+	// 	// 		}
+	// 	// 	});
+	// 	// } else {
+	// 	// 	return;
+	// 	// }
+	// };
+
+	const updateContacto = async (form) => {
+		let data = {
+			Id: form.Id,
+			CONTACTADO: form.CONTACTADO,
+			CONTACTADO_CUANDO: form.CONTACTADO_CUANDO,
+			TIPO_LOCAL_MESA: form.TIPO_LOCAL_MESA,
+		};
+
+		await fetch(url_apoderados_put + form.Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				alert(JSON.stringify(result));
+				if (result.filasafectadas === 0) {
+					alert('No se pudo grabar');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const updateNoPuede = async (form) => {
+		let data = {
+			Id: form.Id,
+			CONTACTADO: form.CONTACTADO,
+			CONTACTADO_CUANDO: form.CONTACTADO_CUANDO,
+			TIPO_LOCAL_MESA: form.TIPO_LOCAL_MESA,
+		};
+
+		await fetch(url_apoderados_put + form.Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.filasafectadas === 0) {
+					alert('No se pudo grabar');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
 				}
 			})
 			.catch((err) => {
@@ -215,17 +258,18 @@ const Nomina = () => {
 										data={db}
 										setOpcion={setOpcion}
 										setDataToEdit={setDataToEdit}
-										updatePersonales={updatePersonales}
-										updateLocal={updateLocal}
-										// deleteData={deleteData}
-										// handleContacto={handleContacto}
-										// handleNoPuede={handleNoPuede}
 									/>
 								</div>
+								{opcion === '0' && (
+									<div className="col-6">
+										<CasosFormBlanco />
+									</div>
+								)}
 								{opcion === '1' && (
 									<div className="col-6">
 										<CasosFormPersonales
-											updatePersonales={updatePersonales}
+											setOpcion={setOpcion}
+											updatePersonal={updatePersonal}
 											dataToEdit={dataToEdit}
 											setDataToEdit={setDataToEdit}
 										/>
@@ -234,6 +278,7 @@ const Nomina = () => {
 								{opcion === '2' && (
 									<div className="col-6">
 										<CasosFormLocal
+											setOpcion={setOpcion}
 											updateLocal={updateLocal}
 											dataToEdit={dataToEdit}
 											setDataToEdit={setDataToEdit}
@@ -243,7 +288,28 @@ const Nomina = () => {
 								{opcion === '3' && (
 									<div className="col-6">
 										<CasosFormSeleccion
+											setOpcion={setOpcion}
 											updateSeleccion={updateSeleccion}
+											dataToEdit={dataToEdit}
+											setDataToEdit={setDataToEdit}
+										/>
+									</div>
+								)}
+								{opcion === '4' && (
+									<div className="col-6">
+										<CasosFormNoPuede
+											setOpcion={setOpcion}
+											updateNoPuede={updateNoPuede}
+											dataToEdit={dataToEdit}
+											setDataToEdit={setDataToEdit}
+										/>
+									</div>
+								)}
+								{opcion === '5' && (
+									<div className="col-6">
+										<CasosFormContactado
+											setOpcion={setOpcion}
+											updateContacto={updateContacto}
 											dataToEdit={dataToEdit}
 											setDataToEdit={setDataToEdit}
 										/>

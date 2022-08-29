@@ -1,10 +1,7 @@
 // modulos
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-	fecha_del_dia_aaaammdd,
-	fecha_nula_aaaammdd,
-} from '../../utils/FuncionesFechas';
+import { fecha_nula_aaaammdd } from '../../utils/FuncionesFechas';
 
 import { useLocation } from 'react-router-dom';
 import Headings from '../home/Headings';

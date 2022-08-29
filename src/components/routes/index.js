@@ -52,7 +52,7 @@ export const Rutas = () => {
 				<Route path="/" element={<Home />} />
 				<Route path="/registroapoderados" element={<RegistroApoderados />} />
 				<Route path="/seleccion" element={<Seleccion />} />
-				<Route path="/nomina" element={<NominaApoderados />} />
+				{/* <Route path="/nomina" element={<NominaApoderados />} /> */}
 				<Route path="/contacto" element={<Contacto />} />
 				<Route path="/mantencion" element={<Mantencion />} />
 				<Route path="/personales" element={<MantencionPersonales />} />
@@ -60,7 +60,7 @@ export const Rutas = () => {
 				<Route path="/seleccionados" element={<MantencionSeleccionados />} />
 				<Route path="/contactados" element={<Contactados />} />
 				<Route path="/nopuede" element={<NoPuede />} />
-				<Route path="/mnt" element={<Nomina />} />
+				<Route path="/nomina" element={<Nomina />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

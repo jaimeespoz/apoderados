@@ -1,16 +1,9 @@
 // modulos
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import Headings from '../home/Headings';
-import { OpcionesNav, VinculosNav } from '../../components/layout';
 import TipoParticipacion from '../../const';
+import Button from 'react-bootstrap/Button';
 
 // url
-import {
-	url_apoderados_query,
-	url_apoderados_put,
-} from '../../components/routes/Urls';
 import {
 	url_regiones,
 	url_comunas,
@@ -19,106 +12,108 @@ import {
 import TipoApoderados from '../../api/TipoApoderados.json';
 
 const initialForm = {
-	selregion: '',
-	selregionglosa: '',
-	selcomuna: '',
-	selcomunaglosa: '',
-	sellocal: '',
-	sellocalglosa: '',
-	selmesa: '',
-	preferencia: '',
-	errores: '0',
+	Id: '',
+	CODIGO_REGION_VOTA: '',
+	CODIGO_COMUNA_VOTA: '',
+	CODIGO_LOCAL_VOTA: '',
+	MESA_VOTA: '',
+	PREFERENCIA_APODERADO: '',
+	CODIGO_COMUNA_ASIGNADA: '',
+	CODIGO_LOCAL_ASIGNADO: '',
+	CODIGO_MESA_ASIGNADA: '',
 };
 
 const validationsForm = (form) => {
 	let errors = {};
 
-	form.errores = '0';
-	if (!form.preferencia) {
-		errors.preferencia = 'Seleccione su Preferencia';
-		form.errores = '1';
-	} else {
-		segunpreferencia(form);
+	form.ERRORES = '0';
+	if (!form.PREFERENCIA_APODERADO) {
+		errors.PREFERENCIA_APODERADO = 'Seleccione su Preferencia';
+		form.ERRORES = '1';
 	}
 
-	if (form.preferencia === '3') {
-		if (!form.sellocal) {
-			errors.sellocal = 'Seleccione el Local';
-			form.errores = '1';
+	if (form.PREFERENCIA_APODERADO === '3') {
+		if (!form.CODIGO_LOCAL_ASIGNADO) {
+			errors.CODIGO_LOCAL_ASIGNADO = 'Seleccione el Local';
+			form.ERRORES = '1';
 		}
 	}
+	if (form.PREFERENCIA_APODERADO === '4') {
+		if (!form.CODIGO_COMUNA_ASIGNADA) {
+			errors.CODIGO_COMUNA_ASIGNADA = 'Seleccione una Comuna';
+			form.ERRORES = '1';
+		}
+		if (!form.CODIGO_LOCAL_ASIGNADO) {
+			errors.CODIGO_LOCAL_ASIGNADO = 'Seleccione el Local';
+			form.ERRORES = '1';
+		}
+		if (form.PREFERENCIA_APODERADO === '3') {
+			if (!form.CODIGO_COMUNA_ASIGNADA) {
+				errors.CODIGO_COMUNA_ASIGNADA = 'Seleccione una Comunal';
+				form.ERRORES = '1';
+			}
+		}
+	}
+
+	if (form.ERRORES === '0') {
+		switch (form.PREFERENCIA_APODERADO) {
+			case '1':
+				form.CODIGO_COMUNA_ASIGNADA = form.CODIGO_COMUNA_VOTA;
+				form.CODIGO_LOCAL_ASIGNADO = form.CODIGO_LOCAL_VOTA;
+				form.CODIGO_MESA_ASIGNADA = form.MESA_VOTA;
+				break;
+			case '2':
+				form.CODIGO_COMUNA_ASIGNADA = form.CODIGO_COMUNA_VOTA;
+				form.CODIGO_LOCAL_ASIGNADO = form.CODIGO_LOCAL_VOTA;
+				form.CODIGO_MESA_ASIGNADA = '0';
+				break;
+			case '3':
+				form.CODIGO_COMUNA_ASIGNADA = form.CODIGO_COMUNA_VOTA;
+				form.CODIGO_MESA_ASIGNADA = '0';
+				break;
+			case '4':
+				form.CODIGO_MESA_ASIGNADA = '0';
+				break;
+			case '5':
+				form.CODIGO_LOCAL_ASIGNADO = '0';
+				form.CODIGO_MESA_ASIGNADA = '0';
+				break;
+			default:
+				form.CODIGO_COMUNA_ASIGNADA = '0';
+				form.CODIGO_LOCAL_ASIGNADO = '0';
+				form.CODIGO_MESA_ASIGNADA = '0';
+				break;
+		}
+	}
+
 	return errors;
 };
 
-const segunpreferencia = (form) => {
-	switch (form.preferencia) {
-		case '1':
-			form.selregion = form.votaregion;
-			form.selcomuna = form.votacomuna;
-			form.sellocal = form.votalocal;
-			form.selmesa = form.votamesa;
-			return;
-		case '2':
-			form.selregion = form.votaregion;
-			form.selcomuna = form.votacomuna;
-			form.sellocal = form.votalocal;
-			form.selmesa = '';
-			return;
-		case '3':
-			form.selregion = form.votaregion;
-			form.selcomuna = form.votacomuna;
-			form.sellocal = '';
-			form.selmesa = '';
-			return;
-		case '4':
-			form.selregion = form.votaregion;
-			form.selcomuna = form.votacomuna;
-			form.sellocal = form.votalocal;
-			form.selmesa = '';
-			return;
-		case '5':
-			form.selregion = form.votaregion;
-			form.selcomuna = form.votacomuna;
-			form.sellocal = '';
-			form.selmesa = '';
-			return;
-		default:
-			return;
-	}
-};
-
-const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
+const CasosFormSeleccion = ({
+	setOpcion,
+	updateSeleccion,
+	dataToEdit,
+	setDataToEdit,
+}) => {
 	const [form, setForm] = useState(initialForm);
-	const [votaRegion, setVotaRegion] = useState('');
-	const [votaComuna, setVotaComuna] = useState('');
-	const [votaLocal, setVotaLocal] = useState('');
-	const [votaMesa, setVotaMesa] = useState('');
-
-	const [votaRegionglosa, setVotaRegionGlosa] = useState('');
-	const [votaComunaglosa, setVotaComunaGlosa] = useState('');
-	const [votaLocalglosa, setVotaLocalGlosa] = useState('');
 
 	const [dbRegiones, setDbRegiones] = useState('');
 	const [dbComunas, setDbComunas] = useState('');
 	const [dbLocales, setDbLocales] = useState('');
 
-	const [selComuna, setSelComuna] = useState('');
-	const [selLocal, setSelLocal] = useState('');
-
-	const [selComunaglosa, setSelComunaGlosa] = useState('');
-	const [selLocalglosa, setSelLocalGlosa] = useState('');
-
-	const [valido, setValido] = useState(false);
 	const [errors, setErrors] = useState({});
 	const [dbTipoApoderados, setDbTipoApoderados] = useState(null);
 	const [tipoApoderados, setTipoApoderados] = useState(null);
 
 	useEffect(() => {
-		setForm(dataToEdit);
-		setDbTipoApoderados(TipoApoderados.tipoapoderados);
-		//		cargaApoderado();
-		cargaRegiones();
-	}, []);
+		if (dataToEdit) {
+			setForm(dataToEdit);
+			setDbTipoApoderados(TipoApoderados.tipoapoderados);
+			cargaRegiones();
+		} else {
+			setForm(initialForm);
+		}
+	}, [dataToEdit]);
 
 	const cargaRegiones = async () => {
 		await fetch(url_regiones, {
@@ -168,46 +163,21 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 			});
 	};
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-
-		setForm({
-			...form,
-			[name]: value,
-		});
-	};
 	const handleSubmit = async (e) => {
-		// 	e.preventDefault();
-		// 	setErrors(validationsForm(form));
-		// 	setErrors((prevState) => validationsForm(form));
-		// 	if (form.errores === '0') {
-		// 		let data = {
-		// 			CODIGO_REGION_VOTA: form.votaregion,
-		// 			CODIGO_COMUNA_VOTA: form.votacomuna,
-		// 			CODIGO_LOCAL_VOTA: form.votalocal,
-		// 			MESA_VOTA: form.votamesa,
-		// 		};
-		// 		fetch(url_apoderados_put + Id, {
-		// 			method: 'post',
-		// 			headers: {
-		// 				'Content-Type': 'application/json',
-		// 			},
-		// 			body: JSON.stringify(data),
-		// 		})
-		// 			.then((res) => res.json())
-		// 			.then((result) => {
-		// 				if (result.filasafectadas === 0) {
-		// 					alert('No se pudo grabar');
-		// 				}
-		// 				if (result.filasafectadas === 1) {
-		// 					alert('Grabado');
-		// 				}
-		// 			})
-		// 			.catch((err) => {
-		// 				console.log(err);
-		// 			});
-		// 		navigate('/mantencion', { state: { Id: Id } });
-		// 	}
+		e.preventDefault();
+
+		setErrors(validationsForm(form));
+		setErrors((prevState) => validationsForm(form));
+
+		if (form.ERRORES === '0') {
+			alert('aca');
+			updateSeleccion(form);
+			setDataToEdit(null);
+		}
+	};
+
+	const handleVolver = (e) => {
+		setOpcion('0');
 	};
 
 	return (
@@ -342,7 +312,7 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 												id="cb_preferencia"
 												className="texto-sm fc-grey"
 												onChange={(e) => {
-													form.preferencia = e.target.value;
+													form.PREFERENCIA_APODERADO = e.target.value;
 													setTipoApoderados(e.target.value);
 													cargaComunas(url_comunas + form.CODIGO_REGION_VOTA);
 													if (e.target.value === '3') {
@@ -373,9 +343,9 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 													))}
 											</select>
 										</div>
-										{errors.preferencia && (
+										{errors.PREFERENCIA_APODERADO && (
 											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.preferencia}
+												{errors.PREFERENCIA_APODERADO}
 											</p>
 										)}
 									</div>
@@ -537,17 +507,17 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 																				id="cb_locales_seleccion"
 																				className="texto-sm fc-grey"
 																				onChange={(e) => {
-																					setSelLocal(e.target.value);
-																					setSelLocalGlosa(
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text
-																					);
+																					// setSelLocal(e.target.value);
+																					// setSelLocalGlosa(
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text
+																					// );
 																					form.sellocal = e.target.value;
-																					form.setlocalglosa =
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text;
+																					// form.setlocalglosa =
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text;
 																				}}
 																			>
 																				<option
@@ -614,19 +584,19 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 																							'/' +
 																							e.target.value
 																					);
-																					setSelComuna(e.target.value);
-																					setSelComunaGlosa(
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text
-																					);
-																					setSelLocal('');
-																					setSelLocalGlosa('Sin Informacion');
+																					// setSelComuna(e.target.value);
+																					// setSelComunaGlosa(
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text
+																					// );
+																					// setSelLocal('');
+																					// setSelLocalGlosa('Sin Informacion');
 																					form.selcomuna = e.target.value;
-																					form.selcomunaglosa =
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text;
+																					// form.selcomunaglosa =
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text;
 																				}}
 																			>
 																				<option
@@ -662,17 +632,17 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 																				id="cb_locales_seleccion"
 																				className="texto-sm fc-grey"
 																				onChange={(e) => {
-																					setSelLocal(e.target.value);
-																					setSelLocalGlosa(
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text
-																					);
+																					// setSelLocal(e.target.value);
+																					// setSelLocalGlosa(
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text
+																					// );
 																					form.sellocal = e.target.value;
-																					form.sellocalglosa =
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text;
+																					// form.sellocalglosa =
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text;
 																				}}
 																			>
 																				<option
@@ -732,17 +702,17 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 																				id="cb_comunas_seleccion"
 																				className="texto-sm fc-grey"
 																				onChange={(e) => {
-																					setSelComuna(e.target.value);
-																					setSelComunaGlosa(
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text
-																					);
+																					// setSelComuna(e.target.value);
+																					// setSelComunaGlosa(
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text
+																					// );
 																					form.selcomuna = e.target.value;
-																					form.selcomunaglosa =
-																						e.target.options[
-																							e.target.selectedIndex
-																						].text;
+																					// form.selcomunaglosa =
+																					// 	e.target.options[
+																					// 		e.target.selectedIndex
+																					// 	].text;
 																				}}
 																			>
 																				<option
@@ -781,6 +751,14 @@ const CasosFormSeleccion = ({ updateSeleccion, dataToEdit, setDataToEdit }) => {
 								<button onClick={handleSubmit} className="btn-primary">
 									Aceptar
 								</button>
+								<Button
+									variant="primary"
+									size="sm"
+									active
+									onClick={handleVolver}
+								>
+									Volver
+								</Button>
 							</div>
 						</div>
 					</form>

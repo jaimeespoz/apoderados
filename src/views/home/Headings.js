@@ -52,7 +52,6 @@ function Headings() {
 						Nomina
 					</p>
 				</article> */}
-				npm start
 				<article className="flex-auto">
 					<p className="navlink fc-white" onClick={handleContacto}>
 						Contacto

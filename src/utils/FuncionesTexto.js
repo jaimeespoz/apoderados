@@ -1,6 +1,6 @@
 export const formatea_celular = (numero) => {
 	let resultado = numero;
-	if (numero !== '') {
+	if (numero.trim() !== '') {
 		let nro = numero.trim();
 		let largo = nro.length;
 

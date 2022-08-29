@@ -192,6 +192,7 @@ const Nomina = () => {
 			TIPO_LOCAL_MESA: form.TIPO_LOCAL_MESA,
 		};
 
+		// alert(JSON.stringify(data));
 		await fetch(url_apoderados_put + form.Id, {
 			method: 'post',
 			headers: {
@@ -201,7 +202,7 @@ const Nomina = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				alert(JSON.stringify(result));
+				// alert(JSON.stringify(result));
 				if (result.filasafectadas === 0) {
 					alert('No se pudo grabar');
 				}

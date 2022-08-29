@@ -1,7 +1,6 @@
 import 'styled-components';
 import React, { useState, useEffect } from 'react';
 import DataTable, { defaultThemes } from 'react-data-table-component';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { url_apoderados_query } from '../../components/routes/Urls';
 import { fecha_del_dia_aaaammdd } from '../../utils/FuncionesFechas';
 

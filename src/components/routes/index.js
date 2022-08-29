@@ -14,6 +14,7 @@ import MantencionLocal from '../../views/mantencion/MantencionLocal';
 import MantencionSeleccionados from '../../views/mantencion/MantencionSeleccionado';
 import Contactados from '../../views/mantencion/Contactados';
 import NoPuede from '../../views/mantencion/NoPuede';
+import Nomina from '../../views/mnt/Nomina';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -59,6 +60,7 @@ export const Rutas = () => {
 				<Route path="/seleccionados" element={<MantencionSeleccionados />} />
 				<Route path="/contactados" element={<Contactados />} />
 				<Route path="/nopuede" element={<NoPuede />} />
+				<Route path="/mnt" element={<Nomina />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

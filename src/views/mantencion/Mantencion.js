@@ -41,8 +41,33 @@ function Mantencion() {
 			});
 	};
 
+	// const updatePersonales = async (data) => {
+	// 	let endpoint = `${url_apoderados_put}${Row.id}`;
+
+	// 	await fetch(endpoint, {
+	// 		method: 'post',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 		body: JSON.stringify(data),
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((result) => {
+	// 			alert(JSON.stringify(result));
+	// 			if (result.filasafectadas === 0) {
+	// 				alert('No se pudo grabar');
+	// 			}
+	// 			if (result.filasafectadas === 1) {
+	// 				alert('Grabado');
+	// 			}
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// };
+
 	const handlePersonales = (e) => {
-		navigate('/personales', { state: { Row: Row } });
+		navigate('/personales', { state: { Id: Id } });
 	};
 
 	const handleLocales = (e) => {

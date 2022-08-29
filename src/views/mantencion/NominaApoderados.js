@@ -80,9 +80,11 @@ const NominaApoderados = () => {
 		setFiltrados(result);
 	}, [search]);
 
+	// filter: 'CONTACTADO=0 OR TIPO_LOCAL_MESA<>"none"',
 	const carga_query = async () => {
 		let data = {
-			filter: 'NOMBRES<>"" AND CONTACTADO<>"1" AND TIPO_LOCAL_MESA<>"Z"',
+			filter:
+				'NOMBRES LIKE "%LL%" OR APELLIDO_PATERNO LIKE "%LL%" OR APELLIDO_MATERNO LIKE "%LL%"',
 			limit: 100,
 		};
 

@@ -334,9 +334,9 @@ function MantencionLocal() {
 																))}
 														</select>
 													</div>
-													{errors.votaregion && (
+													{errors.CODIGO_REGION_VOTA && (
 														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votaregion}
+															{errors.CODIGO_REGION_VOTA}
 														</p>
 													)}
 												</div>
@@ -384,9 +384,9 @@ function MantencionLocal() {
 																))}
 														</select>
 													</div>
-													{errors.votacomuna && (
+													{errors.CODIGO_COMUNA_VOTA && (
 														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votacomuna}
+															{errors.CODIGO_COMUNA_VOTA}
 														</p>
 													)}
 												</div>
@@ -426,34 +426,34 @@ function MantencionLocal() {
 																))}
 														</select>
 													</div>
-													{errors.votalocal && (
+													{errors.CODIGO_LOCAL_VOTA && (
 														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votalocal}
+															{errors.CODIGO_LOCAL_VOTA}
 														</p>
 													)}
 												</div>
 												<div className="flex-auto">
-													<label htmlFor="votamesa" className="form-label-sm">
+													<label htmlFor="MESA_VOTA" className="form-label-sm">
 														Mesa de Votacion
 													</label>
 													<input
 														type="text"
 														className="form-control-sm"
-														id="votamesa"
-														name="votamesa"
-														value={form.votamesa}
+														id="MESA_VOTA"
+														name="MESA_VOTA"
+														value={form.MESA_VOTA}
 														placeholder="Numero de Mesa"
 														onChange={(e) => {
 															setVotaMesa(e.target.value);
-															form.votamesa = e.target.value;
+															form.MESA_VOTA = e.target.value;
 															form.selmesa = e.target.value;
 															setValido(true);
 															handleChange();
 														}}
 													/>
-													{errors.votamesa && (
+													{errors.MESA_VOTA && (
 														<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-															{errors.votamesa}
+															{errors.MESA_VOTA}
 														</p>
 													)}
 												</div>

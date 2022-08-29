@@ -16,6 +16,11 @@ const Opciones = [
 		path: '/nopuede',
 		icon: <FaIcons.FaGit />,
 	},
+	{
+		title: 'Nuevo',
+		path: '/mnt',
+		icon: <FaIcons.FaGit />,
+	},
 ];
 
 export default Opciones;

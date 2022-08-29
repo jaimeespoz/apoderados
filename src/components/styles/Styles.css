@@ -955,3 +955,32 @@ input[type="reset"] {
     color: #15cdfc;
     line-height: 26px;
 } */
+
+.img-opciones {
+    height: 18px;
+    width: auto;
+}
+
+/* .row {
+    padding: 0 !important;
+    margin: 0 !important;
+} */
+
+/* .col,
+[class*="col-"] {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+} */
+
+/* .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    [class*="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+} */

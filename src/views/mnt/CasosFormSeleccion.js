@@ -1,6 +1,6 @@
 // modulos
 import { useState, useEffect } from 'react';
-import TipoParticipacion from '../../const';
+import { TipoParticipacion } from '../../const';
 import Button from 'react-bootstrap/Button';
 
 // url

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { url_apoderados_query } from '../../components/routes/Urls';
 import Headings from '../home/Headings';
 import { VinculosNav } from '../../components/layout';
+import { Casos_Por_Contactar, Casos_Limite } from '../../const';
 
 // url
 import { url_apoderados_put } from '../../components/routes/Urls';
@@ -26,9 +27,9 @@ const Nomina = () => {
 		let data = {
 			filter:
 				'CONTACTADO=0 OR TIPO_LOCAL_MESA<>"Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			// 'APELLIDO_PATERNO="THOMAS"',
-			limit: 20,
+			limit: 50,
 		};
+		// alert(JSON.stringify(data));
 
 		fetch(url_apoderados_query, {
 			method: 'post',

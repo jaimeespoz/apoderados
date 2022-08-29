@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Headings from '../home/Headings';
 import { OpcionesNav, VinculosNav } from '../../components/layout';
-import TipoParticipacion from '../../const';
+import { TipoParticipacion } from '../../const';
 
 // url
 import { url_apoderados_query } from '../../components/routes/Urls';

@@ -1,4 +1,4 @@
-const TipoParticipacion = (cod) => {
+export const TipoParticipacion = (cod) => {
 	switch (cod) {
 		case '1':
 			return 'Mismo Local y Misma Mesa';
@@ -15,4 +15,8 @@ const TipoParticipacion = (cod) => {
 	}
 };
 
-export default TipoParticipacion;
+export const Casos_Por_Contactar = {
+	Filter:
+		'CONTACTADO=0 OR TIPO_LOCAL_MESA<>"Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+};
+export const Casos_Limite = '20';

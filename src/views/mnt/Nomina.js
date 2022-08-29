@@ -26,7 +26,8 @@ const Nomina = () => {
 	const carga_query = () => {
 		let data = {
 			filter:
-				'CONTACTADO=0 OR TIPO_LOCAL_MESA<>"Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+				'CONTACTADO=0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			// 'CONTACTADO=1 AND TIPO_LOCAL_MESA="Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
 			limit: 50,
 		};
 		// alert(JSON.stringify(data));
@@ -193,7 +194,6 @@ const Nomina = () => {
 			TIPO_LOCAL_MESA: form.TIPO_LOCAL_MESA,
 		};
 
-		// alert(JSON.stringify(data));
 		await fetch(url_apoderados_put + form.Id, {
 			method: 'post',
 			headers: {
@@ -203,6 +203,7 @@ const Nomina = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
+				// alert(JSON.stringify(data));
 				// alert(JSON.stringify(result));
 				if (result.filasafectadas === 0) {
 					alert('No se pudo grabar');

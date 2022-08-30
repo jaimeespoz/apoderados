@@ -7,6 +7,7 @@ import Footer from './Footer';
 //
 import mountainImage from '../../components/assets/images/Fondo.jpg';
 import Logo from '../../components/assets/images/logo.jpg';
+import LogoTeam from '../../components/assets/images/LogoTeamPatriota.jpg';
 
 // css
 import '../../components/styles/Styles.css';
@@ -28,19 +29,23 @@ function Home() {
 			<main>
 				<div className=" text-white " style={backgroundImageStyle}>
 					<div className="bg-gradient-to-r from-black px-8 py-16">
-						<div className=" max-w-xl grid grid-cols-1 gap-8">
+						<div className=" max-w-xl grid grid-cols-1 gap-4">
 							<div className="w-16">
 								<img src={Logo} alt="" className="logo" />
 							</div>
-							<>La Diestra</>
-							<h2 className="text-xl uppercase font-bold">
+							<span className="texto-lg">La Diestra</span>
+							<div className="w-16">
+								<img src={LogoTeam} alt="" className="logo" />
+							</div>
+							<span className="texto-lg">Team Patriota</span>
+							<h2 className="text-xl uppercase font-bold mt-4">
 								Plebiscito 4 de Septiembre del 2022
 							</h2>
 							<h1 className="text-6xl font-bold">Apoderados x el Rechazo</h1>
 							{/* <p className="text-lg">Ayudanos -solo- el dia de la votacion</p> */}
 							<p className="text-lg">Juntos para salvar CHILE</p>
 							<button
-								className="bg-gradient-to-r from-pink-600 to-orange-600 py-3 px-6 text-lg rounded-md w-48"
+								className="bg-gradient-to-r from-pink-600 to-orange-600 py-2 px-6 text-lg rounded-md w-48"
 								onClick={handleClick}
 							>
 								Ingresar

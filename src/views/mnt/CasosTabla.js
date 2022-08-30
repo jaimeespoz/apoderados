@@ -5,7 +5,7 @@ const CasosTabla = ({ data, setOpcion, setDataToEdit }) => {
 		<div className="container">
 			<div className="row my-4">
 				<div className="col-12 mb-1">
-					<h3 className="texto-lg fc-grey">Tabla de Datos</h3>
+					<h3 className="texto-lg fc-grey">Apoderados de Mesa</h3>
 				</div>
 				<div className="col-12">
 					<div className="bd-1 px-4">

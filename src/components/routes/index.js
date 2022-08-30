@@ -15,6 +15,7 @@ import MantencionSeleccionados from '../../views/mantencion/MantencionSelecciona
 import Contactados from '../../views/mantencion/Contactados';
 import NoPuede from '../../views/mantencion/NoPuede';
 import Nomina from '../../views/mnt/Nomina';
+import Ricardo from '../../views/mnt/Ricardo';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -61,6 +62,7 @@ export const Rutas = () => {
 				<Route path="/contactados" element={<Contactados />} />
 				<Route path="/nopuede" element={<NoPuede />} />
 				<Route path="/nomina" element={<Nomina />} />
+				<Route path="/ricardo" element={<Ricardo />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

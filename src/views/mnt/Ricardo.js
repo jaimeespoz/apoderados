@@ -3,6 +3,7 @@ import { url_apoderados_query } from '../../components/routes/Urls';
 import Headings from '../home/Headings';
 import { VinculosNav } from '../../components/layout';
 import { Casos_Por_Contactar, Casos_Limite } from '../../const';
+import Button from 'react-bootstrap/Button';
 
 // url
 import { url_apoderados_put } from '../../components/routes/Urls';
@@ -14,7 +15,7 @@ import CasosFormContactado from './CasosFormContactado';
 import CasosFormNoPuede from './CasosFormNoPuede';
 import CasosFormBlanco from './CasosFormBlanco';
 
-const Nomina = () => {
+const Ricardo = () => {
 	const [db, setDb] = useState(null);
 	const [opcion, setOpcion] = useState('0');
 	const [dataToEdit, setDataToEdit] = useState(null);
@@ -45,6 +46,39 @@ const Nomina = () => {
 				setDb(result.apoderados);
 				// alert(result.apoderados.length);
 				// alert(JSON.stringify(result.apoderados[19].Id));
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const carga_query_busqueda = (raiz) => {
+		let data = {
+			filter:
+				'(LOWER(NOMBRES) LIKE "%' +
+				raiz +
+				'%" OR LOWER(APELLIDO_PATERNO) LIKE "%' +
+				raiz +
+				'%" OR LOWER(APELLIDO_MATERNO) LIKE "%' +
+				raiz +
+				'%") AND CONTACTADO = 0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			// ' AND CONTACTADO=0
+			// 'CONTACTADO=1 AND TIPO_LOCAL_MESA="Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			limit: 20,
+		};
+
+		// alert(JSON.stringify(data));
+		fetch(url_apoderados_query, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				// alert(result.apoderados);
+				setDb(result.apoderados);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -251,11 +285,19 @@ const Nomina = () => {
 			});
 	};
 
+	const handleChange = (e) => {
+		const { value } = e.target;
+
+		if (value.length > 3) {
+			carga_query_busqueda(value.toLowerCase());
+		}
+	};
+
 	return (
 		<>
 			<Headings />
 			<main>
-				<div className="container">
+				<div className="container my-4">
 					<div className="row">
 						<div className="col-12">
 							<div className="row">
@@ -265,6 +307,22 @@ const Nomina = () => {
 										setOpcion={setOpcion}
 										setDataToEdit={setDataToEdit}
 									/>
+									<div className="bd-1">
+										<div className="row d-flex justify-content-center align-items-center">
+											<div className="col-6">
+												<label htmlFor="raiz" className="form-label-sm fc-blue">
+													Criterio de Busqueda
+												</label>
+												<input
+													type="text"
+													className="form-control-sm"
+													name="raiz"
+													placeholder="Criterio busqueda (minimo 3 digitos"
+													onChange={handleChange}
+												/>
+											</div>
+										</div>
+									</div>
 								</div>
 								{opcion === '0' && (
 									<div className="col-6">
@@ -331,4 +389,4 @@ const Nomina = () => {
 	);
 };
 
-export default Nomina;
+export default Ricardo;

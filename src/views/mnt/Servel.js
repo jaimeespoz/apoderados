@@ -26,11 +26,12 @@ const Servel = () => {
 
 	const carga_query = () => {
 		let data = {
-			filter: 'RUT=0',
-			//'TIPO_LOCAL_MESA<>"E" AND MESA_VOTA IS NULL ORDER BY NOMBRES',
+			filter:
+				// 'RUT=0 AND APELLIDO_MATERNO <> "None"',
+				'TIPO_LOCAL_MESA<>"E" AND MESA_VOTA IS NULL ORDER BY NOMBRES',
 			//	'RUT > 7999999 AND RUT < 10000000 AND MESA_VOTA IS NULL ORDER BY NOMBRES',
 			// 'RUT > 0 AND MESA_VOTA IS NULL ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 40,
+			limit: 50,
 		};
 		// alert(JSON.stringify(data));
 

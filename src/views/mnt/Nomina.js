@@ -25,11 +25,11 @@ const Nomina = () => {
 
 	const carga_query = () => {
 		let data = {
-			filter:
-				'ID > 342 AND CONTACTADO=0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			filter: 'ID > 342 AND CONTACTADO=0 ORDER BY NOMBRES',
+			// 'ID > 342 AND CONTACTADO=0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
 			// ' AND CONTACTADO=0
 			// 'CONTACTADO=1 AND TIPO_LOCAL_MESA="Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 20,
+			limit: 50,
 		};
 		// alert(JSON.stringify(data));
 

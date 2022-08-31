@@ -67,30 +67,30 @@ const validationsForm = (form) => {
 		form.ERRORES = '1';
 	}
 
-	if (!form.RUT.trim()) {
-		errors.RUT = 'Ingrese su RUT';
-		form.ERRORES = '1';
-	} else if (!isNumber(form.RUT)) {
-		errors.RUT = 'Ingrese un numero';
-		form.ERRORES = '1';
-	} else {
-		let rutpaso = form.RUT.trim();
-		let rutpaso2 = rutpaso.replace(/-/g, '');
-		let rutpaso3 = rutpaso2.replace(/\./g, '');
-		let largo = rutpaso3.length;
-		let cuerpo = rutpaso3.substring(0, largo - 1);
-		let digito = rutpaso3.substring(largo - 1, largo);
-		form.CUERPO = cuerpo;
-		form.CDV = digito;
-	}
+	// if (!form.RUT.trim()) {
+	// 	errors.RUT = 'Ingrese su RUT';
+	// 	form.ERRORES = '1';
+	// } else if (!isNumber(form.RUT)) {
+	// 	errors.RUT = 'Ingrese un numero';
+	// 	form.ERRORES = '1';
+	// } else {
+	// 	let rutpaso = form.RUT.trim();
+	// 	let rutpaso2 = rutpaso.replace(/-/g, '');
+	// 	let rutpaso3 = rutpaso2.replace(/\./g, '');
+	// 	let largo = rutpaso3.length;
+	// 	let cuerpo = rutpaso3.substring(0, largo - 1);
+	// 	let digito = rutpaso3.substring(largo - 1, largo);
+	// 	form.CUERPO = cuerpo;
+	// 	form.CDV = digito;
+	// }
 
-	if (!form.DV.trim()) {
-		errors.DV = 'Ingrese un Digito';
-		form.ERRORES = '1';
-	} else if (!isDigitoRut(form.DV.trim())) {
-		errors.DV = 'Ingrese un Digito';
-		form.ERRORES = '1';
-	}
+	// if (!form.DV.trim()) {
+	// 	errors.DV = 'Ingrese un Digito';
+	// 	form.ERRORES = '1';
+	// } else if (!isDigitoRut(form.DV.trim())) {
+	// 	errors.DV = 'Ingrese un Digito';
+	// 	form.ERRORES = '1';
+	// }
 	return errors;
 };
 
@@ -128,6 +128,7 @@ const CasosFormPersonales = ({
 		setErrors((prevState) => validationsForm(form));
 
 		if (form.ERRORES === '0') {
+			// alert(JSON.stringify(form));
 			updatePersonal(form);
 			setForm(initialForm);
 			setDataToEdit(null);
@@ -227,6 +228,21 @@ const CasosFormPersonales = ({
 								</div>
 								<div className="row">
 									<div className="col-4">
+										<label className="form-label-sm fc-blue">Celular</label>
+										<p className="form-control-sm fc-grey">
+											{form.TELEFONO_MOVIL}
+										</p>
+									</div>
+									<div className="col-4">
+										<label className="form-label-sm fc-blue">
+											Casilla Correo
+										</label>
+										<p className="form-control-sm fc-grey">{form.EMAIL}</p>
+									</div>
+								</div>
+
+								<div className="row">
+									<div className="col-4">
 										<label htmlFor="RUT" className="form-label-sm fc-blue">
 											RUT
 										</label>
@@ -265,55 +281,6 @@ const CasosFormPersonales = ({
 										{errors.DV && (
 											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
 												{errors.DV}
-											</p>
-										)}
-									</div>
-								</div>
-								<div className="row">
-									<div className="col-4">
-										<label
-											htmlFor="TELEFONO_MOVIL"
-											className="form-label-sm fc-blue"
-										>
-											Celular
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											name="TELEFONO_MOVIL"
-											placeholder="Celular"
-											onChange={handleChange}
-											value={
-												form.TELEFONO_MOVIL.toLowerCase().trim() === 'none'
-													? null
-													: form.TELEFONO_MOVIL
-											}
-										/>
-										{errors.TELEFONO_MOVIL && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.TELEFONO_MOVIL}
-											</p>
-										)}
-									</div>
-									<div className="col-8">
-										<label htmlFor="EMAIL" className="form-label-sm fc-blue">
-											Casilla Correo
-										</label>
-										<input
-											type="text"
-											className="form-control-sm"
-											name="EMAIL"
-											placeholder="Casilla de Correo"
-											onChange={handleChange}
-											value={
-												form.EMAIL.toLowerCase().trim() === 'none'
-													? null
-													: form.EMAIL
-											}
-										/>
-										{errors.EMAIL && (
-											<p className="texto-sm fc-secondaryColor fw-medium mb-2">
-												{errors.EMAIL}
 											</p>
 										)}
 									</div>

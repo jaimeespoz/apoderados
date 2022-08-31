@@ -209,6 +209,8 @@ const NominaApoderados = () => {
 			.then((res) => res.json())
 			.then((result) => {
 				if (result.filasafectadas === 0) {
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
 					alert('No se pudo grabar');
 				}
 			})

@@ -15,7 +15,7 @@ import CasosFormContactado from './CasosFormContactado';
 import CasosFormNoPuede from './CasosFormNoPuede';
 import CasosFormBlanco from './CasosFormBlanco';
 
-const Ricardo = () => {
+const Servel = () => {
 	const [db, setDb] = useState(null);
 	const [opcion, setOpcion] = useState('0');
 	const [dataToEdit, setDataToEdit] = useState(null);
@@ -26,11 +26,11 @@ const Ricardo = () => {
 
 	const carga_query = () => {
 		let data = {
-			filter: 'UPPER(APELLIDO_PATERNO) LIKE "ARAVENA"',
-			// 'ID > 342 AND CONTACTADO=0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			// ' AND CONTACTADO=0
-			// 'CONTACTADO=1 AND TIPO_LOCAL_MESA="Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 20,
+			filter: 'RUT=0',
+			//'TIPO_LOCAL_MESA<>"E" AND MESA_VOTA IS NULL ORDER BY NOMBRES',
+			//	'RUT > 7999999 AND RUT < 10000000 AND MESA_VOTA IS NULL ORDER BY NOMBRES',
+			// 'RUT > 0 AND MESA_VOTA IS NULL ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
+			limit: 40,
 		};
 		// alert(JSON.stringify(data));
 
@@ -46,39 +46,6 @@ const Ricardo = () => {
 				setDb(result.apoderados);
 				// alert(result.apoderados.length);
 				// alert(JSON.stringify(result.apoderados[19].Id));
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-	const carga_query_busqueda = (raiz) => {
-		let data = {
-			filter:
-				'(LOWER(NOMBRES) LIKE "%' +
-				raiz +
-				'%" OR LOWER(APELLIDO_PATERNO) LIKE "%' +
-				raiz +
-				'%" OR LOWER(APELLIDO_MATERNO) LIKE "%' +
-				raiz +
-				'%") AND CONTACTADO = 0 ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			// ' AND CONTACTADO=0
-			// 'CONTACTADO=1 AND TIPO_LOCAL_MESA="Z" ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 20,
-		};
-
-		// alert(JSON.stringify(data));
-		fetch(url_apoderados_query, {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		})
-			.then((res) => res.json())
-			.then((result) => {
-				// alert(result.apoderados);
-				setDb(result.apoderados);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -105,8 +72,8 @@ const Ricardo = () => {
 	const updatePersonal = async (form) => {
 		let data = {
 			Id: form.Id,
-			RUT: form.CUERPO,
-			DV: form.CDV,
+			RUT: form.RUT,
+			DV: form.DV,
 			NOMBRES: form.NOMBRES,
 			APELLIDO_PATERNO: form.APELLIDO_PATERNO,
 			APELLIDO_MATERNO: form.APELLIDO_MATERNO,
@@ -128,6 +95,36 @@ const Ricardo = () => {
 					console.log(JSON.stringify(data));
 					console.log(JSON.stringify(result));
 					alert('No se pudo grabar');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const updateExtrajeros = async (form) => {
+		let data = {
+			Id: form.Id,
+			TIPO_LOCAL_MESA: 'E',
+		};
+
+		await fetch(url_apoderados_put + form.Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.filasafectadas === 0) {
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateExtrajeros)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -292,14 +289,6 @@ const Ricardo = () => {
 			});
 	};
 
-	const handleChange = (e) => {
-		const { value } = e.target;
-
-		if (value.length > 3) {
-			carga_query_busqueda(value.toLowerCase());
-		}
-	};
-
 	return (
 		<>
 			<Headings />
@@ -314,22 +303,6 @@ const Ricardo = () => {
 										setOpcion={setOpcion}
 										setDataToEdit={setDataToEdit}
 									/>
-									<div className="bd-1">
-										<div className="row d-flex justify-content-center align-items-center">
-											<div className="col-6">
-												<label htmlFor="raiz" className="form-label-sm fc-blue">
-													Criterio de Busqueda
-												</label>
-												<input
-													type="text"
-													className="form-control-sm"
-													name="raiz"
-													placeholder="Criterio busqueda (minimo 3 digitos"
-													onChange={handleChange}
-												/>
-											</div>
-										</div>
-									</div>
 								</div>
 								{opcion === '0' && (
 									<div className="col-6">
@@ -351,6 +324,7 @@ const Ricardo = () => {
 										<CasosFormLocal
 											setOpcion={setOpcion}
 											updateLocal={updateLocal}
+											updateExtrajeros={updateExtrajeros}
 											dataToEdit={dataToEdit}
 											setDataToEdit={setDataToEdit}
 										/>
@@ -396,4 +370,4 @@ const Ricardo = () => {
 	);
 };
 
-export default Ricardo;
+export default Servel;

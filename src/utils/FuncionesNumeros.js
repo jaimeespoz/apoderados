@@ -28,3 +28,31 @@ export const isDigitoRut = (str) => {
 		return false;
 	}
 };
+
+export const formatea_numero = (numero) => {
+	let resultado = numero;
+	if (numero !== '') {
+		// if (numero.trim() !== '') {
+		let nro = numero.trim();
+		let largo = nro.length;
+
+		if (largo === 8) {
+			resultado =
+				nro.substring(0, 2) +
+				'.' +
+				nro.substring(2, 5) +
+				'.' +
+				nro.substring(5, 8);
+		}
+		// if (largo === 9) {
+		// 	resultado =
+		// 		'(56) ' +
+		// 		nro.substring(0, 1) +
+		// 		' ' +
+		// 		nro.substring(1, 5) +
+		// 		' ' +
+		// 		nro.substring(5, 9);
+		// }
+	}
+	return resultado;
+};

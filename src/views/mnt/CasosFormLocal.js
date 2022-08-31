@@ -1,6 +1,7 @@
 // modulos
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import { formatea_numero } from '../../utils/FuncionesNumeros';
 
 import {
 	url_regiones,
@@ -45,6 +46,7 @@ const validationsForm = (form) => {
 const CasosFormLocal = ({
 	setOpcion,
 	updateLocal,
+	updateExtrajeros,
 	dataToEdit,
 	setDataToEdit,
 }) => {
@@ -123,6 +125,20 @@ const CasosFormLocal = ({
 		});
 	};
 
+	const handleExtranjero = (e) => {
+		e.preventDefault();
+
+		setErrors(validationsForm(form));
+		setErrors((prevState) => validationsForm(form));
+
+		if (form.ERRORES === '0') {
+			updateExtrajeros(form);
+			setForm(initialForm);
+			setDataToEdit(null);
+			setOpcion('0');
+		}
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -131,6 +147,7 @@ const CasosFormLocal = ({
 
 		if (form.ERRORES === '0') {
 			updateLocal(form);
+			setOpcion('0');
 		}
 	};
 
@@ -174,6 +191,23 @@ const CasosFormLocal = ({
 												<p className="form-control-sm fc-grey">
 													{form.APELLIDO_MATERNO}
 												</p>
+											</div>
+										</div>
+										<div className="row">
+											<div className="col-4">
+												<label htmlFor="RUT" className="form-label-sm fc-blue">
+													RUT
+												</label>
+												<p className="form-control-sm fc-grey">
+													{/* {formatea_numero(form.RUT)} */}
+													{form.RUT}
+												</p>
+											</div>
+											<div className="col-2">
+												<label htmlFor="DV" className="form-label-sm fc-blue">
+													DV
+												</label>
+												<p className="form-control-sm fc-grey">{form.DV}</p>
 											</div>
 										</div>
 									</div>
@@ -361,6 +395,14 @@ const CasosFormLocal = ({
 								<button onClick={handleSubmit} className="btn-primary">
 									Aceptar
 								</button>
+								<Button
+									variant="primary"
+									size="sm"
+									active
+									onClick={handleExtranjero}
+								>
+									Extranjero
+								</Button>
 								<Button
 									variant="primary"
 									size="sm"

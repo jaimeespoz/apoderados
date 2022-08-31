@@ -80,7 +80,6 @@ const Nomina = () => {
 			EMAIL: form.EMAIL,
 		};
 
-		// alert(JSON.stringify(data));
 		await fetch(url_apoderados_put + form.Id, {
 			method: 'post',
 			headers: {
@@ -90,9 +89,10 @@ const Nomina = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				// alert(JSON.stringify(result));
 				if (result.filasafectadas === 0) {
-					alert('No se pudo grabar');
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updatePersonal)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -123,7 +123,39 @@ const Nomina = () => {
 			.then((res) => res.json())
 			.then((result) => {
 				if (result.filasafectadas === 0) {
-					alert('No se pudo grabar');
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateLocal)');
+				}
+				if (result.filasafectadas === 1) {
+					alert('Cambios Grabados');
+					carga_query();
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const updateExtrajeros = async (form) => {
+		let data = {
+			Id: form.Id,
+			TIPO_LOCAL_MESA: 'E',
+		};
+
+		await fetch(url_apoderados_put + form.Id, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				if (result.filasafectadas === 0) {
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateExtrajeros)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -153,7 +185,9 @@ const Nomina = () => {
 			.then((res) => res.json())
 			.then((result) => {
 				if (result.filasafectadas === 0) {
-					alert('No se pudo grabar');
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateSeleccion)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -206,10 +240,10 @@ const Nomina = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				// alert(JSON.stringify(data));
-				// alert(JSON.stringify(result));
 				if (result.filasafectadas === 0) {
-					alert('No se pudo grabar');
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateContacto)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -239,7 +273,9 @@ const Nomina = () => {
 			.then((res) => res.json())
 			.then((result) => {
 				if (result.filasafectadas === 0) {
-					alert('No se pudo grabar');
+					console.log(JSON.stringify(data));
+					console.log(JSON.stringify(result));
+					alert('No se pudo grabar (updateNoPuede)');
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
@@ -286,6 +322,7 @@ const Nomina = () => {
 										<CasosFormLocal
 											setOpcion={setOpcion}
 											updateLocal={updateLocal}
+											updateExtrajeros={updateExtrajeros}
 											dataToEdit={dataToEdit}
 											setDataToEdit={setDataToEdit}
 										/>

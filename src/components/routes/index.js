@@ -7,7 +7,6 @@ import Home from '../../views/home/Home';
 import Contacto from '../../views/home/contacto/Contacto';
 import RegistroApoderados from '../../views/apoderados/RegistroApoderados';
 import Seleccion from '../../views/mantencion/Seleccion';
-import NominaApoderados from '../../views/mantencion/NominaApoderados';
 import Mantencion from '../../views/mantencion/Mantencion';
 import MantencionPersonales from '../../views/mantencion/MantencionPersonales';
 import MantencionLocal from '../../views/mantencion/MantencionLocal';
@@ -16,6 +15,8 @@ import Contactados from '../../views/mantencion/Contactados';
 import NoPuede from '../../views/mantencion/NoPuede';
 import Nomina from '../../views/mnt/Nomina';
 import Ricardo from '../../views/mnt/Ricardo';
+import Servel from '../../views/mnt/Servel';
+import Consulta from '../../views/consulta/Consulta';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -63,6 +64,8 @@ export const Rutas = () => {
 				<Route path="/nopuede" element={<NoPuede />} />
 				<Route path="/nomina" element={<Nomina />} />
 				<Route path="/ricardo" element={<Ricardo />} />
+				<Route path="/servel" element={<Servel />} />
+				<Route path="/consulta" element={<Consulta />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

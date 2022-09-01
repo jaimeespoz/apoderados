@@ -12,6 +12,7 @@ export const url_apoderados_putxrut = url_srv + 'putmodificaapoderadoxrut/';
 export const url_apoderados_get = url_srv + 'getapoderadorut/';
 export const url_apoderados_nuevo = url_srv + 'putnuevoapoderado';
 export const url_apoderados_query = url_srv + 'putqueryapoderados';
+export const url_apoderados_querygenerico = url_srv + 'putquerygenerico';
 
 // CREATE TABLE `AUDITDB`.`APODERADOS` (
 //   `Id` INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador del registro, generado automáticamente',

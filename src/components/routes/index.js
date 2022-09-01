@@ -17,6 +17,8 @@ import Nomina from '../../views/mnt/Nomina';
 import Ricardo from '../../views/mnt/Ricardo';
 import Servel from '../../views/mnt/Servel';
 import Consulta from '../../views/consulta/Consulta';
+import Agregados from '../../views/consulta/Agregados';
+import Consultas from '../../views/consultas/Consultas';
 
 import PrivacidadMain from '../../views/terminoscondiciones/PrivacidadMain';
 import SeguridadClaveMain from '../../views/terminoscondiciones/SeguridadClaveMain';
@@ -46,6 +48,7 @@ import TerminosMarcasComerciales from '../../views/terminoscondiciones/TerminosM
 import TerminosLegislacionAplicable from '../../views/terminoscondiciones/TerminosLegislacionAplicable';
 import TerminosContratacionServicios from '../../views/terminoscondiciones/TerminosContratacionServicios';
 import TerminosTerminos from '../../views/terminoscondiciones/TerminosTerminos';
+import PorComunas from '../../views/porcomunas/PorComunas';
 
 export const Rutas = () => {
 	return (
@@ -66,6 +69,9 @@ export const Rutas = () => {
 				<Route path="/ricardo" element={<Ricardo />} />
 				<Route path="/servel" element={<Servel />} />
 				<Route path="/consulta" element={<Consulta />} />
+				<Route path="/agregados" element={<Agregados />} />
+				<Route path="/consultas" element={<Consultas />} />
+				<Route path="porcomunas" element={<PorComunas />} />
 
 				<Route path="/terminos" element={<TerminosUsoMain />} />
 				<Route path="/seguridad" element={<SeguridadClaveMain />} />

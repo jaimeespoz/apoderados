@@ -1,13 +1,13 @@
+// modulos
 import { useState, useEffect } from 'react';
-import { url_apoderados_query } from '../../components/routes/Urls';
 import Headings from '../home/Headings';
-import { VinculosNav } from '../../components/layout';
-import { Casos_Por_Contactar, Casos_Limite } from '../../const';
-import Button from 'react-bootstrap/Button';
+import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
+import { url_apoderados_query } from '../../components/routes/Urls';
 import { url_apoderados_put } from '../../components/routes/Urls';
-import CasosTabla from './CasosTabla';
+
+import TablaCasos from './TablaCasos';
 import CasosFormPersonales from './CasosFormPersonales';
 import CasosFormLocal from './CasosFormLocal';
 import CasosFormSeleccion from './CasosFormSeleccion';
@@ -15,27 +15,26 @@ import CasosFormContactado from './CasosFormContactado';
 import CasosFormNoPuede from './CasosFormNoPuede';
 import CasosFormBlanco from './CasosFormBlanco';
 
-const Servel = () => {
-	const [db, setDb] = useState(null);
+function Consultas() {
+	const [contactados, setContactados] = useState('');
 	const [opcion, setOpcion] = useState('0');
 	const [dataToEdit, setDataToEdit] = useState(null);
 
 	useEffect(() => {
-		carga_query();
+		cargaContactados();
 	}, []);
 
-	const carga_query = () => {
-		let data = {
-			filter:
-				// 'RUT=0 AND APELLIDO_MATERNO <> "None"',
-				'RUT=1 ORDER BY NOMBRES',
-			//	'RUT > 7999999 AND RUT < 10000000 AND MESA_VOTA IS NULL ORDER BY NOMBRES',
-			// 'RUT > 0 AND MESA_VOTA IS NULL ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 50,
-		};
-		// alert(JSON.stringify(data));
+	const cargaContactados = async () => {
+		let criterio =
+			'RUT > 0 AND MESA_VOTA IS NULL ORDER BY CODIGO_REGION_VOTA, APELLIDO_PATERNO';
 
-		fetch(url_apoderados_query, {
+		let data = {
+			filter: criterio,
+			limit: 200,
+		};
+
+		// alert(JSON.stringify(data));
+		await fetch(url_apoderados_query, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -44,31 +43,13 @@ const Servel = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				setDb(result.apoderados);
-				// alert(result.apoderados.length);
-				// alert(JSON.stringify(result.apoderados[19].Id));
+				// alert(JSON.stringify(result.apoderados));
+				setContactados(result.apoderados);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-
-	// const createData = (data) => {
-	// 	data.id = Date.now();
-
-	// 	let options = {
-	// 		body: data,
-	// 		headers: { 'content-type': 'application/json' },
-	// 	};
-
-	// 	// api.post(url, options).then((res) => {
-	// 	// 	if (!res.err) {
-	// 	// 		setDb([...db, res]);
-	// 	// 	} else {
-	// 	// 		setError(res);
-	// 	// 	}
-	// 	// });
-	// };
 
 	const updatePersonal = async (form) => {
 		let data = {
@@ -99,7 +80,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -110,6 +91,10 @@ const Servel = () => {
 	const updateExtrajeros = async (form) => {
 		let data = {
 			Id: form.Id,
+			CODIGO_REGION_VOTA: '99',
+			CODIGO_COMUNA_VOTA: '99999',
+			CODIGO_LOCAL_VOTA: 99999,
+			MESA_VOTA: 99999,
 			TIPO_LOCAL_MESA: 'E',
 		};
 
@@ -129,7 +114,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -162,7 +147,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -194,37 +179,13 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-
-	// const deleteData = (id) => {
-	// 	let isDelete = window.confirm(
-	// 		`¿Estás seguro de eliminar el registro con el id '${id}'?`
-	// 	);
-
-	// 	// if (isDelete) {
-	// 	// 	let endpoint = `${url}/${id}`;
-	// 	// 	let options = {
-	// 	// 		headers: { 'content-type': 'application/json' },
-	// 	// 	};
-
-	// 	// 	api.del(endpoint, options).then((res) => {
-	// 	// 		if (!res.err) {
-	// 	// 			let newData = db.filter((el) => el.id !== id);
-	// 	// 			setDb(newData);
-	// 	// 		} else {
-	// 	// 			setError(res);
-	// 	// 		}
-	// 	// 	});
-	// 	// } else {
-	// 	// 	return;
-	// 	// }
-	// };
 
 	const updateContacto = async (form) => {
 		let data = {
@@ -250,7 +211,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -282,7 +243,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -294,13 +255,13 @@ const Servel = () => {
 		<>
 			<Headings />
 			<main>
-				<div className="container my-4">
-					<div className="row">
+				<div className="container">
+					<section className="row">
 						<div className="col-12">
 							<div className="row">
 								<div className="col-6">
-									<CasosTabla
-										data={db}
+									<TablaCasos
+										data={contactados}
 										setOpcion={setOpcion}
 										setDataToEdit={setDataToEdit}
 									/>
@@ -363,12 +324,12 @@ const Servel = () => {
 								)}
 							</div>
 						</div>
-					</div>
+					</section>
 				</div>
 			</main>
 			<VinculosNav />
 		</>
 	);
-};
+}
 
-export default Servel;
+export default Consultas;

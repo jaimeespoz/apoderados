@@ -1,13 +1,18 @@
+// modulos
 import { useState, useEffect } from 'react';
-import { url_apoderados_query } from '../../components/routes/Urls';
 import Headings from '../home/Headings';
-import { VinculosNav } from '../../components/layout';
-import { Casos_Por_Contactar, Casos_Limite } from '../../const';
-import Button from 'react-bootstrap/Button';
+import { OpcionesNav, VinculosNav } from '../../components/layout';
 
 // url
+import { url_apoderados_query } from '../../components/routes/Urls';
 import { url_apoderados_put } from '../../components/routes/Urls';
-import CasosTabla from './CasosTabla';
+import {
+	url_regiones,
+	url_comunas,
+	url_locales,
+} from '../../components/routes/Urls';
+
+import TablaCasos from './TablaCasos';
 import CasosFormPersonales from './CasosFormPersonales';
 import CasosFormLocal from './CasosFormLocal';
 import CasosFormSeleccion from './CasosFormSeleccion';
@@ -15,27 +20,97 @@ import CasosFormContactado from './CasosFormContactado';
 import CasosFormNoPuede from './CasosFormNoPuede';
 import CasosFormBlanco from './CasosFormBlanco';
 
-const Servel = () => {
-	const [db, setDb] = useState(null);
+function PorComunas() {
+	const [contactados, setContactados] = useState('');
 	const [opcion, setOpcion] = useState('0');
 	const [dataToEdit, setDataToEdit] = useState(null);
 
+	const [votaRegion, setVotaRegion] = useState('');
+	const [votaComuna, setVotaComuna] = useState('');
+	const [votaLocal, setVotaLocal] = useState('');
+
+	const [dbRegiones, setDbRegiones] = useState('');
+	const [dbComunas, setDbComunas] = useState('');
+	const [dbLocales, setDbLocales] = useState('');
+
 	useEffect(() => {
-		carga_query();
+		cargaRegiones();
 	}, []);
 
-	const carga_query = () => {
-		let data = {
-			filter:
-				// 'RUT=0 AND APELLIDO_MATERNO <> "None"',
-				'RUT=1 ORDER BY NOMBRES',
-			//	'RUT > 7999999 AND RUT < 10000000 AND MESA_VOTA IS NULL ORDER BY NOMBRES',
-			// 'RUT > 0 AND MESA_VOTA IS NULL ORDER BY APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES',
-			limit: 50,
-		};
-		// alert(JSON.stringify(data));
+	const cargaRegiones = async () => {
+		await fetch(url_regiones, {
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setDbRegiones(result.regiones);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
-		fetch(url_apoderados_query, {
+	const cargaComunas = async (url) => {
+		await fetch(url, {
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setDbComunas(result.comunas);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const cargaLocales = async (url) => {
+		await fetch(url, {
+			method: 'get',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((result) => {
+				setDbLocales(result.locales);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const handleBuscar = (e) => {
+		cargaContactados();
+	};
+
+	const cargaContactados = async () => {
+		let criterio = 'CONTACTADO=0 ';
+		if (votaRegion) {
+			criterio = criterio + ' AND CODIGO_REGION_VOTA="' + votaRegion + '"';
+		}
+		if (votaComuna) {
+			criterio = criterio + ' AND CODIGO_COMUNA_VOTA="' + votaComuna + '"';
+		}
+		if (votaLocal) {
+			criterio = criterio + ' AND CODIGO_LOCAL_VOTA="' + votaLocal + '"';
+		}
+		criterio =
+			criterio +
+			' ORDER BY DESC_COMUNA_VOTA, APELLIDO_PATERNO, APELLIDO_MATERNO, NOMBRES';
+
+		let data = {
+			filter: criterio,
+			limit: 200,
+		};
+
+		// alert(JSON.stringify(data));
+		await fetch(url_apoderados_query, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
@@ -44,31 +119,13 @@ const Servel = () => {
 		})
 			.then((res) => res.json())
 			.then((result) => {
-				setDb(result.apoderados);
-				// alert(result.apoderados.length);
-				// alert(JSON.stringify(result.apoderados[19].Id));
+				// alert(JSON.stringify(result.apoderados));
+				setContactados(result.apoderados);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-
-	// const createData = (data) => {
-	// 	data.id = Date.now();
-
-	// 	let options = {
-	// 		body: data,
-	// 		headers: { 'content-type': 'application/json' },
-	// 	};
-
-	// 	// api.post(url, options).then((res) => {
-	// 	// 	if (!res.err) {
-	// 	// 		setDb([...db, res]);
-	// 	// 	} else {
-	// 	// 		setError(res);
-	// 	// 	}
-	// 	// });
-	// };
 
 	const updatePersonal = async (form) => {
 		let data = {
@@ -99,7 +156,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -110,6 +167,10 @@ const Servel = () => {
 	const updateExtrajeros = async (form) => {
 		let data = {
 			Id: form.Id,
+			CODIGO_REGION_VOTA: '99',
+			CODIGO_COMUNA_VOTA: '99999',
+			CODIGO_LOCAL_VOTA: 99999,
+			MESA_VOTA: 99999,
 			TIPO_LOCAL_MESA: 'E',
 		};
 
@@ -129,7 +190,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -162,7 +223,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -194,37 +255,13 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
-
-	// const deleteData = (id) => {
-	// 	let isDelete = window.confirm(
-	// 		`¿Estás seguro de eliminar el registro con el id '${id}'?`
-	// 	);
-
-	// 	// if (isDelete) {
-	// 	// 	let endpoint = `${url}/${id}`;
-	// 	// 	let options = {
-	// 	// 		headers: { 'content-type': 'application/json' },
-	// 	// 	};
-
-	// 	// 	api.del(endpoint, options).then((res) => {
-	// 	// 		if (!res.err) {
-	// 	// 			let newData = db.filter((el) => el.id !== id);
-	// 	// 			setDb(newData);
-	// 	// 		} else {
-	// 	// 			setError(res);
-	// 	// 		}
-	// 	// 	});
-	// 	// } else {
-	// 	// 	return;
-	// 	// }
-	// };
 
 	const updateContacto = async (form) => {
 		let data = {
@@ -250,7 +287,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -282,7 +319,7 @@ const Servel = () => {
 				}
 				if (result.filasafectadas === 1) {
 					alert('Cambios Grabados');
-					carga_query();
+					// carga_query();
 				}
 			})
 			.catch((err) => {
@@ -294,13 +331,116 @@ const Servel = () => {
 		<>
 			<Headings />
 			<main>
-				<div className="container my-4">
-					<div className="row">
+				<div className="container">
+					<section className="row">
+						<div className="col-12 bd-1">
+							<div className="row">
+								<section className="col-12">
+									<p className="texto-lg fw-semi-bold fc-grey pt-6 pb-1">
+										Seleccion
+									</p>
+								</section>
+								<section className="col-4">
+									<label className="form-label-sm">Region</label>
+									<div className="bootstrap-select">
+										<select
+											name="cb_regiones"
+											id="cb_regiones"
+											className="texto-sm fc-grey"
+											onChange={(e) => {
+												cargaComunas(url_comunas + e.target.value);
+												setVotaRegion(e.target.value);
+												setVotaComuna('');
+												setVotaLocal('');
+											}}
+										>
+											<option value="" className="texto-sm fc-grey">
+												Elige una Region
+											</option>
+											{dbRegiones &&
+												dbRegiones.map((el) => (
+													<option
+														key={el.CODIGO}
+														value={el.CODIGO}
+														className="texto-sm fc-grey"
+													>
+														{el.DESCRIPCION}
+													</option>
+												))}
+										</select>
+									</div>
+								</section>
+								<section className="col-4">
+									<label className="form-label-sm">Comuna</label>
+									<div className="bootstrap-select">
+										<select
+											name="cb_comunas"
+											id="cb_comunas"
+											className="texto-sm fc-grey"
+											onChange={(e) => {
+												cargaLocales(
+													url_locales + votaRegion + '/' + e.target.value
+												);
+												setVotaComuna(e.target.value);
+												setVotaLocal('');
+											}}
+										>
+											<option value="" className="texto-sm fc-grey">
+												Elige una Comuna
+											</option>
+											{dbComunas &&
+												dbComunas.map((el) => (
+													<option
+														key={el.CODIGO}
+														value={el.CODIGO}
+														className="texto-sm fc-grey"
+													>
+														{el.DESCRIPCION}
+													</option>
+												))}
+										</select>
+									</div>
+								</section>
+								<section className="col-4">
+									<label className="form-label-sm">Local</label>
+									<div className="bootstrap-select">
+										<select
+											name="cb_locales"
+											id="cb_locales"
+											className="texto-sm fc-grey"
+											onChange={(e) => {
+												setVotaLocal(e.target.value);
+											}}
+										>
+											<option value="" className="texto-sm fc-grey">
+												Elige un Local
+											</option>
+											{dbLocales &&
+												dbLocales.map((el) => (
+													<option
+														key={el.CODIGO}
+														value={el.CODIGO}
+														className="texto-sm fc-grey"
+													>
+														{el.DESCRIPCION}
+													</option>
+												))}
+										</select>
+									</div>
+								</section>
+								<section className="col-12">
+									<button onClick={handleBuscar} className="btn-primary my-2">
+										Buscar
+									</button>
+								</section>
+							</div>
+						</div>
+
 						<div className="col-12">
 							<div className="row">
 								<div className="col-6">
-									<CasosTabla
-										data={db}
+									<TablaCasos
+										data={contactados}
 										setOpcion={setOpcion}
 										setDataToEdit={setDataToEdit}
 									/>
@@ -363,12 +503,12 @@ const Servel = () => {
 								)}
 							</div>
 						</div>
-					</div>
+					</section>
 				</div>
 			</main>
 			<VinculosNav />
 		</>
 	);
-};
+}
 
-export default Servel;
+export default PorComunas;

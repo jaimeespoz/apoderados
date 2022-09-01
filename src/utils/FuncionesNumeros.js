@@ -36,6 +36,17 @@ export const formatea_numero = (numero) => {
 		let nro = numero.trim();
 		let largo = nro.length;
 
+		if (largo === 6) {
+			resultado = nro.substring(0, 3) + '.' + nro.substring(3, 6);
+		}
+		if (largo === 7) {
+			resultado =
+				nro.substring(0, 1) +
+				'.' +
+				nro.substring(1, 4) +
+				'.' +
+				nro.substring(4, 7);
+		}
 		if (largo === 8) {
 			resultado =
 				nro.substring(0, 2) +
